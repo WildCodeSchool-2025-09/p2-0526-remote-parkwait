@@ -1,8 +1,11 @@
-function Home() {
+import "../css/Home.css";
+import type { ParkCompany } from "../component/ShowParksCard.tsx";
+import ShowParks from "./ShowParks.tsx";
+
+function Home({ park }: { park: ParkCompany[] }) {
 	return (
 		<>
-			<h1>ParkWait</h1>
-			<div>Hello world</div>
+			<ShowParks park={park} />
 		</>
 	);
 }
