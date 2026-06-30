@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import "../css/Parklist.css";
 
 function ParkList({ searchTerm }) {
 	const [allParks, setAllParks] = useState([]);
@@ -26,13 +27,13 @@ function ParkList({ searchTerm }) {
 	if (loading) return <p>Chargement des parcs...</p>;
 
 	return (
-		<div>
-			<ul>
-				{filteredParks.map((park) => (
-					<li key={park.id}>{park.name}</li>
-				))}
-			</ul>
-		</div>
+        <div className="park-list-grid">
+            {filteredParks.map((park) => (
+                <div key={park.id} className="park-card">
+                    <h3 className="park-name">{park.name}</h3>
+                </div>
+            ))}
+        </div>
 	);
 }
 
