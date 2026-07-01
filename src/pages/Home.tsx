@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ParkList from "../components/ParkList";
-import SearchBarPark from "../components/searchBarPark";
+import ParkList from "../components/ParkList.tsx";
+import SearchBarPark from "../components/SearchBarPark";
 
 function Home() {
 	const [searchTerm, setSearchTerm] = useState("");

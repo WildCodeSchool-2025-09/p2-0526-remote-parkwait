@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import ParkFilter from "./ParkFilter.jsx";
+import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
+import type { ParkListProps, ParkGroup } from "../types.js";
 
-function ParkList({ searchTerm }) {
-	const [allParksData, setAllParksData] = useState([]);
+function ParkList({ searchTerm }: ParkListProps) {
+	const [allParksData, setAllParksData] = useState<ParkGroup[]>([]);
 	const [selectedCountry, setSelectedCountry] = useState("All");
 
 	useEffect(() => {

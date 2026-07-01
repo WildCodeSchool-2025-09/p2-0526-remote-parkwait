@@ -1,8 +1,13 @@
 import { useState } from "react";
 import "../css/ParkFilter.css";
 import myIcon from "../../public/icons/world.svg";
+import type { ParkFilterProps } from "../types.js";
 
-function ParkFilter({ countries, selectedCountry, onFilterChange }) {
+function ParkFilter({
+	countries,
+	selectedCountry,
+	onFilterChange,
+}: ParkFilterProps) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
