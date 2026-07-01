@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
-import type { ParkListProps, ParkGroup } from "../types.js";
+import type { ParkGroup, ParkListProps } from "../types.js";
 
 function ParkList({ searchTerm }: ParkListProps) {
 	const [allParksData, setAllParksData] = useState<ParkGroup[]>([]);
