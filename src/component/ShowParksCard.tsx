@@ -1,16 +1,13 @@
 import "../css/ShowParksCard.css";
-
-import type { ParkCompany } from "../types"
+import type { ParkCompany } from "../types";
+import ParkCard from "./ParkCard";
 
 function ShowParksCard({ park }: { park: ParkCompany[] }) {
 	return (
 		<section className="ShowParksCardContainer">
 			{park.map((company) =>
 				company.parks.map((parkItem) => (
-					<article key={parkItem.id} className="ParkCard">
-						<p className="ParkCard-name">{parkItem.name}</p>
-						<p className="ParkCard-country">{parkItem.country}</p>
-					</article>
+					<ParkCard key={parkItem.id} park={parkItem} />
 				)),
 			)}
 		</section>

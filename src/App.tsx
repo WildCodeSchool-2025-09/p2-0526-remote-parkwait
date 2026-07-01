@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./component/NavBar.tsx";
-import type { ParkCompany } from "./types";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
+import type { ParkCompany } from "./types";
 
 const PARK_LIST_REFRESH_INTERVAL = 5 * 60 * 1000;
 
