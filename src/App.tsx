@@ -1,7 +1,7 @@
 // App.tsx
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./component/NavBar.tsx";
+import Navbar from "./components/NavBar.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { ParkCompany } from "./types";

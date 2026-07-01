@@ -1,4 +1,4 @@
-import ShowParksCard from "../component/ShowParksCard.tsx";
+import ShowParksCard from "../components/ShowParksCard.tsx";
 import type { ParkCompany } from "../types";
 import "../css/ShowParks.css";
 
