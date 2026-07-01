@@ -1,5 +1,5 @@
 import ShowParksCard from "../component/ShowParksCard.tsx";
-import type { ParkCompany } from "../component/ShowParksCard.tsx";
+import type { ParkCompany } from "../types";
 import "../css/ShowParks.css";
 
 function ShowParks({ park }: { park: ParkCompany[] }) {

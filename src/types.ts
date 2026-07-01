@@ -39,3 +39,17 @@ export interface ParkGroup {
     rideName: string
     addedAt: string
   }
+
+  export interface Park {
+	id: number;
+	name: string;
+	country: string;
+	continent: string;
+	timezone: string;
+}
+
+export interface ParkCompany {
+	id: number;
+	name: string;
+	parks: Park[];
+}
