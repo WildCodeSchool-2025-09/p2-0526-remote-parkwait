@@ -2,10 +2,10 @@ import "../css/Home.css";
 import type { ParkCompany } from "../types";
 import ShowParks from "./ShowParks.tsx";
 
-function Home({ park }: { park: ParkCompany[] }) {
+function Home({ parkCompanies }: { parkCompanies: ParkCompany[] }) {
 	return (
 		<>
-			<ShowParks park={park} />
+			<ShowParks parkCompanies={parkCompanies} />
 		</>
 	);
 }

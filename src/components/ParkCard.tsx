@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Park } from "../types";
+import type { Land, Park, ParkQueueData } from "../types";
 
 function ParkCard({ park }: { park: Park }) {
 	const [isOpen, setIsOpen] = useState<boolean | null>(null);
@@ -7,12 +7,10 @@ function ParkCard({ park }: { park: Park }) {
 	useEffect(() => {
 		fetch(`/api/parks/${park.id}/queue_times.json`)
 			.then((response) => response.json())
-			.then((data) => {
+			.then((data: ParkQueueData) => {
 				const allRides = [
 					...data.rides,
-					...data.lands.flatMap(
-						(land: { rides: { is_open: boolean }[] }) => land.rides,
-					),
+					...data.lands.flatMap((land: Land) => land.rides),
 				];
 				setIsOpen(allRides.some((ride) => ride.is_open));
 			});

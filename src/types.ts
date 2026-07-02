@@ -1,9 +1,3 @@
-export interface ParkGroup {
-	id: number;
-	name: string;
-	parks: Park[];
-}
-
 export interface Park {
 	id: number;
 	name: string;

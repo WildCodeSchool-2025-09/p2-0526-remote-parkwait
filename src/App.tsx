@@ -1,7 +1,7 @@
 // App.tsx
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./components/NavBar.tsx";
+import NavBar from "./components/NavBar.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { ParkCompany } from "./types";
@@ -28,9 +28,9 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<Navbar />
+			<NavBar />
 			<Routes>
-				<Route path="/" element={<Home park={companies} />} />
+				<Route path="/" element={<Home parkCompanies={companies} />} />
 				<Route path="/park" element={<Park />} />
 			</Routes>
 		</BrowserRouter>

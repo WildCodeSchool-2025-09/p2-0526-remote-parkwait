@@ -2,10 +2,10 @@ import "../css/ShowParksCard.css";
 import type { ParkCompany } from "../types";
 import ParkCard from "./ParkCard";
 
-function ShowParksCard({ park }: { park: ParkCompany[] }) {
+function ShowParksCard({ parkCompanies }: { parkCompanies: ParkCompany[] }) {
 	return (
 		<section className="ShowParksCardContainer">
-			{park.map((company) =>
+			{parkCompanies.map((company) =>
 				company.parks.map((parkItem) => (
 					<ParkCard key={parkItem.id} park={parkItem} />
 				)),
