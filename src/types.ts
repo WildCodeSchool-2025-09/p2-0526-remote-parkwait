@@ -39,3 +39,14 @@ export interface ParkGroup {
     rideName: string
     addedAt: string
   }
+
+export type AffluenceLevel = "Faible" | "Moderee" | "Elevee";
+
+export interface ParkSummary {
+	id: number;
+	name: string;
+	country: string;
+	isOpen: boolean;
+	closingTime: string;
+	affluence: AffluenceLevel;
+}
