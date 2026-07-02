@@ -1,10 +1,16 @@
+import { useParams } from "react-router-dom";
+import ParkHeader from "../components/ParkHeader";
+import { useParkSummary } from "../hooks/useParkSummary";
+
 function Park() {
-	return (
-		<>
-			<h1>Park</h1>
-			<h2>Park Details</h2>
-		</>
-	);
+	const { parkId } = useParams();
+	const summary = useParkSummary(parkId);
+
+	if (summary === null) {
+		return <p>Chargement...</p>;
+	}
+
+	return <ParkHeader summary={summary} />;
 }
 
 export default Park;
