@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { ParkSummary, Park as ParkType } from "../types";
+import type { ParkGroup, ParkSummary } from "../types";
 import { getParkSummary } from "../utils/parkSummary";
 
 export function useParkSummary(parkId: string | undefined) {
@@ -8,10 +8,8 @@ export function useParkSummary(parkId: string | undefined) {
 	useEffect(() => {
 		async function loadPark() {
 			const response = await fetch("/api/parks.json");
-			const groups = await response.json();
-			const allParks: ParkType[] = groups.flatMap(
-				(group: { parks: ParkType[] }) => group.parks,
-			);
+			const groups: ParkGroup[] = await response.json();
+			const allParks = groups.flatMap((group) => group.parks);
 
 			const foundPark = allParks.find((park) => park.id === Number(parkId));
 

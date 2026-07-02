@@ -31,9 +31,9 @@ function getAffluenceLevel(averageWait: number): AffluenceLevel {
 		return "Faible";
 	}
 	if (averageWait <= 40) {
-		return "Moderee";
+		return "Moderée";
 	}
-	return "Elevee";
+	return "Elevée";
 }
 
 export async function getParkSummary(park: Park): Promise<ParkSummary> {

@@ -40,7 +40,7 @@ export interface FavoriteEntry {
 	addedAt: string;
 }
 
-export type AffluenceLevel = "Faible" | "Moderee" | "Elevee";
+export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
 
 export interface ParkSummary {
 	id: number;

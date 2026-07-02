@@ -10,9 +10,17 @@ function ParkHeader({ summary }: ParkHeaderProps) {
 			<p className="label">Parc sélectionné</p>
 			<h1 className="title">{summary.name}</h1>
 			<div className="badges">
-				<span className="badge badge-open">
-					<img src="/icons/checkcircle.svg" alt="" width="16" />
-					{summary.isOpen ? "Ouvert" : "Fermé"} jusqu'à {summary.closingTime}
+				<span
+					className={`badge ${summary.isOpen ? "badge-open" : "badge-closed"}`}
+				>
+					<img
+						src={
+							summary.isOpen ? "/icons/checkcircle.svg" : "/icons/cancel.svg"
+						}
+						alt=""
+						width="16"
+					/>
+					{summary.isOpen ? `Ouvert jusqu'à ${summary.closingTime}` : "Fermé"}
 				</span>
 				<span className="badge">
 					<img src="/icons/graphbar.svg" alt="" width="16" />
