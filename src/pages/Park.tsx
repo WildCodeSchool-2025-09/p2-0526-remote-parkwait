@@ -1,9 +1,14 @@
+import { useParams } from "react-router-dom";
+import RideList from "../components/RideList";
+
 function Park() {
+	const { id } = useParams<{ id: string }>();
+	const parkId = Number(id);
+
 	return (
-		<>
-			<h1>Park</h1>
-			<h2>Park Details</h2>
-		</>
+		<div className="park-page">
+			{parkId ? <RideList parkId={parkId} /> : <p>Parc introuvable.</p>}
+		</div>
 	);
 }
 
