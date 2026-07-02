@@ -47,3 +47,7 @@ export interface ParkFilterProps {
 	selectedCountry: string;
 	onFilterChange: (country: string) => void;
 }
+
+export interface SearchBarProps {
+	onSearch: (value: string) => void;
+}

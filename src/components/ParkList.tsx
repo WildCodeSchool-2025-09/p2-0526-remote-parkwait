@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
-import type { ParkGroup, ParkListProps } from "../types.js";
+import type { ParkGroup, ParkListProps } from "../types";
 
 function ParkList({ searchTerm }: ParkListProps) {
 	const [allParksData, setAllParksData] = useState<ParkGroup[]>([]);
@@ -35,15 +35,6 @@ function ParkList({ searchTerm }: ParkListProps) {
 				selectedCountry={selectedCountry}
 				onFilterChange={setSelectedCountry}
 			/>
-
-			<div className="park-list-grid">
-				{filteredParks.map((park) => (
-					<div key={park.id} className="park-card">
-						<h3>{park.name}</h3>
-						<p>{park.country}</p>
-					</div>
-				))}
-			</div>
 		</div>
 	);
 }
