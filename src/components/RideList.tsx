@@ -11,12 +11,7 @@ function RideList({ parkId }: { parkId: number }) {
 	const closedRides = rides.filter((ride) => !ride.is_open);
 
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
-	if (error)
-		return (
-			<p className="error" role="alert">
-				{error}
-			</p>
-		);
+	if (error) return <div className="error">{error}</div>;
 
 	return (
 		<div className="ride-list-container" aria-live="polite">
