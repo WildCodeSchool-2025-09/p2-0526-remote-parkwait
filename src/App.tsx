@@ -31,8 +31,8 @@ function App() {
 			<BrowserRouter>
 				<NavBar />
 				<Routes>
-				<Route path="/" element={<Home parkCompanies={companies} />} />
-				<Route path="/park/:parkId" element={<Park />} />
+					<Route path="/" element={<Home parkCompanies={companies} />} />
+					<Route path="/park/:parkId" element={<Park />} />
 				</Routes>
 			</BrowserRouter>
 		</>
