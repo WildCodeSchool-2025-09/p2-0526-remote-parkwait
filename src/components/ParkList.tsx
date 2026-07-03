@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+import ParkFavoriteButton from "./ParkFavoriteButton";
 import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
-import type { ParkListProps, ParkGroup } from "../types.js";
+import type { ParkGroup, ParkListProps } from "../types.js";
 
-function ParkList({ searchTerm }: ParkListProps) {
+function ParkList({
+	searchTerm,
+	favoriteParks,
+	addFavoritePark,
+}: ParkListProps) {
 	const [allParksData, setAllParksData] = useState<ParkGroup[]>([]);
 	const [selectedCountry, setSelectedCountry] = useState("All");
 
@@ -41,6 +46,11 @@ function ParkList({ searchTerm }: ParkListProps) {
 					<div key={park.id} className="park-card">
 						<h3>{park.name}</h3>
 						<p>{park.country}</p>
+						<ParkFavoriteButton
+							park={park}
+							addFavoritePark={addFavoritePark}
+							favoriteParks={favoriteParks}
+						/>
 					</div>
 				))}
 			</div>

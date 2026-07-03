@@ -1,0 +1,42 @@
+import favIconEmpty from "/icons/favempty.svg";
+import favIconFilled from "/icons/favfull.svg";
+import type { Park } from "../types";
+
+function ParkFavoriteButton({
+	park,
+	addFavoritePark,
+	favoriteParks,
+}: {
+	park: Park;
+	addFavoritePark: (park: Park) => void;
+	favoriteParks: Park[];
+}) {
+	const isFavorite = favoriteParks.some((fav) => fav.id === park.id);
+
+	function handleClick() {
+		addFavoritePark(park);
+	}
+
+	return (
+		<button
+			type="button"
+			className={`icon-button favorite-button${isFavorite ? " is-active" : ""}`}
+			onClick={handleClick}
+			aria-label={
+				isFavorite
+					? `Retirer ${park.name} des favoris`
+					: `Ajouter ${park.name} aux favoris`
+			}
+			aria-pressed={isFavorite}
+			title="Favoris"
+		>
+			<img
+				src={isFavorite ? favIconFilled : favIconEmpty}
+				className="favIcon"
+				alt=""
+			/>
+		</button>
+	);
+}
+
+export default ParkFavoriteButton;
