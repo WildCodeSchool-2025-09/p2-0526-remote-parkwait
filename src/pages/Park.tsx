@@ -1,9 +1,26 @@
-function Park() {
+import { useParams } from "react-router-dom";
+import RideList from "../components/RideList";
+import type { Ride } from "../types";
+
+function Park({
+	addFavorite,
+	favoriteRides,
+}: { addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
+	const { id } = useParams<{ id: string }>();
+	const parkId = Number(id);
+
 	return (
-		<>
-			<h1>Park</h1>
-			<h2>Park Details</h2>
-		</>
+		<div className="park-page">
+			{parkId ? (
+				<RideList
+					parkId={parkId}
+					addFavorite={addFavorite}
+					favoriteRides={favoriteRides}
+				/>
+			) : (
+				<p>Parc introuvable.</p>
+			)}
+		</div>
 	);
 }
 

@@ -1,17 +1,37 @@
-import { NavLink } from "react-router-dom";
-import "../css/FavoriteButton.css";
+import favIconEmpty from "/icons/favempty.svg";
+import favIconFilled from "/icons/favfull.svg";
+import type { Ride } from "../types";
 
-function FavoriteButton() {
+function FavoriteButton({
+	ride,
+	addFavorite,
+	favoriteRides,
+}: { ride: Ride; addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
+	const isFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+
+	function handleClick() {
+		addFavorite(ride);
+	}
+
 	return (
-		<NavLink
-			to="/favorite"
-			className={({ isActive }) =>
-				`favorite-button${isActive ? " is-active" : ""}`
+		<button
+			type="button"
+			className={`icon-button favorite-button${isFavorite ? " is-active" : ""}`}
+			onClick={handleClick}
+			aria-label={
+				isFavorite
+					? `Retirer ${ride.name} des favoris`
+					: `Ajouter ${ride.name} aux favoris`
 			}
+			aria-pressed={isFavorite}
+			title="Favoris"
 		>
-			<img src="/icons/favempty.svg" alt="favoris" />
-			Favoris
-		</NavLink>
+			<img
+				src={isFavorite ? favIconFilled : favIconEmpty}
+				className="favIcon"
+				alt=""
+			/>
+		</button>
 	);
 }
 

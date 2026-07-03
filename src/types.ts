@@ -42,6 +42,7 @@ export interface FavoriteEntry {
 export interface ParkListProps {
 	searchTerm: string;
 }
+
 export interface ParkFilterProps {
 	countries: string[];
 	selectedCountry: string;
