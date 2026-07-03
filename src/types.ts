@@ -1,3 +1,9 @@
+export interface ParkGroup {
+	id: number;
+	name: string;
+	parks: Park[];
+}
+
 export interface Park {
 	id: number;
 	name: string;
@@ -38,4 +44,15 @@ export interface ParkCompany {
 	id: number;
 	name: string;
 	parks: Park[];
+}
+
+export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
+
+export interface ParkSummary {
+	id: number;
+	name: string;
+	country: string;
+	isOpen: boolean;
+	closingTime: string;
+	affluence: AffluenceLevel;
 }

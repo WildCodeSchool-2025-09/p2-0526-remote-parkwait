@@ -27,13 +27,15 @@ function App() {
 	}, []);
 
 	return (
-		<BrowserRouter>
-			<NavBar />
-			<Routes>
+		<>
+			<BrowserRouter>
+				<NavBar />
+				<Routes>
 				<Route path="/" element={<Home parkCompanies={companies} />} />
-				<Route path="/park" element={<Park />} />
-			</Routes>
-		</BrowserRouter>
+				<Route path="/park/:parkId" element={<Park />} />
+				</Routes>
+			</BrowserRouter>
+		</>
 	);
 }
 
