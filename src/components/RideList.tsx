@@ -1,6 +1,6 @@
 import { useParkRides } from "../hooks/useParkRides";
 import type { Ride } from "../types";
-import { getWaitTimeClass } from "../utils/RideUtils";
+import { getWaitTimeClass } from "../utils/rideUtils";
 import FavoriteButton from "./FavoriteButton";
 import HiddenButton from "./HiddenButton";
 import "../css/RideList.css";
@@ -16,8 +16,9 @@ function RideList({
 }) {
 	const { rides, isLoading, error } = useParkRides(parkId);
 
-	const openRides = rides.filter((ride) => ride.is_open);
-	const closedRides = rides.filter((ride) => !ride.is_open);
+	const openRides = rides
+		.filter((ride) => ride.is_open)
+		.sort((a, b) => a.wait_time - b.wait_time);	const closedRides = rides.filter((ride) => !ride.is_open);
 
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
 	if (error) return <div className="error">{error}</div>;
@@ -29,7 +30,7 @@ function RideList({
 				<h2>Attractions ouvertes : {openRides.length}</h2>
 			</div>
 
-			<ul className="ride-list">
+			<ul className="ride-list" aria-live="polite">
 				{openRides.map((ride, index) => (
 					<li key={ride.id} className="ride-item">
 						<div className="ride-info">

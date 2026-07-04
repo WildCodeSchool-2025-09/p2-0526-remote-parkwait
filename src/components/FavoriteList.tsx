@@ -3,8 +3,10 @@ import "../css/FavoriteList.css";
 import favIconFilled from "/icons/favfull.svg";
 
 function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
-	// on sépare les favoris ouverts et fermés, comme dans RideList
-	const openFavorites = favoriteRides.filter((ride) => ride.is_open);
+
+    const openFavorites = favoriteRides
+		.filter((ride) => ride.is_open)
+		.sort((a, b) => a.wait_time - b.wait_time);
 	const closedFavorites = favoriteRides.filter((ride) => !ride.is_open);
 
 	return (
@@ -13,7 +15,6 @@ function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
 				♡ FAVORIS ({favoriteRides.length})
 			</h1>
 
-			{/* Message si aucun favori du tout */}
 			{favoriteRides.length === 0 && (
 				<p className="favorites-empty">
 					Vous n'avez pas encore ajouté de favoris. Cliquez sur le cœur d'une
@@ -21,20 +22,17 @@ function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
 				</p>
 			)}
 
-			{/* Liste des favoris ouverts */}
 			{openFavorites.length > 0 && (
-				<ul className="favorites-list">
+				<ul className="favorites-list" aria-live="polite">
 					{openFavorites.map((ride, index) => (
 						<li key={ride.id} className="favorite-item">
 							<article className="favorite-content">
 								<span className="favorite-number" aria-hidden="true">
 									{index + 1}
 								</span>
-
 								<div className="favorite-text">
 									<h2>{ride.name}</h2>
 								</div>
-
 								<div className="favorite-actions">
 									<span className="favorite-wait">
 										{ride.wait_time} min d'attente
@@ -51,7 +49,6 @@ function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
 				</ul>
 			)}
 
-			{/* Section séparée pour les favoris fermés */}
 			{closedFavorites.length > 0 && (
 				<section
 					className="closed-favorites-section"
@@ -67,7 +64,6 @@ function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
 									<div className="favorite-text">
 										<h3>{ride.name}</h3>
 									</div>
-
 									<div className="favorite-actions">
 										<span className="favorite-status">Fermé</span>
 										<img

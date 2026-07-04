@@ -7,18 +7,28 @@ import FavoriteParkList from "./components/FavoriteParkList.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { Park as ParkType, Ride } from "./types.ts";
+import { useParkRides } from "./hooks/useParkRides.ts";
 
 function App() {
-	const [favoriteRides, setFavoriteRides] = useState<Ride[]>([]);
+	const [favoriteRideIds, setFavoriteRideIds] = useState<number[]>([]);
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
+	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
+
+	// on récupère les rides à jour du parc actuellement sélectionné
+	const { rides: freshRides } = useParkRides(currentParkId ?? 0);
+
+	// on reconstruit la liste des rides favorites à partir des ids + données fraîches
+	const favoriteRides: Ride[] = freshRides.filter((ride) =>
+		favoriteRideIds.includes(ride.id),
+	);
 
 	function addFavorite(ride: Ride) {
-		const alreadyFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+		const alreadyFavorite = favoriteRideIds.some((fav) => fav === ride.id);
 
 		if (alreadyFavorite) {
-			setFavoriteRides(favoriteRides.filter((fav) => fav.id !== ride.id));
+			setFavoriteRideIds(favoriteRideIds.filter((fav) => fav !== ride.id));
 		} else {
-			setFavoriteRides([...favoriteRides, ride]);
+			setFavoriteRideIds([...favoriteRideIds, ride.id]);
 		}
 	}
 
@@ -54,7 +64,11 @@ function App() {
 					<Route
 						path="/park/:id"
 						element={
-							<Park addFavorite={addFavorite} favoriteRides={favoriteRides} />
+							<Park
+								addFavorite={addFavorite}
+								favoriteRides={favoriteRides}
+								setCurrentParkId={setCurrentParkId}
+							/>
 						}
 					/>
 					<Route
