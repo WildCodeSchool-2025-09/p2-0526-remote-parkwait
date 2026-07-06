@@ -3,8 +3,7 @@ import "../css/FavoriteList.css";
 import favIconFilled from "/icons/favfull.svg";
 
 function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
-
-    const openFavorites = favoriteRides
+	const openFavorites = favoriteRides
 		.filter((ride) => ride.is_open)
 		.sort((a, b) => a.wait_time - b.wait_time);
 	const closedFavorites = favoriteRides.filter((ride) => !ride.is_open);
