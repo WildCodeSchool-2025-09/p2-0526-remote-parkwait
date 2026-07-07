@@ -39,6 +39,17 @@ export interface FavoriteEntry {
 	rideName: string;
 	addedAt: string;
 }
+export interface ParkListProps {
+	searchTerm: string;
+}
+export interface ParkFilterProps {
+	countries: string[];
+	selectedCountry: string;
+	onFilterChange: (country: string) => void;
+}
+
+export interface SearchBarProps {
+	onSearch: (value: string) => void;
 
 export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
 
