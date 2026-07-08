@@ -50,7 +50,7 @@ export interface ParkFilterProps {
 
 export interface SearchBarProps {
 	onSearch: (value: string) => void;
-
+}
 export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
 
 export interface ParkSummary {
