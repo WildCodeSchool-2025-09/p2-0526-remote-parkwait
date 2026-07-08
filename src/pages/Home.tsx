@@ -1,11 +1,14 @@
-import "../css/Home.css";
-import type { ParkCompany } from "../types";
-import ShowParks from "./ShowParks.tsx";
+import { useState } from "react";
+import ParkList from "../components/ParkList.tsx";
+import SearchBarPark from "../components/SearchBarPark";
 
-function Home({ parkCompanies }: { parkCompanies: ParkCompany[] }) {
+function Home() {
+	const [searchTerm, setSearchTerm] = useState("");
 	return (
 		<>
-			<ShowParks parkCompanies={parkCompanies} />
+			<h1>ParkWait</h1>
+			<SearchBarPark onSearch={setSearchTerm} />
+			<ParkList searchTerm={searchTerm} />
 		</>
 	);
 }

@@ -2,5 +2,7 @@
 @import "./Variables.css";
 @import "./NavBar.css";
 @import "./ShowParks.css";
+@import "./SearchBarPark.css";
+@import "./Parklist.css";
 @import "./App.css";
 @import "./Park.css";
