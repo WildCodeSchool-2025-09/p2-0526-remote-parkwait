@@ -1,10 +1,7 @@
 import { useState } from "react";
 import EyeIcon from "/icons/eye.svg";
 import EyeOffIcon from "/icons/eyeoff.svg";
-
-interface HiddenButtonProps {
-	rideName: string;
-}
+import type { HiddenButtonProps } from "../types";
 
 function HiddenButton({ rideName }: HiddenButtonProps) {
 	const [isHidden, setIsHidden] = useState(false);

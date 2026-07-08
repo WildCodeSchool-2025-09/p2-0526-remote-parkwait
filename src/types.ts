@@ -16,6 +16,14 @@ export interface Park {
 	timezone: string;
 }
 
+export interface Ride {
+	id: number;
+	name: string;
+	is_open: boolean;
+	wait_time: number;
+	last_updated: string;
+}
+
 export interface ParkQueueData {
 	lands: Land[];
 	rides: Ride[];
@@ -68,4 +76,34 @@ export interface RideItemProps {
 
 export interface LandSectionProps {
 	land: GroupedLand;
+}
+export interface ParkListProps {
+	searchTerm: string;
+}
+export interface ParkFilterProps {
+	countries: string[];
+	selectedCountry: string;
+	onFilterChange: (country: string) => void;
+}
+
+export interface SearchBarProps {
+	onSearch: (value: string) => void;
+}
+
+export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
+
+export interface ParkSummary {
+	id: number;
+	name: string;
+	country: string;
+	isOpen: boolean;
+	closingTime: string;
+	affluence: AffluenceLevel;
+}
+
+export interface FavoriteButtonProps {
+	rideName: string;
+}
+export interface HiddenButtonProps {
+	rideName: string;
 }

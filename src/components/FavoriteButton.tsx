@@ -1,10 +1,7 @@
 import { useState } from "react";
 import favIconEmpty from "/icons/favempty.svg";
 import favIconFilled from "/icons/favfull.svg";
-
-interface FavoriteButtonProps {
-	rideName: string;
-}
+import { FavoriteButtonProps } from "../types";
 
 function FavoriteButton({ rideName }: FavoriteButtonProps) {
 	const [isFavorite, setIsFavorite] = useState(false);
