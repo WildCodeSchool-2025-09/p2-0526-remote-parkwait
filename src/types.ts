@@ -39,32 +39,25 @@ export interface FavoriteEntry {
 	rideName: string;
 	addedAt: string;
 }
-
 export interface ParkListProps {
 	searchTerm: string;
 }
-
 export interface ParkFilterProps {
 	countries: string[];
 	selectedCountry: string;
 	onFilterChange: (country: string) => void;
 }
 
-export interface Ride {
+export interface SearchBarProps {
+	onSearch: (value: string) => void;
+}
+export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
+
+export interface ParkSummary {
 	id: number;
 	name: string;
-	is_open: boolean;
-	wait_time: number;
-	last_updated: string;
-}
-
-export interface Land {
-	id: number;
-	name: string;
-	rides: Ride[];
-}
-
-export interface ParkQueueData {
-	lands: Land[];
-	rides: Ride[];
+	country: string;
+	isOpen: boolean;
+	closingTime: string;
+	affluence: AffluenceLevel;
 }

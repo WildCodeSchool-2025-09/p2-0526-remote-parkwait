@@ -1,0 +1,26 @@
+.park-name {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+	margin-bottom: var(--space-2);
+}
+
+.loading-text {
+	text-align: center;
+	color: var(--color-text-secondary);
+	font-size: var(--font-size-md);
+	padding: var(--space-12);
+}
+
+@media (min-width: 768px) {
+	.park-list-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-6);
+	}
+}
+
+@media (min-width: 1024px) {
+	.park-list-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}

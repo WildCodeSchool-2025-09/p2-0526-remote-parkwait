@@ -1,0 +1,140 @@
+.filter-wrapper {
+	position: relative;
+	display: inline-block;
+	padding: var(--space-6);
+}
+
+.filter-trigger {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+	height: var(--button-height);
+	padding: 0 var(--space-5);
+	background-color: var(--color-primary-light);
+	/* background: linear-gradient(
+		180deg,
+		var(--color-primary-light),
+		var(--color-primary)
+	); */
+	color: var(--color-text-white);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	font-family: var(--font-family);
+	font-size: var(--font-size-md);
+	font-weight: var(--font-weight-semibold);
+	cursor: pointer;
+	box-shadow: var(--shadow-xs);
+	transition: background var(--transition), border-color var(--transition),
+		box-shadow var(--transition), transform var(--transition-fast);
+}
+
+.filter-trigger:hover {
+	background-color: var(--color-primary);
+	/* background: linear-gradient(
+		180deg,
+		var(--color-primary-light),
+		var(--color-primary)
+	); */
+	border-color: var(--color-border-hover);
+	box-shadow: var(--shadow-sm);
+}
+
+.filter-trigger:active {
+	transform: translateY(1px);
+}
+
+.filter-list {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	min-width: 150px;
+	max-height: 240px;
+	overflow-y: auto;
+	margin-left: var(--space-6);
+	padding: var(--space-2);
+	list-style: none;
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-md);
+	z-index: 1000;
+	animation: dropdownFade .2s ease;
+}
+
+.filter-list li + li {
+	margin-top: 4px;
+}
+
+.filter-list button {
+	width: 100%;
+	padding: 12px 16px;
+	border: none;
+	border-radius: var(--radius-sm);
+	background: transparent;
+	text-align: left;
+	font-family: var(--font-family);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text);
+	cursor: pointer;
+	transition: all var(--transition-fast);
+}
+
+.filter-list button:hover {
+	background: var(--color-primary-soft);
+	color: var(--color-primary);
+}
+
+.btn-icon {
+	max-height: 20px;
+}
+
+.filter-list button.active {
+	background-color: var(--color-primary-light);
+	/* background: linear-gradient(
+		180deg,
+		var(--color-primary-light),
+		var(--color-primary)
+	); */
+	color: var(--color-text-white);
+}
+
+.filter-list button.active:hover {
+	background-color: var(--color-primary);
+	/* background: linear-gradient(
+		180deg,
+		var(--color-primary),
+		var(--color-primary-dark)
+	); */
+}
+.filter-list::-webkit-scrollbar {
+	width: 6px;
+}
+
+.filter-list::-webkit-scrollbar-track {
+	background: transparent;
+	margin-top: var(--space-2);
+	margin-bottom: var(--space-2);
+}
+
+.filter-list::-webkit-scrollbar-thumb {
+	background-color: var(--color-border);
+	border-radius: var(--radius-md);
+}
+
+.filter-list::-webkit-scrollbar-thumb:hover {
+	background-color: var(--color-primary-soft);
+}
+
+@keyframes dropdownFade {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
