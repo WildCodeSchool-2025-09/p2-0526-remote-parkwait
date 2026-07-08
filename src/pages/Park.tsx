@@ -5,16 +5,17 @@ import { useParkSummary } from "../hooks/useParkSummary";
 
 function Park() {
 	const { id } = useParams<{ id: string }>();
-	const parkId = Number(id);
-	const summary = useParkSummary(parkId);
+	const summary = useParkSummary(id);
+
 	if (summary === null) {
 		return <p>Chargement...</p>;
 	}
+
 	return (
 		<>
 			<ParkHeader summary={summary} />
 			<div className="park-page">
-				{parkId ? <RideList parkId={parkId} /> : <p>Parc introuvable.</p>}
+				{id ? <RideList parkId={id} /> : <p>Parc introuvable.</p>}
 			</div>
 		</>
 	);

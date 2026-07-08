@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { ParkQueueData, Ride } from "../types.js";
+import type { ParkQueueData, Ride } from "../types";
 
 export interface RideWithCategory extends Ride {
 	category: string;
@@ -9,6 +9,7 @@ export const useParkRides = (parkId: number) => {
 	const [rides, setRides] = useState<RideWithCategory[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
+	const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
 	useEffect(() => {
 		const fetchParkData = async () => {
@@ -43,7 +44,7 @@ export const useParkRides = (parkId: number) => {
 			}
 		};
 		fetchParkData();
-		const intervalId = setInterval(fetchParkData, 300000);
+		const intervalId = setInterval(fetchParkData, REFRESH_INTERVAL_MS);
 
 		return () => clearInterval(intervalId);
 	}, [parkId]);

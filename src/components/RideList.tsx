@@ -1,5 +1,5 @@
 import { useParkRides } from "../hooks/useParkRides";
-import { getWaitTimeClass } from "../utils/rideUtils";
+import { getWaitTimeClass } from "../utils/RideUtils";
 import FavoriteButton from "./FavoriteButton";
 import HiddenButton from "./HiddenButton";
 import "../css/RideList.css";
@@ -16,8 +16,8 @@ function RideList({ parkId }: { parkId: number }) {
 	return (
 		<div className="ride-list-container" aria-live="polite">
 			<div className="ride-stats">
-				<h1>{rides.length} ATTRACTIONS</h1>
-				<h2>Attractions ouvertes : {openRides.length}</h2>
+				<h2>{rides.length} ATTRACTIONS</h2>
+				<h3>Attractions ouvertes : {openRides.length}</h3>
 			</div>
 
 			<ul className="ride-list">
