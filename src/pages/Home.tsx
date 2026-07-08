@@ -1,8 +1,11 @@
-function Home() {
+import "../css/Home.css";
+import type { ParkCompany } from "../types";
+import ShowParks from "./ShowParks.tsx";
+
+function Home({ parkCompanies }: { parkCompanies: ParkCompany[] }) {
 	return (
 		<>
-			<h1>ParkWait</h1>
-			<div>Hello world</div>
+			<ShowParks parkCompanies={parkCompanies} />
 		</>
 	);
 }
