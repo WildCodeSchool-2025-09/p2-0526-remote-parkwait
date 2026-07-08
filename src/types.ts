@@ -1,3 +1,9 @@
+export interface ParkGroup {
+	id: number;
+	name: string;
+	parks: Park[];
+}
+
 export interface Park {
 	id: number;
 	name: string;
@@ -33,9 +39,25 @@ export interface FavoriteEntry {
 	rideName: string;
 	addedAt: string;
 }
+export interface ParkListProps {
+	searchTerm: string;
+}
+export interface ParkFilterProps {
+	countries: string[];
+	selectedCountry: string;
+	onFilterChange: (country: string) => void;
+}
 
-export interface ParkCompany {
+export interface SearchBarProps {
+	onSearch: (value: string) => void;
+}
+export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
+
+export interface ParkSummary {
 	id: number;
 	name: string;
-	parks: Park[];
+	country: string;
+	isOpen: boolean;
+	closingTime: string;
+	affluence: AffluenceLevel;
 }

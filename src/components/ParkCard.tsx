@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Land, Park, ParkQueueData } from "../types";
 import { Link } from "react-router-dom";
+import type { Land, Park, ParkQueueData } from "../types";
 
 function ParkCard({ park }: { park: Park }) {
 	const [isOpen, setIsOpen] = useState<boolean | null>(null);
