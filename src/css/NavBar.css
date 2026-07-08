@@ -1,0 +1,60 @@
+.NavBar {
+	height: var(--header-height);
+	padding: 0 var(--space-8);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--color-surface);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.imgNavBar {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+.imgNavBar img {
+	border-radius: var(--radius-sm);
+}
+
+.NavBar-title {
+	font-family: var(--font-family);
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+}
+
+.LastUpdate_Refresh {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+.LastUpdate_Refresh p {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+
+.LastUpdate_Refresh button {
+	height: var(--button-height);
+	padding: 0 var(--space-5);
+	border: none;
+	border-radius: var(--radius-pill);
+	background-color: var(--color-primary);
+	color: var(--color-text-white);
+	font-family: var(--font-family);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-semibold);
+	cursor: pointer;
+	transition: background-color var(--transition-fast);
+}
+
+.LastUpdate_Refresh button:hover {
+	background-color: var(--color-primary-dark);
+}
+
+.LastUpdate_Refresh button:focus-visible {
+	outline: 2px solid var(--color-primary-light);
+	outline-offset: 2px;
+}
