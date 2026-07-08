@@ -1,0 +1,214 @@
+* {
+	box-sizing: border-box;
+}
+
+.ride-list-container {
+	font-family: var(--font-family);
+	background: var(--color-surface);
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: var(--space-6) var(--card-padding) var(--space-6);
+	border-radius: var(--radius-lg);
+}
+
+.ride-stats {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding-bottom: var(--space-4);
+	margin-bottom: var(--space-2);
+	border-bottom: 1px solid var(--color-border);
+	flex-direction: column;
+	align-content: flex-start;
+}
+
+.ride-stats h1 {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	letter-spacing: 0.3px;
+	color: var(--color-text);
+	margin: 0;
+	text-transform: uppercase;
+	padding-top: var(--space-4);
+}
+
+.ride-stats h2 {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+.ride-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ride-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--space-5) 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.ride-list .ride-item:last-child {
+	border-bottom: none;
+}
+
+.ride-info {
+	display: flex;
+	align-items: center;
+	gap: var(--space-4);
+	min-width: 0;
+	flex: 1;
+}
+
+.ride-number {
+	flex: 0 0 36px;
+	width: 36px;
+	height: 36px;
+	border-radius: var(--radius-sm);
+	background: var(--color-primary-soft);
+	color: var(--color-primary-dark);
+	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-sm);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ride-text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ride-info h3 {
+	margin: 0;
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ride-category {
+	font-size: var(--font-size-xs);
+	color: var(--color-text-secondary);
+	font-weight: var(--font-weight-medium);
+	white-space: nowrap;
+}
+
+.ride-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	flex: 0 0 auto;
+}
+
+.ride-wait-time {
+	min-width: 64px;
+	text-align: center;
+	padding: var(--space-2) var(--space-4);
+	border-radius: var(--radius-pill);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+}
+
+.ride-wait-time.wait-short {
+	background: var(--color-success-bg);
+	color: var(--color-success-text);
+}
+
+.ride-wait-time.wait-medium {
+	background: var(--color-warning-bg);
+	color: var(--color-warning-text);
+}
+
+.ride-wait-time.wait-long {
+	background: var(--color-danger-bg);
+	color: var(--color-danger-text);
+}
+
+.icon-button {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border: 1.5px solid var(--color-border);
+	background: var(--color-surface);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	padding: 0;
+	flex: 0 0 auto;
+	transition: background var(--transition-fast), border-color
+		var(--transition-fast);
+}
+
+.icon-button:hover {
+	background: var(--color-surface-hover);
+	border-color: var(--color-border-hover);
+}
+
+.icon-button:focus-visible {
+	outline: 2px solid var(--color-primary-light);
+	outline-offset: 2px;
+}
+
+.favIcon,
+.hideIcon {
+	width: 17px;
+	height: 17px;
+	object-fit: contain;
+	pointer-events: none;
+}
+
+.favorite-button:not(.is-active) {
+	border-color: var(--color-danger-bg);
+	background: var(--color-danger-bg);
+}
+
+.hidden-button:not(.is-active) {
+	border-color: var(--color-primary-soft);
+	background: var(--color-primary-soft);
+}
+
+.closed-rides-section {
+	margin-top: var(--space-2);
+	padding-top: var(--space-2);
+}
+
+.closed-rides-section h2 {
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+	letter-spacing: 0.3px;
+	margin: 0 0 var(--space-1);
+	text-transform: uppercase;
+}
+
+.closed-list .ride-item.closed {
+	opacity: 0.55;
+}
+
+.ride-status {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text-secondary);
+}
+
+.error {
+	color: var(--color-danger-text);
+	background: var(--color-danger-bg);
+	padding: var(--space-4);
+	border-radius: var(--radius-md);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+}
