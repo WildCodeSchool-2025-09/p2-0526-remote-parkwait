@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
+import ParkHeader from "../components/ParkHeader";
 import RideList from "../components/RideList";
+import { useParkSummary } from "../hooks/useParkSummary";
 import type { Ride } from "../types";
 
 function Park({
@@ -8,9 +10,15 @@ function Park({
 }: { addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
 	const { id } = useParams<{ id: string }>();
 	const parkId = Number(id);
+	const summary = useParkSummary(id);
+
+	if (summary === null) {
+		return <p>Chargement...</p>;
+	}
 
 	return (
 		<div className="park-page">
+			<ParkHeader summary={summary} />
 			{parkId ? (
 				<RideList
 					parkId={parkId}

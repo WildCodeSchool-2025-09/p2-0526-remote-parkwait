@@ -1,6 +1,6 @@
 import { useParkRides } from "../hooks/useParkRides";
 import type { Ride } from "../types";
-import { getWaitTimeClass } from "../utils/RideUtils";
+import { getWaitTimeClass } from "../utils/rideUtils";
 import FavoriteButton from "./FavoriteButton";
 import HiddenButton from "./HiddenButton";
 import "../css/RideList.css";

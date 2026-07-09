@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ParkFavoriteButton from "./ParkFavoriteButton";
 import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
-import type { ParkGroup, ParkListProps } from "../types.js";
+import type { ParkGroup, ParkListProps } from "../types";
 
 function ParkList({
 	searchTerm,
