@@ -33,10 +33,10 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/park/:parkId" element={<Park />} />
+					<Route path="*" element={<p>Page introuvable</p>} />
 				</Routes>
 			</BrowserRouter>
 		</>
 	);
 }
-
 export default App;
