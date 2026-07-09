@@ -1,0 +1,33 @@
+.favorite-button {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+
+	background: var(--color-surface);
+	border: none;
+	border-radius: var(--radius-pill);
+	padding: var(--space-2) var(--space-4);
+	box-shadow: var(--shadow-xs);
+
+	color: var(--color-primary);
+	font-family: var(--font-family);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	text-decoration: none;
+
+	cursor: pointer;
+}
+
+.favorite-button.is-active {
+	background: var(--color-primary);
+	color: var(--color-text-white);
+}
+
+.favorite-button.is-active img {
+	filter: brightness(0) invert(1);
+}
+
+.favorite-button img {
+	width: 18px;
+	height: 18px;
+}

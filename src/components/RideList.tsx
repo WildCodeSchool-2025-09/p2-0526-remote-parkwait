@@ -1,10 +1,19 @@
 import { useParkRides } from "../hooks/useParkRides";
-import { getWaitTimeClass } from "../utils/RideUtils";
+import type { Ride } from "../types";
+import { getWaitTimeClass } from "../utils/rideUtils";
 import FavoriteButton from "./FavoriteButton";
 import HiddenButton from "./HiddenButton";
 import "../css/RideList.css";
 
-function RideList({ parkId }: { parkId: number }) {
+function RideList({
+	parkId,
+	addFavorite,
+	favoriteRides,
+}: {
+	parkId: number;
+	addFavorite: (ride: Ride) => void;
+	favoriteRides: Ride[];
+}) {
 	const { rides, isLoading, error } = useParkRides(parkId);
 
 	const openRides = rides.filter((ride) => ride.is_open);
@@ -38,7 +47,11 @@ function RideList({ parkId }: { parkId: number }) {
 								{ride.wait_time} min
 							</div>
 
-							<FavoriteButton rideName={ride.name} />
+							<FavoriteButton
+								item={ride}
+								favorites={favoriteRides}
+								onToggle={addFavorite}
+							/>
 							<HiddenButton rideName={ride.name} />
 						</div>
 					</li>
@@ -57,7 +70,6 @@ function RideList({ parkId }: { parkId: number }) {
 										<span className="ride-category">{ride.category}</span>
 									</div>
 								</div>
-
 								<div className="ride-actions">
 									<div className="ride-status">Fermé</div>
 								</div>

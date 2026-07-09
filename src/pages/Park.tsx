@@ -2,9 +2,14 @@ import { useParams } from "react-router-dom";
 import ParkHeader from "../components/ParkHeader";
 import RideList from "../components/RideList";
 import { useParkSummary } from "../hooks/useParkSummary";
+import type { Ride } from "../types";
 
-function Park() {
+function Park({
+	addFavorite,
+	favoriteRides,
+}: { addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
 	const { id } = useParams<{ id: string }>();
+	const parkId = Number(id);
 	const summary = useParkSummary(id);
 
 	if (summary === null) {
@@ -12,12 +17,18 @@ function Park() {
 	}
 
 	return (
-		<>
+		<div className="park-page">
 			<ParkHeader summary={summary} />
-			<div className="park-page">
-				{id ? <RideList parkId={id} /> : <p>Parc introuvable.</p>}
-			</div>
-		</>
+			{parkId ? (
+				<RideList
+					parkId={parkId}
+					addFavorite={addFavorite}
+					favoriteRides={favoriteRides}
+				/>
+			) : (
+				<p>Parc introuvable.</p>
+			)}
+		</div>
 	);
 }
 
