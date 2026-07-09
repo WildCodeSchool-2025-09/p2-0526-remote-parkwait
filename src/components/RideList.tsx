@@ -1,14 +1,25 @@
+import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
-import { getWaitTimeClass } from "../utils/RideUtils";
-import FavoriteButton from "./FavoriteButton";
-import HiddenButton from "./HiddenButton";
+import type { FilterType } from "../types";
+import { groupRidesByLand } from "../utils/rideUtils";
+import LandSection from "./LandSection";
+import RideItem from "./RideItem";
+import SearchBarRide from "./SearchBarRide";
 import "../css/RideList.css";
 
 function RideList({ parkId }: { parkId: number }) {
 	const { rides, isLoading, error } = useParkRides(parkId);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [activeFilter, setActiveFilter] = useState<FilterType>("Toutes");
 
 	const openRides = rides.filter((ride) => ride.is_open);
 	const closedRides = rides.filter((ride) => !ride.is_open);
+
+	const filteredOpenRides = openRides.filter((ride) =>
+		ride.name.toLowerCase().includes(searchTerm.toLowerCase()),
+	);
+
+	const groupedLands = groupRidesByLand(filteredOpenRides);
 
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
 	if (error) return <div className="error">{error}</div>;
@@ -16,52 +27,30 @@ function RideList({ parkId }: { parkId: number }) {
 	return (
 		<div className="ride-list-container" aria-live="polite">
 			<div className="ride-stats">
-				<h2>{rides.length} ATTRACTIONS</h2>
-				<h3>Attractions ouvertes : {openRides.length}</h3>
+				<SearchBarRide
+					onSearchChange={setSearchTerm}
+					onFilterChange={setActiveFilter}
+				/>
+				<h1>{rides.length} ATTRACTIONS</h1>
+				<h2>Attractions ouvertes : {openRides.length}</h2>
 			</div>
 
-			<ul className="ride-list">
-				{openRides.map((ride, index) => (
-					<li key={ride.id} className="ride-item">
-						<div className="ride-info">
-							<span className="ride-number">{index + 1}</span>
-							<div className="ride-text">
-								<h3>{ride.name}</h3>
-								<span className="ride-category">{ride.category}</span>
-							</div>
-						</div>
-
-						<div className="ride-actions">
-							<div
-								className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}
-							>
-								{ride.wait_time} min
-							</div>
-
-							<FavoriteButton rideName={ride.name} />
-							<HiddenButton rideName={ride.name} />
-						</div>
-					</li>
-				))}
-			</ul>
+			{activeFilter === "Thème" ? (
+				groupedLands.map((land) => <LandSection key={land.name} land={land} />)
+			) : (
+				<ul className="ride-list">
+					{filteredOpenRides.map((ride, index) => (
+						<RideItem key={ride.id} ride={ride} index={index + 1} />
+					))}
+				</ul>
+			)}
 
 			{closedRides.length > 0 && (
 				<section className="closed-rides-section">
 					<h2>FERMÉES ({closedRides.length})</h2>
 					<ul className="ride-list closed-list">
 						{closedRides.map((ride) => (
-							<li key={ride.id} className="ride-item closed">
-								<div className="ride-info">
-									<div className="ride-text">
-										<h3>{ride.name}</h3>
-										<span className="ride-category">{ride.category}</span>
-									</div>
-								</div>
-
-								<div className="ride-actions">
-									<div className="ride-status">Fermé</div>
-								</div>
-							</li>
+							<RideItem key={ride.id} ride={ride} variant="closed" />
 						))}
 					</ul>
 				</section>

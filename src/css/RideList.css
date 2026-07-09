@@ -13,11 +13,13 @@
 
 .ride-stats {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
 	padding-bottom: var(--space-4);
 	margin-bottom: var(--space-2);
 	border-bottom: 1px solid var(--color-border);
+	flex-direction: column;
+	align-content: flex-start;
 }
 
 .ride-stats h1 {
@@ -27,6 +29,7 @@
 	color: var(--color-text);
 	margin: 0;
 	text-transform: uppercase;
+	padding-top: var(--space-4);
 }
 
 .ride-stats h2 {

@@ -1,3 +1,5 @@
+import type { RideWithCategory } from "./hooks/useParkRides";
+
 export interface ParkGroup {
 	id: number;
 	name: string;
@@ -39,6 +41,34 @@ export interface FavoriteEntry {
 	rideName: string;
 	addedAt: string;
 }
+
+export type FilterType = "Toutes" | "Thème";
+
+export interface SearchBarRideProps {
+	onSearchChange: (term: string) => void;
+	onFilterChange: (filter: FilterType) => void;
+}
+export interface FilterButtonProps {
+	label: string;
+	isActive: boolean;
+	onClick: () => void;
+}
+
+export interface GroupedLand {
+	name: string;
+	rides: RideWithCategory[];
+}
+
+export interface RideItemProps {
+	ride: RideWithCategory;
+	index?: number;
+	variant?: "open" | "closed";
+	hideCategory?: boolean;
+}
+
+export interface LandSectionProps {
+	land: GroupedLand;
+}
 export interface ParkListProps {
 	searchTerm: string;
 }
@@ -62,4 +92,11 @@ export interface ParkSummary {
 	affluence: AffluenceLevel;
 	openRidesCount: number;
 	// total aussi ?
+}
+
+export interface FavoriteButtonProps {
+	rideName: string;
+}
+export interface HiddenButtonProps {
+	rideName: string;
 }
