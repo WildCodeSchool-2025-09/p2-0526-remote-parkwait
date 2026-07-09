@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Land, Park, ParkQueueData } from "../types";
 
 function ParkCard({ park }: { park: Park }) {
@@ -18,11 +19,13 @@ function ParkCard({ park }: { park: Park }) {
 
 	return (
 		<article className="ParkCard">
-			<p className="ParkCard-name">{park.name}</p>
-			<p className="ParkCard-status">
-				{isOpen === null ? "..." : isOpen ? "Ouvert" : "Fermé"}
-			</p>
-			<p className="ParkCard-country">{park.country}</p>
+			<Link to={`/park/${park.id}`} className="ParkCard">
+				<p className="ParkCard-name">{park.name}</p>
+				<p className="ParkCard-status">
+					{isOpen === null ? "..." : isOpen ? "Ouvert" : "Fermé"}
+				</p>
+				<p className="ParkCard-country">{park.country}</p>
+			</Link>
 		</article>
 	);
 }
