@@ -1,16 +1,26 @@
 import favIconEmpty from "../asset/img/icons/favempty.svg";
 import favIconFilled from "../asset/img/icons/favfull.svg";
-import type { Ride } from "../types";
 
-function FavoriteButton({
-	ride,
-	addFavorite,
-	favoriteRides,
-}: { ride: Ride; addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
-	const isFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+interface FavoriteItem {
+	id: number;
+	name: string;
+}
+
+interface FavoriteButtonProps<T extends FavoriteItem> {
+	item: T;
+	favorites: T[];
+	onToggle: (item: T) => void;
+}
+
+function FavoriteButton<T extends FavoriteItem>({
+	item,
+	favorites,
+	onToggle,
+}: FavoriteButtonProps<T>) {
+	const isFavorite = favorites.some((fav) => fav.id === item.id);
 
 	function handleClick() {
-		addFavorite(ride);
+		onToggle(item);
 	}
 
 	return (
@@ -20,8 +30,8 @@ function FavoriteButton({
 			onClick={handleClick}
 			aria-label={
 				isFavorite
-					? `Retirer ${ride.name} des favoris`
-					: `Ajouter ${ride.name} aux favoris`
+					? `Retirer ${item.name} des favoris`
+					: `Ajouter ${item.name} aux favoris`
 			}
 			aria-pressed={isFavorite}
 			title="Favoris"

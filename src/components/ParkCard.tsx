@@ -1,34 +1,43 @@
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import cancelIcon from "../asset/img/icons/cancel.svg";
+import checkCircleIcon from "../asset/img/icons/checkcircle.svg";
 import "../css/ShowParksCard.css";
-import type { Land, Park, ParkQueueData } from "../types";
+import type { Park, ParkSummary } from "../types";
+import { getParkSummary } from "../utils/parkSummary";
 
-function ParkCard({ park }: { park: Park }) {
-	const [isOpen, setIsOpen] = useState<boolean | null>(null);
+interface ParkCardProps {
+	park: Park;
+	children?: ReactNode;
+}
+
+function ParkCard({ park, children }: ParkCardProps) {
+	const [summary, setSummary] = useState<ParkSummary | null>(null);
 
 	useEffect(() => {
-		fetch(`/api/parks/${park.id}/queue_times.json`)
-			.then((response) => response.json())
-			.then((data: ParkQueueData) => {
-				const allRides = [
-					...data.rides,
-					...data.lands.flatMap((land: Land) => land.rides),
-				];
-				setIsOpen(allRides.some((ride) => ride.is_open));
-			});
-	}, [park.id]);
+		getParkSummary(park).then(setSummary);
+	}, [park]);
 
 	const status =
-		isOpen === null
-			? { text: "...", className: "" }
-			: isOpen
-				? { text: "Ouvert", className: "is-open" }
-				: { text: "Fermé", className: "is-closed" };
+		summary === null
+			? { text: "...", icon: null, className: "" }
+			: summary.isOpen
+				? {
+						text: `Ouvert jusqu'à ${summary.closingTime}`,
+						icon: checkCircleIcon,
+						className: "is-open",
+					}
+				: { text: "Fermé", icon: cancelIcon, className: "is-closed" };
 
 	return (
 		<article className="ParkCard">
 			<p className="ParkCard-name">{park.name}</p>
-			<p className={`ParkCard-status ${status.className}`}>{status.text}</p>
+			<p className={`ParkCard-status ${status.className}`}>
+				{status.icon && <img src={status.icon} alt="" width="16" />}
+				{status.text}
+			</p>
 			<p className="ParkCard-country">{park.country}</p>
+			{children}
 		</article>
 	);
 }

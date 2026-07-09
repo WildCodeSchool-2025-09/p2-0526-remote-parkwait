@@ -48,9 +48,9 @@ function RideList({
 							</div>
 
 							<FavoriteButton
-								ride={ride}
-								addFavorite={addFavorite}
-								favoriteRides={favoriteRides}
+								item={ride}
+								favorites={favoriteRides}
+								onToggle={addFavorite}
 							/>
 							<HiddenButton rideName={ride.name} />
 						</div>

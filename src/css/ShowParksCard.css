@@ -28,6 +28,9 @@
 }
 
 .ParkCard-status {
+	display: flex;
+	align-items: center;
+	gap: var(--space-1);
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-semibold);
 	color: var(--color-text-secondary);
@@ -46,4 +49,8 @@
 	font-size: var(--font-size-sm);
 	color: var(--color-text-secondary);
 	margin: 0;
+}
+
+.ParkCard > .favorite-button {
+	margin-top: var(--space-3);
 }
