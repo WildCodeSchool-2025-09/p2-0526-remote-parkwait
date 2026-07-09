@@ -1,5 +1,6 @@
 import type { RideItemProps } from "../types";
 import { getWaitTimeClass } from "../utils/rideUtils";
+import Done from "./Done";
 import FavoriteButton from "./FavoriteButton";
 import HiddenButton from "./HiddenButton";
 import "../css/RideItem.css";
@@ -11,6 +12,8 @@ function RideItem({
 	hideCategory = false,
 	addFavorite,
 	favoriteRides,
+	doneRideIds,
+	toggleDone,
 }: RideItemProps) {
 	return (
 		<li className={`ride-item ${variant === "closed" ? "closed" : ""}`}>
@@ -32,6 +35,7 @@ function RideItem({
 						{ride.wait_time} min
 					</div>
 				)}
+				<Done ride={ride} doneRideIds={doneRideIds} toggleDone={toggleDone} />
 				<FavoriteButton
 					ride={ride}
 					addFavorite={addFavorite}

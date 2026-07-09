@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ParkHeader from "../components/ParkHeader";
 import ParkKPIs from "../components/ParkKPIs";
@@ -8,10 +9,25 @@ import type { Ride } from "../types";
 function Park({
 	addFavorite,
 	favoriteRides,
-}: { addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
+	setCurrentParkId,
+	doneRideIds,
+	toggleDone,
+}: {
+	addFavorite: (ride: Ride) => void;
+	favoriteRides: Ride[];
+	setCurrentParkId: (id: number | null) => void;
+	doneRideIds: number[];
+	toggleDone: (id: number) => void;
+}) {
 	const { parkId: id } = useParams<{ parkId: string }>();
 	const summary = useParkSummary(id);
 	const parkId = Number(id);
+
+	useEffect(() => {
+		if (parkId) {
+			setCurrentParkId(parkId);
+		}
+	}, [parkId, setCurrentParkId]);
 
 	if (summary === null) {
 		return <p>Chargement...</p>;
@@ -27,6 +43,8 @@ function Park({
 						parkId={parkId}
 						addFavorite={addFavorite}
 						favoriteRides={favoriteRides}
+						doneRideIds={doneRideIds}
+						toggleDone={toggleDone}
 					/>
 				) : (
 					<p>Parc introuvable.</p>

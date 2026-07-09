@@ -4,7 +4,13 @@ import { getLandIcon } from "../utils/rideUtils";
 import RideItem from "./RideItem";
 import "../css/LandSection.css";
 
-function LandSection({ land, addFavorite, favoriteRides }: LandSectionProps) {
+function LandSection({
+	land,
+	addFavorite,
+	favoriteRides,
+	doneRideIds,
+	toggleDone,
+}: LandSectionProps) {
 	const { isOpen, toggle } = useLandSection();
 
 	return (
@@ -33,6 +39,8 @@ function LandSection({ land, addFavorite, favoriteRides }: LandSectionProps) {
 							hideCategory
 							addFavorite={addFavorite}
 							favoriteRides={favoriteRides}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
 						/>
 					))}
 				</ul>

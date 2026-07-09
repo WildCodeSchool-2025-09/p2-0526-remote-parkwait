@@ -66,12 +66,16 @@ export interface RideItemProps {
 	hideCategory?: boolean;
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
+	doneRideIds: number[];
+	toggleDone: (id: number) => void;
 }
 
 export interface LandSectionProps {
 	land: GroupedLand;
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
+	doneRideIds: number[];
+	toggleDone: (id: number) => void;
 }
 export interface ParkListProps {
 	searchTerm: string;

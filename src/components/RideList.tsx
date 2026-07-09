@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
 import type { FilterType, Ride } from "../types";
 import { groupRidesByLand } from "../utils/rideUtils";
+import Done from "./Done";
 import LandSection from "./LandSection";
 import RideItem from "./RideItem";
 import SearchBarRide from "./SearchBarRide";
@@ -11,17 +12,34 @@ function RideList({
 	parkId,
 	addFavorite,
 	favoriteRides,
+	doneRideIds,
+	toggleDone,
 }: {
 	parkId: number;
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
+	doneRideIds: number[];
+	toggleDone: (id: number) => void;
 }) {
 	const { rides, isLoading, error } = useParkRides(parkId);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [activeFilter, setActiveFilter] = useState<FilterType>("Toutes");
 
-	const openRides = rides.filter((ride) => ride.is_open);
-	const closedRides = rides.filter((ride) => !ride.is_open);
+	const openRides = rides
+		.filter(
+			(ride) =>
+				ride.is_open && !doneRideIds.some((rideId) => rideId === ride.id),
+		)
+		.sort((a, b) => a.wait_time - b.wait_time);
+
+	const closedRides = rides.filter(
+		(ride) =>
+			!ride.is_open && !doneRideIds.some((rideId) => rideId === ride.id),
+	);
+
+	const doneRides = rides.filter((ride) =>
+		doneRideIds.some((rideId) => rideId === ride.id),
+	);
 
 	const filteredOpenRides = openRides.filter((ride) =>
 		ride.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -50,6 +68,8 @@ function RideList({
 						land={land}
 						addFavorite={addFavorite}
 						favoriteRides={favoriteRides}
+						doneRideIds={doneRideIds}
+						toggleDone={toggleDone}
 					/>
 				))
 			) : (
@@ -61,6 +81,8 @@ function RideList({
 							index={index + 1}
 							addFavorite={addFavorite}
 							favoriteRides={favoriteRides}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
 						/>
 					))}
 				</ul>
@@ -77,7 +99,34 @@ function RideList({
 								variant="closed"
 								addFavorite={addFavorite}
 								favoriteRides={favoriteRides}
+								doneRideIds={doneRideIds}
+								toggleDone={toggleDone}
 							/>
+						))}
+					</ul>
+				</section>
+			)}
+
+			{doneRides.length > 0 && (
+				<section className="done-rides-section">
+					<h2>TERMINÉES ({doneRides.length})</h2>
+					<ul className="ride-list done-list">
+						{doneRides.map((ride) => (
+							<li key={ride.id} className="ride-item done">
+								<div className="ride-info">
+									<div className="ride-text">
+										<h3>{ride.name}</h3>
+										<span className="ride-category">{ride.category}</span>
+									</div>
+								</div>
+								<div className="ride-actions">
+									<Done
+										ride={ride}
+										doneRideIds={doneRideIds}
+										toggleDone={toggleDone}
+									/>
+								</div>
+							</li>
 						))}
 					</ul>
 				</section>

@@ -5,21 +5,32 @@ import "./css/Reset.css";
 import FavoriteList from "./components/FavoriteList.tsx";
 import FavoriteParkList from "./components/FavoriteParkList.tsx";
 import NavBar from "./components/NavBar.tsx";
+import { useParkRides } from "./hooks/useParkRides.ts";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { Park as ParkType, Ride } from "./types.ts";
 
 function App() {
-	const [favoriteRides, setFavoriteRides] = useState<Ride[]>([]);
+	const [favoriteRideIds, setFavoriteRideIds] = useState<number[]>([]);
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
+	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
+	const [doneRideIds, setDoneRideIds] = useState<number[]>([]);
+
+	// on récupère les rides à jour du parc actuellement sélectionné
+	const { rides: freshRides } = useParkRides(currentParkId ?? 0);
+
+	// on reconstruit la liste des rides favorites à partir des ids + données fraîches
+	const favoriteRides: Ride[] = freshRides.filter((ride) =>
+		favoriteRideIds.includes(ride.id),
+	);
 
 	function addFavorite(ride: Ride) {
-		const alreadyFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+		const alreadyFavorite = favoriteRideIds.some((fav) => fav === ride.id);
 
 		if (alreadyFavorite) {
-			setFavoriteRides(favoriteRides.filter((fav) => fav.id !== ride.id));
+			setFavoriteRideIds(favoriteRideIds.filter((fav) => fav !== ride.id));
 		} else {
-			setFavoriteRides([...favoriteRides, ride]);
+			setFavoriteRideIds([...favoriteRideIds, ride.id]);
 		}
 	}
 
@@ -30,6 +41,14 @@ function App() {
 			setFavoriteParks(favoriteParks.filter((fav) => fav.id !== park.id));
 		} else {
 			setFavoriteParks([...favoriteParks, park]);
+		}
+	}
+
+	function toggleDone(id: number) {
+		if (doneRideIds.some((rideId) => rideId === id)) {
+			setDoneRideIds(doneRideIds.filter((rideId) => rideId !== id));
+		} else {
+			setDoneRideIds([...doneRideIds, id]);
 		}
 	}
 
@@ -56,7 +75,13 @@ function App() {
 					<Route
 						path="/park/:parkId"
 						element={
-							<Park addFavorite={addFavorite} favoriteRides={favoriteRides} />
+							<Park
+								addFavorite={addFavorite}
+								favoriteRides={favoriteRides}
+								setCurrentParkId={setCurrentParkId}
+								doneRideIds={doneRideIds}
+								toggleDone={toggleDone}
+							/>
 						}
 					/>
 					<Route
