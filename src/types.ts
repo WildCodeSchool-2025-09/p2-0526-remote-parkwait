@@ -44,7 +44,6 @@ export interface ParkListProps {
 	favoriteParks: Park[];
 	addFavoritePark: (park: Park) => void;
 }
-
 export interface ParkFilterProps {
 	countries: string[];
 	selectedCountry: string;
@@ -54,7 +53,6 @@ export interface ParkFilterProps {
 export interface SearchBarProps {
 	onSearch: (value: string) => void;
 }
-
 export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
 
 export interface ParkSummary {

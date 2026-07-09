@@ -13,7 +13,7 @@ function ParkList({
 	const [selectedCountry, setSelectedCountry] = useState("All");
 
 	useEffect(() => {
-		fetch("https://queue-times.com/parks.json")
+		fetch("/api/parks.json")
 			.then((res) => res.json())
 			.then((data) => {
 				setAllParksData(data);
@@ -44,8 +44,8 @@ function ParkList({
 			<div className="park-list-grid">
 				{filteredParks.map((park) => (
 					<div key={park.id} className="park-card">
-						<h3>{park.name}</h3>
-						<p>{park.country}</p>
+						<h3 className="park-name">{park.name}</h3>
+						<p className="park-country">{park.country}</p>
 						<ParkFavoriteButton
 							park={park}
 							addFavoritePark={addFavoritePark}

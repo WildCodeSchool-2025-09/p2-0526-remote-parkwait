@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "./css/App.css";
 import "./css/Reset.css";
-import { useState } from "react";
 import FavoriteList from "./components/FavoriteList.tsx";
 import FavoriteParkList from "./components/FavoriteParkList.tsx";
+import NavBar from "./components/NavBar.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { Park as ParkType, Ride } from "./types.ts";
@@ -35,6 +36,7 @@ function App() {
 	return (
 		<>
 			<BrowserRouter>
+				<NavBar />
 				<Link to="/favorites" className="favorites-link">
 					Mes favoris
 				</Link>

@@ -13,7 +13,6 @@ function Home({
 	const [searchTerm, setSearchTerm] = useState("");
 	return (
 		<>
-			<h1>ParkWait</h1>
 			<SearchBarPark onSearch={setSearchTerm} />
 			<ParkList
 				searchTerm={searchTerm}

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import EyeIcon from "/icons/eye.svg";
-import EyeOffIcon from "/icons/eyeoff.svg";
+import EyeIcon from "../asset/img/icons/eye.svg";
+import EyeOffIcon from "../asset/img/icons/eyeoff.svg";
 
 interface HiddenButtonProps {
 	rideName: string;

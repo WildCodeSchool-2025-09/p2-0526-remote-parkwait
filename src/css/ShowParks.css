@@ -1,0 +1,51 @@
+.ShowParks {
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: var(--space-8);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+.ShowParks-searchBar {
+	height: var(--search-height);
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+	padding: 0 var(--space-5);
+	background-color: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+}
+
+.ShowParks-searchIcon {
+	color: var(--color-text-muted);
+	font-size: var(--font-size-lg);
+}
+
+.ShowParks-searchBar input {
+	flex: 1;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-family: var(--font-family);
+	font-size: var(--font-size-md);
+	color: var(--color-text);
+}
+
+.ShowParks-searchBar input::placeholder {
+	color: var(--color-text-muted);
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}

@@ -1,5 +1,5 @@
 import "../css/index.css";
-import searchIcon from "../../public/icons/search.svg";
+import searchIcon from "../asset/img/icons/search.svg";
 import type { SearchBarProps } from "../types";
 
 function SearchBarPark({ onSearch }: SearchBarProps) {

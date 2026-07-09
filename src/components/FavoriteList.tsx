@@ -1,6 +1,6 @@
 import type { Ride } from "../types";
 import "../css/FavoriteList.css";
-import favIconFilled from "/icons/favfull.svg";
+import favIconFilled from "../asset/img/icons/favfull.svg";
 
 function FavoriteList({ favoriteRides }: { favoriteRides: Ride[] }) {
 	// on sépare les favoris ouverts et fermés, comme dans RideList

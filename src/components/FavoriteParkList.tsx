@@ -1,6 +1,6 @@
 import type { Park } from "../types";
 import "../css/FavoriteList.css";
-import favIconFilled from "/icons/favfull.svg";
+import favIconFilled from "../asset/img/icons/favfull.svg";
 
 function FavoriteParkList({ favoriteParks }: { favoriteParks: Park[] }) {
 	return (

@@ -1,0 +1,49 @@
+.ShowParksCardContainer {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-4);
+}
+
+.ParkCard {
+	padding: var(--card-padding);
+	background-color: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	transition: box-shadow var(--transition-fast), border-color
+		var(--transition-fast);
+}
+
+.ParkCard:hover {
+	box-shadow: var(--shadow-md);
+	border-color: var(--color-border-hover);
+}
+
+.ParkCard-name {
+	font-family: var(--font-family);
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+	margin: 0 0 var(--space-2);
+}
+
+.ParkCard-status {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text-secondary);
+	margin: 0 0 var(--space-1);
+}
+
+.ParkCard-status.is-open {
+	color: var(--color-success-text);
+}
+
+.ParkCard-status.is-closed {
+	color: var(--color-danger-text);
+}
+
+.ParkCard-country {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-secondary);
+	margin: 0;
+}
