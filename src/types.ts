@@ -60,4 +60,6 @@ export interface ParkSummary {
 	isOpen: boolean;
 	closingTime: string;
 	affluence: AffluenceLevel;
+	openRidesCount: number;
+	// total aussi ?
 }
