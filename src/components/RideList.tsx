@@ -1,13 +1,21 @@
 import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
-import type { FilterType } from "../types";
+import type { FilterType, Ride } from "../types";
 import { groupRidesByLand } from "../utils/rideUtils";
 import LandSection from "./LandSection";
 import RideItem from "./RideItem";
 import SearchBarRide from "./SearchBarRide";
 import "../css/RideList.css";
 
-function RideList({ parkId }: { parkId: number }) {
+function RideList({
+	parkId,
+	addFavorite,
+	favoriteRides,
+}: {
+	parkId: number;
+	addFavorite: (ride: Ride) => void;
+	favoriteRides: Ride[];
+}) {
 	const { rides, isLoading, error } = useParkRides(parkId);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [activeFilter, setActiveFilter] = useState<FilterType>("Toutes");
@@ -36,11 +44,24 @@ function RideList({ parkId }: { parkId: number }) {
 			</div>
 
 			{activeFilter === "Thème" ? (
-				groupedLands.map((land) => <LandSection key={land.name} land={land} />)
+				groupedLands.map((land) => (
+					<LandSection
+						key={land.name}
+						land={land}
+						addFavorite={addFavorite}
+						favoriteRides={favoriteRides}
+					/>
+				))
 			) : (
 				<ul className="ride-list">
 					{filteredOpenRides.map((ride, index) => (
-						<RideItem key={ride.id} ride={ride} index={index + 1} />
+						<RideItem
+							key={ride.id}
+							ride={ride}
+							index={index + 1}
+							addFavorite={addFavorite}
+							favoriteRides={favoriteRides}
+						/>
 					))}
 				</ul>
 			)}
@@ -50,7 +71,13 @@ function RideList({ parkId }: { parkId: number }) {
 					<h2>FERMÉES ({closedRides.length})</h2>
 					<ul className="ride-list closed-list">
 						{closedRides.map((ride) => (
-							<RideItem key={ride.id} ride={ride} variant="closed" />
+							<RideItem
+								key={ride.id}
+								ride={ride}
+								variant="closed"
+								addFavorite={addFavorite}
+								favoriteRides={favoriteRides}
+							/>
 						))}
 					</ul>
 				</section>

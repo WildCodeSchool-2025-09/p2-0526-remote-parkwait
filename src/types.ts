@@ -64,13 +64,19 @@ export interface RideItemProps {
 	index?: number;
 	variant?: "open" | "closed";
 	hideCategory?: boolean;
+	addFavorite: (ride: Ride) => void;
+	favoriteRides: Ride[];
 }
 
 export interface LandSectionProps {
 	land: GroupedLand;
+	addFavorite: (ride: Ride) => void;
+	favoriteRides: Ride[];
 }
 export interface ParkListProps {
 	searchTerm: string;
+	favoriteParks: Park[];
+	addFavoritePark: (park: Park) => void;
 }
 export interface ParkFilterProps {
 	countries: string[];

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "../css/ShowParksCard.css";
 import type { Land, Park, ParkQueueData } from "../types";
 
 function ParkCard({ park }: { park: Park }) {
@@ -17,13 +18,18 @@ function ParkCard({ park }: { park: Park }) {
 			});
 	}, [park.id]);
 
+	const status =
+		isOpen === null
+			? { text: "...", className: "" }
+			: isOpen
+				? { text: "Ouvert", className: "is-open" }
+				: { text: "Fermé", className: "is-closed" };
+
 	return (
 		<article className="ParkCard">
 			<Link to={`/park/${park.id}`} className="ParkCard">
 				<p className="ParkCard-name">{park.name}</p>
-				<p className="ParkCard-status">
-					{isOpen === null ? "..." : isOpen ? "Ouvert" : "Fermé"}
-				</p>
+				<p className={`ParkCard-status ${status.className}`}>{status.text}</p>
 				<p className="ParkCard-country">{park.country}</p>
 			</Link>
 		</article>

@@ -1,38 +1,72 @@
-// App.tsx
-import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import "./css/App.css";
+import "./css/Reset.css";
+import FavoriteList from "./components/FavoriteList.tsx";
+import FavoriteParkList from "./components/FavoriteParkList.tsx";
 import NavBar from "./components/NavBar.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
-import type { ParkGroup } from "./types";
-
-const PARK_LIST_REFRESH_INTERVAL = 5 * 60 * 1000;
+import type { Park as ParkType, Ride } from "./types.ts";
 
 function App() {
-	const [companies, setCompanies] = useState<ParkGroup[]>([]);
+	const [favoriteRides, setFavoriteRides] = useState<Ride[]>([]);
+	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
 
-	useEffect(() => {
-		function fetchParks() {
-			fetch("/api/parks.json")
-				.then((response) => response.json())
-				.then((data) => {
-					setCompanies(data);
-				});
+	function addFavorite(ride: Ride) {
+		const alreadyFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+
+		if (alreadyFavorite) {
+			setFavoriteRides(favoriteRides.filter((fav) => fav.id !== ride.id));
+		} else {
+			setFavoriteRides([...favoriteRides, ride]);
 		}
-		fetchParks();
-		const interval = setInterval(() => {
-			fetchParks();
-		}, PARK_LIST_REFRESH_INTERVAL);
-		return () => clearInterval(interval);
-	}, []);
+	}
+
+	function addFavoritePark(park: ParkType) {
+		const alreadyFavorite = favoriteParks.some((fav) => fav.id === park.id);
+
+		if (alreadyFavorite) {
+			setFavoriteParks(favoriteParks.filter((fav) => fav.id !== park.id));
+		} else {
+			setFavoriteParks([...favoriteParks, park]);
+		}
+	}
 
 	return (
 		<>
 			<BrowserRouter>
 				<NavBar />
+				<Link to="/favorites" className="favorites-link">
+					Mes favoris
+				</Link>
+				<Link to="/favorite-parks" className="favorites-link">
+					Mes parcs favoris
+				</Link>
 				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/park/:parkId" element={<Park />} />
+					<Route
+						path="/"
+						element={
+							<Home
+								favoriteParks={favoriteParks}
+								addFavoritePark={addFavoritePark}
+							/>
+						}
+					/>
+					<Route
+						path="/park/:parkId"
+						element={
+							<Park addFavorite={addFavorite} favoriteRides={favoriteRides} />
+						}
+					/>
+					<Route
+						path="/favorites"
+						element={<FavoriteList favoriteRides={favoriteRides} />}
+					/>
+					<Route
+						path="/favorite-parks"
+						element={<FavoriteParkList favoriteParks={favoriteParks} />}
+					/>
 					<Route path="*" element={<p>Page introuvable</p>} />
 				</Routes>
 			</BrowserRouter>

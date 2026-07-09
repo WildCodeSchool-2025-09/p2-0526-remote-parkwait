@@ -1,6 +1,6 @@
 .ShowParksCardContainer {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: 1fr;
 	gap: var(--space-4);
 }
 
@@ -25,6 +25,21 @@
 	font-weight: var(--font-weight-bold);
 	color: var(--color-text);
 	margin: 0 0 var(--space-2);
+}
+
+.ParkCard-status {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text-secondary);
+	margin: 0 0 var(--space-1);
+}
+
+.ParkCard-status.is-open {
+	color: var(--color-success-text);
+}
+
+.ParkCard-status.is-closed {
+	color: var(--color-danger-text);
 }
 
 .ParkCard-country {

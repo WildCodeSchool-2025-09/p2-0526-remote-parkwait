@@ -9,6 +9,8 @@ function RideItem({
 	index,
 	variant = "open",
 	hideCategory = false,
+	addFavorite,
+	favoriteRides,
 }: RideItemProps) {
 	return (
 		<li className={`ride-item ${variant === "closed" ? "closed" : ""}`}>
@@ -30,7 +32,11 @@ function RideItem({
 						{ride.wait_time} min
 					</div>
 				)}
-				<FavoriteButton rideName={ride.name} />
+				<FavoriteButton
+					ride={ride}
+					addFavorite={addFavorite}
+					favoriteRides={favoriteRides}
+				/>
 				<HiddenButton rideName={ride.name} />
 			</div>
 		</li>
