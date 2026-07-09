@@ -1,6 +1,6 @@
 import { useState } from "react";
-import favIconEmpty from "/icons/favempty.svg";
-import favIconFilled from "/icons/favfull.svg";
+import favIconEmpty from "../asset/img/icons/favempty.svg";
+import favIconFilled from "../asset/img/icons/favfull.svg";
 
 interface FavoriteButtonProps {
 	rideName: string;
