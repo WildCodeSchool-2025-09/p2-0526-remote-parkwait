@@ -2,7 +2,7 @@ import { useSearchBarRide } from "../hooks/useSearchBarRide";
 import type { SearchBarRideProps } from "../types";
 import FilterButton from "./FilterButton";
 import "../css/SearchBarRide.css";
-import searchIcon from "/icons/search.svg";
+import searchIcon from "../asset/img/icons/search.svg";
 
 function SearchBarRide({ onSearchChange, onFilterChange }: SearchBarRideProps) {
 	const { searchTerm, activeFilter, handleSearch, handleFilterClick } =
