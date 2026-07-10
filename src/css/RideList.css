@@ -235,7 +235,7 @@
 }
 
 .section-toggle .chevron {
-	font-size: var(--font-size-lg);
+	font-size: var(--font-size-xl);
 	line-height: 1;
 	transition: transform var(--transition-fast);
 	color: var(--color-primary-dark);

@@ -2,7 +2,8 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	gap: var(--space-4);
-	margin: var(--space-6) 0;
+	max-width: var(--container-width);
+	margin: var(--space-6);
 }
 
 .kpi-card {

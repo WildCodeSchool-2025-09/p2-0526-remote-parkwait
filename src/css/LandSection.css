@@ -42,6 +42,7 @@
 }
 
 .chevron {
+	font-size: var(--font-size-xl);
 	transition: transform var(--transition-fast);
 	color: var(--color-text-muted);
 }
