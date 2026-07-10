@@ -6,6 +6,15 @@ export function getWaitTimeClass(waitTime: number): string {
 	return "wait-long";
 }
 
+export function getLandIcon(landName: string): string {
+	const icons: Record<string, string> = {
+		Fantasyland: "castle.svg",
+		Discoveryland: "rocket.svg",
+		Adventureland: "compass.svg",
+	};
+	return icons[landName] || "default.svg";
+}
+
 export function byWaitTime(a: Ride, b: Ride): number {
 	return a.wait_time - b.wait_time;
 }
