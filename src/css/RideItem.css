@@ -6,7 +6,8 @@
 	border-bottom: 1px solid var(--color-border);
 }
 
-.ride-item.closed {
+.ride-item.closed,
+.ride-item.hidden {
 	opacity: 0.6;
 }
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
 import type { Ride } from "../types";
 import { byWaitTime } from "../utils/rideUtils";
@@ -14,9 +15,30 @@ function RideList({
 	favoriteRides: Ride[];
 }) {
 	const { rides, isLoading, error } = useParkRides(parkId);
+	const [hiddenRideIds, setHiddenRideIds] = useState<number[]>([]);
 
-	const openRides = rides.filter((ride) => ride.is_open).sort(byWaitTime);
-	const closedRides = rides.filter((ride) => !ride.is_open);
+	// on oublie les attractions ignorées du parc précédent en changeant de parc
+	const [renderedParkId, setRenderedParkId] = useState(parkId);
+	if (parkId !== renderedParkId) {
+		setRenderedParkId(parkId);
+		setHiddenRideIds([]);
+	}
+
+	function toggleHidden(ride: Ride) {
+		setHiddenRideIds((ids) =>
+			ids.includes(ride.id)
+				? ids.filter((id) => id !== ride.id)
+				: [...ids, ride.id],
+		);
+	}
+
+	const visibleRides = rides.filter((ride) => !hiddenRideIds.includes(ride.id));
+	const hiddenRides = rides.filter((ride) => hiddenRideIds.includes(ride.id));
+
+	const openRides = visibleRides
+		.filter((ride) => ride.is_open)
+		.sort(byWaitTime);
+	const closedRides = visibleRides.filter((ride) => !ride.is_open);
 
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
 	if (error) return <div className="error">{error}</div>;
@@ -36,11 +58,29 @@ function RideList({
 						index={index}
 						favorites={favoriteRides}
 						onToggle={addFavorite}
+						onToggleHidden={toggleHidden}
 					/>
 				))}
 			</ul>
 
-			{/* Liste des fermées */}
+			{hiddenRides.length > 0 && (
+				<section className="hidden-rides-section">
+					<h2>IGNORÉE ({hiddenRides.length})</h2>
+					<ul className="ride-list hidden-list">
+						{hiddenRides.map((ride) => (
+							<RideItem
+								key={ride.id}
+								ride={ride}
+								variant="hidden"
+								favorites={favoriteRides}
+								onToggle={addFavorite}
+								onToggleHidden={toggleHidden}
+							/>
+						))}
+					</ul>
+				</section>
+			)}
+
 			{closedRides.length > 0 && (
 				<section className="closed-rides-section">
 					<h2>FERMÉES ({closedRides.length})</h2>
@@ -52,6 +92,7 @@ function RideList({
 								variant="closed"
 								favorites={favoriteRides}
 								onToggle={addFavorite}
+								onToggleHidden={toggleHidden}
 							/>
 						))}
 					</ul>

@@ -59,10 +59,11 @@ export interface FavoriteEntry {
 export interface RideItemProps {
 	ride: Ride;
 	index?: number;
-	variant?: "open" | "closed";
+	variant?: "open" | "closed" | "hidden";
 	hideCategory?: boolean;
 	favorites: Ride[];
 	onToggle: (ride: Ride) => void;
+	onToggleHidden: (ride: Ride) => void;
 }
 
 export interface FavoriteButtonProps {
@@ -73,6 +74,7 @@ export interface FavoriteButtonProps {
 
 export interface HiddenButtonProps {
 	rideName: string;
+	onHide: () => void;
 }
 
 export interface LandSectionProps {

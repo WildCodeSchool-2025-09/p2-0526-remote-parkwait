@@ -1,3 +1,4 @@
+import EyeOffIcon from "../asset/img/icons/eyeoff.svg";
 import type { RideItemProps } from "../types";
 import { getWaitTimeClass } from "../utils/rideUtils";
 import FavoriteButton from "./FavoriteButton";
@@ -11,9 +12,12 @@ function RideItem({
 	hideCategory = false,
 	favorites,
 	onToggle,
+	onToggleHidden,
 }: RideItemProps) {
 	return (
-		<li className={`ride-item ${variant === "closed" ? "closed" : ""}`}>
+		<li
+			className={`ride-item ${variant === "closed" ? "closed" : ""} ${variant === "hidden" ? "hidden" : ""}`}
+		>
 			<div className="ride-info">
 				{index !== undefined && (
 					<span className="ride-number">{index + 1}</span>
@@ -27,17 +31,32 @@ function RideItem({
 			</div>
 
 			<div className="ride-actions">
-				{variant === "closed" ? (
-					<div className="ride-status">Fermé</div>
-				) : (
+				{ride.is_open ? (
 					<div className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}>
 						{ride.wait_time} min
 					</div>
+				) : (
+					<div className="ride-status">Fermé</div>
 				)}
 
-				{/* Props alignées avec les attentes du projet */}
 				<FavoriteButton item={ride} favorites={favorites} onToggle={onToggle} />
-				<HiddenButton rideName={ride.name} />
+
+				{variant === "hidden" ? (
+					<button
+						type="button"
+						className="icon-button hidden-button is-active"
+						onClick={() => onToggleHidden(ride)}
+						aria-label={`Afficher ${ride.name}`}
+						title="Annuler"
+					>
+						<img src={EyeOffIcon} className="hideIcon" alt="" />
+					</button>
+				) : (
+					<HiddenButton
+						rideName={ride.name}
+						onHide={() => onToggleHidden(ride)}
+					/>
+				)}
 			</div>
 		</li>
 	);

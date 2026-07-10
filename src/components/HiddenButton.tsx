@@ -1,24 +1,16 @@
-import { useState } from "react";
 import EyeIcon from "../asset/img/icons/eye.svg";
-import EyeOffIcon from "../asset/img/icons/eyeoff.svg";
+import type { HiddenButtonProps } from "../types";
 
-interface HiddenButtonProps {
-	rideName: string;
-}
-
-function HiddenButton({ rideName }: HiddenButtonProps) {
-	const [isHidden, setIsHidden] = useState(false);
-
+function HiddenButton({ rideName, onHide }: HiddenButtonProps) {
 	return (
 		<button
 			type="button"
-			className={`icon-button hidden-button${isHidden ? " is-active" : ""}`}
-			onClick={() => setIsHidden(!isHidden)}
-			aria-label={isHidden ? `Afficher ${rideName}` : `Masquer ${rideName}`}
-			aria-pressed={isHidden}
-			title="Masquer/Afficher"
+			className="icon-button hidden-button"
+			onClick={onHide}
+			aria-label={`Masquer ${rideName}`}
+			title="Masquer"
 		>
-			<img src={isHidden ? EyeIcon : EyeOffIcon} className="hideIcon" alt="" />
+			<img src={EyeIcon} className="hideIcon" alt="" />
 		</button>
 	);
 }

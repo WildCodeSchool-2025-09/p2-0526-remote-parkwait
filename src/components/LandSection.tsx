@@ -33,6 +33,7 @@ function LandSection({ land }: LandSectionProps) {
 							hideCategory={true}
 							favorites={[]}
 							onToggle={() => {}}
+							onToggleHidden={() => {}}
 						/>
 					))}
 				</ul>

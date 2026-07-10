@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import cancelIcon from "../asset/img/icons/cancel.svg";
 import checkCircleIcon from "../asset/img/icons/checkcircle.svg";
 import "../css/ShowParksCard.css";
@@ -31,12 +32,14 @@ function ParkCard({ park, children }: ParkCardProps) {
 
 	return (
 		<article className="ParkCard">
-			<p className="ParkCard-name">{park.name}</p>
-			<p className={`ParkCard-status ${status.className}`}>
-				{status.icon && <img src={status.icon} alt="" width="16" />}
-				{status.text}
-			</p>
-			<p className="ParkCard-country">{park.country}</p>
+			<Link to={`/park/${park.id}`} className="ParkCard-link">
+				<p className="ParkCard-name">{park.name}</p>
+				<p className={`ParkCard-status ${status.className}`}>
+					{status.icon && <img src={status.icon} alt="" width="16" />}
+					{status.text}
+				</p>
+				<p className="ParkCard-country">{park.country}</p>
+			</Link>
 			{children}
 		</article>
 	);

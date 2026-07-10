@@ -180,11 +180,13 @@
 	background: var(--color-primary-soft);
 }
 
+.hidden-rides-section,
 .closed-rides-section {
 	margin-top: var(--space-2);
 	padding-top: var(--space-2);
 }
 
+.hidden-rides-section h2,
 .closed-rides-section h2 {
 	font-size: var(--font-size-xs);
 	font-weight: var(--font-weight-bold);
@@ -194,7 +196,8 @@
 	text-transform: uppercase;
 }
 
-.closed-list .ride-item.closed {
+.closed-list .ride-item.closed,
+.hidden-list .ride-item.hidden {
 	opacity: 0.55;
 }
 
