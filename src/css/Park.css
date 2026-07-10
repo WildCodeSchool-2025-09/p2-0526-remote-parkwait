@@ -2,7 +2,7 @@
 	background-color: var(--color-primary-dark);
 	color: var(--color-text-white);
 	max-width: var(--container-width);
-	margin: 0 var(--space-6);
+	margin: 0 auto;
 	padding: var(--space-6);
 	border-radius: var(--radius-xl);
 }
