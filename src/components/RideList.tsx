@@ -1,6 +1,6 @@
 import { useParkRides } from "../hooks/useParkRides";
 import type { Ride } from "../types";
-import { getWaitTimeClass } from "../utils/rideUtils";
+import { byWaitTime, getWaitTimeClass } from "../utils/rideUtils";
 import FavoriteButton from "./FavoriteButton";
 import HiddenButton from "./HiddenButton";
 import "../css/RideList.css";
@@ -16,9 +16,7 @@ function RideList({
 }) {
 	const { rides, isLoading, error } = useParkRides(parkId);
 
-	const openRides = rides
-		.filter((ride) => ride.is_open)
-		.sort((a, b) => a.wait_time - b.wait_time);
+	const openRides = rides.filter((ride) => ride.is_open).sort(byWaitTime);
 	const closedRides = rides.filter((ride) => !ride.is_open);
 
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;

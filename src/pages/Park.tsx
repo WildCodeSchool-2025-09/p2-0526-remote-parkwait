@@ -18,16 +18,16 @@ function Park({
 	const parkId = Number(id);
 	const summary = useParkSummary(id);
 
-	if (summary === null) {
-		return <p>Chargement...</p>;
-	}
-
 	// on informe App.tsx quel parc est actuellement affiché
 	useEffect(() => {
 		if (parkId) {
 			setCurrentParkId(parkId);
 		}
 	}, [parkId, setCurrentParkId]);
+
+	if (summary === null) {
+		return <p>Chargement...</p>;
+	}
 
 	return (
 		<div className="park-page">

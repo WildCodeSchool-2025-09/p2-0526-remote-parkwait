@@ -12,6 +12,10 @@ export const useParkRides = (parkId: number) => {
 	const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
 	useEffect(() => {
+		setRides([]);
+		setIsLoading(true);
+		setError(null);
+
 		const fetchParkData = async () => {
 			try {
 				const response = await fetch(
