@@ -19,15 +19,6 @@ function RideList({
 	const openRides = rides.filter((ride) => ride.is_open);
 	const closedRides = rides.filter((ride) => !ride.is_open);
 
-<<<<<<< HEAD
-	const filteredOpenRides = openRides.filter((ride) =>
-		ride.name.toLowerCase().includes(searchTerm.toLowerCase()),
-	);
-
-	const groupedLands = groupRidesByLand(filteredOpenRides);
-
-=======
->>>>>>> 2dc0d5007fa6ed96c0c20ffa1129ea6b56519c44
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
 	if (error) return <div className="error">{error}</div>;
 

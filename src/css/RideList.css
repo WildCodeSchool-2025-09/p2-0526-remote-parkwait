@@ -18,11 +18,8 @@
 	padding-bottom: var(--space-4);
 	margin-bottom: var(--space-2);
 	border-bottom: 1px solid var(--color-border);
-<<<<<<< HEAD
 	flex-direction: column;
 	align-content: flex-start;
-=======
->>>>>>> 2dc0d5007fa6ed96c0c20ffa1129ea6b56519c44
 }
 
 .ride-stats h1 {
@@ -32,10 +29,7 @@
 	color: var(--color-text);
 	margin: 0;
 	text-transform: uppercase;
-<<<<<<< HEAD
 	padding-top: var(--space-4);
-=======
->>>>>>> 2dc0d5007fa6ed96c0c20ffa1129ea6b56519c44
 }
 
 .ride-stats h2 {
