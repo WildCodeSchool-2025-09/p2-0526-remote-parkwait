@@ -1,8 +1,8 @@
 import ShowParksCard from "../components/ShowParksCard.tsx";
-import type { ParkCompany } from "../types";
+import type { ParkGroup } from "../types";
 import "../css/ShowParks.css";
 
-function ShowParks({ parkCompanies }: { parkCompanies: ParkCompany[] }) {
+function ShowParks({ parkCompanies }: { parkCompanies: ParkGroup[] }) {
 	return (
 		<section>
 			<article className="ShowParks">

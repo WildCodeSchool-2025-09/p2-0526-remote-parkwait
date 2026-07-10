@@ -79,6 +79,8 @@ export interface LandSectionProps {
 }
 export interface ParkListProps {
 	searchTerm: string;
+	favoriteParks: Park[];
+	addFavoritePark: (park: Park) => void;
 }
 export interface ParkFilterProps {
 	countries: string[];

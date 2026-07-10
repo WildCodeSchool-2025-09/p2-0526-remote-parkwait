@@ -1,20 +1,37 @@
-import { useState } from "react";
-import favIconEmpty from "/icons/favempty.svg";
-import favIconFilled from "/icons/favfull.svg";
-import type { FavoriteButtonProps } from "../types";
+import favIconEmpty from "../asset/img/icons/favempty.svg";
+import favIconFilled from "../asset/img/icons/favfull.svg";
 
-function FavoriteButton({ rideName }: FavoriteButtonProps) {
-	const [isFavorite, setIsFavorite] = useState(false);
+interface FavoriteItem {
+	id: number;
+	name: string;
+}
+
+interface FavoriteButtonProps<T extends FavoriteItem> {
+	item: T;
+	favorites: T[];
+	onToggle: (item: T) => void;
+}
+
+function FavoriteButton<T extends FavoriteItem>({
+	item,
+	favorites,
+	onToggle,
+}: FavoriteButtonProps<T>) {
+	const isFavorite = favorites.some((fav) => fav.id === item.id);
+
+	function handleClick() {
+		onToggle(item);
+	}
 
 	return (
 		<button
 			type="button"
 			className={`icon-button favorite-button${isFavorite ? " is-active" : ""}`}
-			onClick={() => setIsFavorite(!isFavorite)}
+			onClick={handleClick}
 			aria-label={
 				isFavorite
-					? `Retirer ${rideName} des favoris`
-					: `Ajouter ${rideName} aux favoris`
+					? `Retirer ${item.name} des favoris`
+					: `Ajouter ${item.name} aux favoris`
 			}
 			aria-pressed={isFavorite}
 			title="Favoris"
