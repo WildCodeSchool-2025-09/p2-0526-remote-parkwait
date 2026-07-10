@@ -1,8 +1,8 @@
 import "../css/ShowParksCard.css";
-import type { ParkCompany } from "../types";
+import type { ParkGroup } from "../types";
 import ParkCard from "./ParkCard";
 
-function ShowParksCard({ parkCompanies }: { parkCompanies: ParkCompany[] }) {
+function ShowParksCard({ parkCompanies }: { parkCompanies: ParkGroup[] }) {
 	return (
 		<section className="ShowParksCardContainer">
 			{parkCompanies.map((company) =>
