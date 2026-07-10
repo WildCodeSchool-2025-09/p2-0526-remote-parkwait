@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import ParkFavoriteButton from "./ParkFavoriteButton";
+import favIconFilled from "../asset/img/icons/favfull.svg";
+import ParkCard from "./ParkCard";
 import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
 import type { ParkGroup, ParkListProps } from "../types";
@@ -11,6 +12,7 @@ function ParkList({
 }: ParkListProps) {
 	const [allParksData, setAllParksData] = useState<ParkGroup[]>([]);
 	const [selectedCountry, setSelectedCountry] = useState("All");
+	const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
 	useEffect(() => {
 		fetch("/api/parks.json")
@@ -30,30 +32,47 @@ function ParkList({
 			.includes(searchTerm.toLowerCase());
 		const matchesCountry =
 			selectedCountry === "All" || park.country === selectedCountry;
-		return matchesName && matchesCountry;
+		const matchesFavorite =
+			!showFavoritesOnly || favoriteParks.some((fav) => fav.id === park.id);
+		return matchesName && matchesCountry && matchesFavorite;
 	});
 
 	return (
-		<div>
-			<ParkFilter
-				countries={countries}
-				selectedCountry={selectedCountry}
-				onFilterChange={setSelectedCountry}
-			/>
-
-			<div className="park-list-grid">
-				{filteredParks.map((park) => (
-					<div key={park.id} className="park-card">
-						<h3 className="park-name">{park.name}</h3>
-						<p className="park-country">{park.country}</p>
-						<ParkFavoriteButton
-							park={park}
-							addFavoritePark={addFavoritePark}
-							favoriteParks={favoriteParks}
-						/>
-					</div>
-				))}
+		<div className="park-list-container">
+			<div className="park-list-filters">
+				<ParkFilter
+					countries={countries}
+					selectedCountry={selectedCountry}
+					onFilterChange={setSelectedCountry}
+				/>
+				<button
+					type="button"
+					className={`filter-trigger${showFavoritesOnly ? " active" : ""}`}
+					onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+					aria-pressed={showFavoritesOnly}
+				>
+					<img src={favIconFilled} alt="" className="btn-icon" />
+					Mes parcs favoris
+				</button>
 			</div>
+
+			{showFavoritesOnly && filteredParks.length === 0 ? (
+				<p className="loading-text">
+					Vous n'avez pas encore ajouté de parc en favoris. Cliquez sur le cœur
+					d'un parc pour l'ajouter ici.
+				</p>
+			) : (
+				<div className="park-list-grid">
+					{filteredParks.map((park) => (
+						<ParkCard
+							key={park.id}
+							park={park}
+							favoriteParks={favoriteParks}
+							addFavoritePark={addFavoritePark}
+						/>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

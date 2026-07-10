@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
 import type { FilterType, Ride } from "../types";
 import { groupRidesByLand } from "../utils/rideUtils";
-import Done from "./Done";
 import LandSection from "./LandSection";
 import RideItem from "./RideItem";
 import SearchBarRide from "./SearchBarRide";
@@ -24,6 +23,12 @@ function RideList({
 	const { rides, isLoading, error } = useParkRides(parkId);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [activeFilter, setActiveFilter] = useState<FilterType>("Toutes");
+	const [isOpenListOpen, setIsOpenListOpen] = useState(true);
+	const [isClosedOpen, setIsClosedOpen] = useState(false);
+	const [isDoneOpen, setIsDoneOpen] = useState(false);
+
+	const isFavorite = (ride: { id: number }) =>
+		favoriteRides.some((fav) => fav.id === ride.id);
 
 	const openRides = rides
 		.filter(
@@ -41,9 +46,26 @@ function RideList({
 		doneRideIds.some((rideId) => rideId === ride.id),
 	);
 
-	const filteredOpenRides = openRides.filter((ride) =>
+	const searchedOpenRides = openRides.filter((ride) =>
 		ride.name.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
+
+	const filteredOpenRides =
+		activeFilter === "Favoris"
+			? searchedOpenRides.filter(isFavorite)
+			: searchedOpenRides;
+
+	const displayedClosedRides =
+		activeFilter === "Favoris" ? closedRides.filter(isFavorite) : closedRides;
+
+	const displayedDoneRides =
+		activeFilter === "Favoris" ? doneRides.filter(isFavorite) : doneRides;
+
+	const hasNoFavorites =
+		activeFilter === "Favoris" &&
+		filteredOpenRides.length === 0 &&
+		displayedClosedRides.length === 0 &&
+		displayedDoneRides.length === 0;
 
 	const groupedLands = groupRidesByLand(filteredOpenRides);
 
@@ -61,6 +83,13 @@ function RideList({
 				<h2>Attractions ouvertes : {openRides.length}</h2>
 			</div>
 
+			{hasNoFavorites && (
+				<p className="loading-text">
+					Vous n'avez pas encore ajouté d'attraction en favoris. Cliquez sur le
+					cœur d'une attraction pour l'ajouter ici.
+				</p>
+			)}
+
 			{activeFilter === "Thème" ? (
 				groupedLands.map((land) => (
 					<LandSection
@@ -73,62 +102,89 @@ function RideList({
 					/>
 				))
 			) : (
-				<ul className="ride-list">
-					{filteredOpenRides.map((ride, index) => (
-						<RideItem
-							key={ride.id}
-							ride={ride}
-							index={index + 1}
-							addFavorite={addFavorite}
-							favoriteRides={favoriteRides}
-							doneRideIds={doneRideIds}
-							toggleDone={toggleDone}
-						/>
-					))}
-				</ul>
-			)}
-
-			{closedRides.length > 0 && (
-				<section className="closed-rides-section">
-					<h2>FERMÉES ({closedRides.length})</h2>
-					<ul className="ride-list closed-list">
-						{closedRides.map((ride) => (
-							<RideItem
-								key={ride.id}
-								ride={ride}
-								variant="closed"
-								addFavorite={addFavorite}
-								favoriteRides={favoriteRides}
-								doneRideIds={doneRideIds}
-								toggleDone={toggleDone}
-							/>
-						))}
-					</ul>
+				<section className="open-rides-section">
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsOpenListOpen((prev) => !prev)}
+						aria-expanded={isOpenListOpen}
+					>
+						<h2>OUVERTES ({filteredOpenRides.length})</h2>
+						<span className={`chevron ${isOpenListOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isOpenListOpen && (
+						<ul className="ride-list">
+							{filteredOpenRides.map((ride, index) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									index={index + 1}
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+								/>
+							))}
+						</ul>
+					)}
 				</section>
 			)}
 
-			{doneRides.length > 0 && (
+			{displayedDoneRides.length > 0 && (
 				<section className="done-rides-section">
-					<h2>TERMINÉES ({doneRides.length})</h2>
-					<ul className="ride-list done-list">
-						{doneRides.map((ride) => (
-							<li key={ride.id} className="ride-item done">
-								<div className="ride-info">
-									<div className="ride-text">
-										<h3>{ride.name}</h3>
-										<span className="ride-category">{ride.category}</span>
-									</div>
-								</div>
-								<div className="ride-actions">
-									<Done
-										ride={ride}
-										doneRideIds={doneRideIds}
-										toggleDone={toggleDone}
-									/>
-								</div>
-							</li>
-						))}
-					</ul>
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsDoneOpen((prev) => !prev)}
+						aria-expanded={isDoneOpen}
+					>
+						<h2>TERMINÉES ({displayedDoneRides.length})</h2>
+						<span className={`chevron ${isDoneOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isDoneOpen && (
+						<ul className="ride-list done-list">
+							{displayedDoneRides.map((ride) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									variant="done"
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+								/>
+							))}
+						</ul>
+					)}
+				</section>
+			)}
+
+			{displayedClosedRides.length > 0 && (
+				<section className="closed-rides-section">
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsClosedOpen((prev) => !prev)}
+						aria-expanded={isClosedOpen}
+					>
+						<h2>FERMÉES ({displayedClosedRides.length})</h2>
+						<span className={`chevron ${isClosedOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isClosedOpen && (
+						<ul className="ride-list closed-list">
+							{displayedClosedRides.map((ride) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									variant="closed"
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+								/>
+							))}
+						</ul>
+					)}
 				</section>
 			)}
 		</div>

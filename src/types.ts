@@ -42,7 +42,7 @@ export interface FavoriteEntry {
 	addedAt: string;
 }
 
-export type FilterType = "Toutes" | "Thème";
+export type FilterType = "Toutes" | "Thème" | "Favoris";
 
 export interface SearchBarRideProps {
 	onSearchChange: (term: string) => void;
@@ -52,6 +52,8 @@ export interface FilterButtonProps {
 	label: string;
 	isActive: boolean;
 	onClick: () => void;
+	icon?: string;
+	plainIcon?: string;
 }
 
 export interface GroupedLand {
@@ -62,7 +64,7 @@ export interface GroupedLand {
 export interface RideItemProps {
 	ride: RideWithCategory;
 	index?: number;
-	variant?: "open" | "closed";
+	variant?: "open" | "closed" | "done";
 	hideCategory?: boolean;
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
@@ -101,7 +103,8 @@ export interface ParkSummary {
 	closingTime: string;
 	affluence: AffluenceLevel;
 	openRidesCount: number;
-	// total aussi ?
+	totalRidesCount: number;
+	averageWaitTime: number;
 }
 
 export interface FavoriteButtonProps {

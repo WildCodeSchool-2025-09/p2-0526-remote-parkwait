@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./css/App.css";
 import "./css/Reset.css";
-import FavoriteList from "./components/FavoriteList.tsx";
-import FavoriteParkList from "./components/FavoriteParkList.tsx";
 import NavBar from "./components/NavBar.tsx";
 import { useParkRides } from "./hooks/useParkRides.ts";
 import Home from "./pages/Home.tsx";
@@ -56,12 +54,6 @@ function App() {
 		<>
 			<BrowserRouter>
 				<NavBar />
-				<Link to="/favorites" className="favorites-link">
-					Mes favoris
-				</Link>
-				<Link to="/favorite-parks" className="favorites-link">
-					Mes parcs favoris
-				</Link>
 				<Routes>
 					<Route
 						path="/"
@@ -83,14 +75,6 @@ function App() {
 								toggleDone={toggleDone}
 							/>
 						}
-					/>
-					<Route
-						path="/favorites"
-						element={<FavoriteList favoriteRides={favoriteRides} />}
-					/>
-					<Route
-						path="/favorite-parks"
-						element={<FavoriteParkList favoriteParks={favoriteParks} />}
 					/>
 					<Route path="*" element={<p>Page introuvable</p>} />
 				</Routes>

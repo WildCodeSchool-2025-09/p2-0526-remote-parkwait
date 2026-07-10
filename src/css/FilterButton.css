@@ -1,10 +1,12 @@
 .filter-btn {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: var(--space-2);
-	padding: var(--space-2) var(--space-4);
+	height: var(--button-height);
+	padding: 0 var(--space-4);
 	border: 1px solid var(--color-border);
-	border-radius: var(--radius-pill);
+	border-radius: var(--radius-md);
 	background-color: var(--color-surface);
 	color: var(--color-text);
 	cursor: pointer;
@@ -22,4 +24,28 @@
 	color: var(--color-on-primary, #fff);
 	border-color: var(--color-primary);
 	font-weight: var(--font-weight-semibold, 600);
+}
+
+.filter-btn-icon {
+	width: 20px;
+	height: 20px;
+	flex: 0 0 auto;
+	background-color: var(--color-primary);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	-webkit-mask-size: contain;
+}
+
+.filter-btn.active .filter-btn-icon {
+	background-color: var(--color-on-primary, #fff);
+}
+
+.filter-btn-icon-img {
+	width: 18px;
+	height: 18px;
+	flex: 0 0 auto;
+	object-fit: contain;
 }

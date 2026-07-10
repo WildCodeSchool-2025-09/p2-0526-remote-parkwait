@@ -1,7 +1,19 @@
+.park-list-filters {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	padding: var(--space-6) var(--space-6) 0;
+}
+
 .filter-wrapper {
 	position: relative;
 	display: inline-block;
-	padding: var(--space-6);
+}
+
+.park-list-filters .filter-trigger.active {
+	background-color: var(--color-primary-dark);
+	border-color: var(--color-primary-dark);
 }
 
 .filter-trigger {

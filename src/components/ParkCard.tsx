@@ -2,8 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/ShowParksCard.css";
 import type { Land, Park, ParkQueueData } from "../types";
+import ParkFavoriteButton from "./ParkFavoriteButton";
 
-function ParkCard({ park }: { park: Park }) {
+function ParkCard({
+	park,
+	favoriteParks,
+	addFavoritePark,
+}: {
+	park: Park;
+	favoriteParks?: Park[];
+	addFavoritePark?: (park: Park) => void;
+}) {
 	const [isOpen, setIsOpen] = useState<boolean | null>(null);
 
 	useEffect(() => {
@@ -27,11 +36,18 @@ function ParkCard({ park }: { park: Park }) {
 
 	return (
 		<article className="ParkCard">
-			<Link to={`/park/${park.id}`} className="ParkCard">
+			<Link to={`/park/${park.id}`} className="ParkCard-link">
 				<p className="ParkCard-name">{park.name}</p>
 				<p className={`ParkCard-status ${status.className}`}>{status.text}</p>
 				<p className="ParkCard-country">{park.country}</p>
 			</Link>
+			{addFavoritePark && favoriteParks && (
+				<ParkFavoriteButton
+					park={park}
+					addFavoritePark={addFavoritePark}
+					favoriteParks={favoriteParks}
+				/>
+			)}
 		</article>
 	);
 }

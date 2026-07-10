@@ -1,10 +1,15 @@
 .search-container {
+	width: 100%;
+	max-width: var(--container-width);
+	margin: var(--space-3) auto var(--space-2) auto;
+	padding: 0 var(--space-6);
+}
+
+.search-input-wrapper {
 	position: relative;
 	display: flex;
 	align-items: center;
 	width: 100%;
-	max-width: 400px;
-	margin: 0 auto var(--space-4) auto;
 }
 
 .search-icon {

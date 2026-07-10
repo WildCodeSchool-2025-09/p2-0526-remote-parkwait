@@ -16,7 +16,7 @@ function RideItem({
 	toggleDone,
 }: RideItemProps) {
 	return (
-		<li className={`ride-item ${variant === "closed" ? "closed" : ""}`}>
+		<li className={`ride-item ${variant !== "open" ? variant : ""}`}>
 			<div className="ride-info">
 				{index !== undefined && <span className="ride-number">{index}</span>}
 				<div className="ride-text">
@@ -28,20 +28,37 @@ function RideItem({
 			</div>
 
 			<div className="ride-actions">
-				{variant === "closed" ? (
-					<div className="ride-status">Fermé</div>
-				) : (
-					<div className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}>
-						{ride.wait_time} min
-					</div>
+				{variant === "closed" && <div className="ride-status">Fermé</div>}
+				{variant === "done" && (
+					<>
+						<div className="ride-status">Terminé</div>
+						<Done
+							ride={ride}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
+						/>
+					</>
 				)}
-				<Done ride={ride} doneRideIds={doneRideIds} toggleDone={toggleDone} />
-				<FavoriteButton
-					ride={ride}
-					addFavorite={addFavorite}
-					favoriteRides={favoriteRides}
-				/>
-				<HiddenButton rideName={ride.name} />
+				{variant === "open" && (
+					<>
+						<div
+							className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}
+						>
+							{ride.wait_time} min
+						</div>
+						<Done
+							ride={ride}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
+						/>
+						<FavoriteButton
+							ride={ride}
+							addFavorite={addFavorite}
+							favoriteRides={favoriteRides}
+						/>
+						<HiddenButton rideName={ride.name} />
+					</>
+				)}
 			</div>
 		</li>
 	);
