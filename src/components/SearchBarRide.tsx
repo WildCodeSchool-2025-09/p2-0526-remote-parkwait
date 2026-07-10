@@ -14,7 +14,7 @@ function SearchBarRide({ onSearchChange, onFilterChange }: SearchBarRideProps) {
 				<img src={searchIcon} alt="Recherche" className="search-icon" />
 				<input
 					type="text"
-					aria-label="rechecher une attraction"
+					aria-label="rechercher une attraction"
 					placeholder="Rechercher une attraction..."
 					value={searchTerm}
 					onChange={handleSearch}
@@ -25,13 +25,13 @@ function SearchBarRide({ onSearchChange, onFilterChange }: SearchBarRideProps) {
 			<div className="filter-buttons">
 				<FilterButton
 					label="Toutes"
-					isActive={activeFilter === "Toutes"}
-					onClick={() => handleFilterClick("Toutes")}
+					isActive={activeFilter === "all"}
+					onClick={() => handleFilterClick("all")}
 				/>
 				<FilterButton
 					label="Thème"
-					isActive={activeFilter === "Thème"}
-					onClick={() => handleFilterClick("Thème")}
+					isActive={activeFilter === "theme"}
+					onClick={() => handleFilterClick("theme")}
 				/>
 			</div>
 		</div>

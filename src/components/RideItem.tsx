@@ -9,11 +9,15 @@ function RideItem({
 	index,
 	variant = "open",
 	hideCategory = false,
+	favorites,
+	onToggle,
 }: RideItemProps) {
 	return (
 		<li className={`ride-item ${variant === "closed" ? "closed" : ""}`}>
 			<div className="ride-info">
-				{index !== undefined && <span className="ride-number">{index}</span>}
+				{index !== undefined && (
+					<span className="ride-number">{index + 1}</span>
+				)}
 				<div className="ride-text">
 					<h3>{ride.name}</h3>
 					{!hideCategory && (
@@ -30,7 +34,9 @@ function RideItem({
 						{ride.wait_time} min
 					</div>
 				)}
-				<FavoriteButton rideName={ride.name} />
+
+				{/* Props alignées avec les attentes du projet */}
+				<FavoriteButton item={ride} favorites={favorites} onToggle={onToggle} />
 				<HiddenButton rideName={ride.name} />
 			</div>
 		</li>

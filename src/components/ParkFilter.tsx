@@ -23,7 +23,7 @@ function ParkFilter({
 
 			{isOpen && (
 				<ul className="filter-list">
-					{countries.map((country) => (
+					{countries.map((country: string) => (
 						<li key={country}>
 							<button
 								type="button"

@@ -1,8 +1,6 @@
 import { useParkRides } from "../hooks/useParkRides";
 import type { Ride } from "../types";
-import { getWaitTimeClass } from "../utils/rideUtils";
-import FavoriteButton from "./FavoriteButton";
-import HiddenButton from "./HiddenButton";
+import RideItem from "./RideItem";
 import "../css/RideList.css";
 
 function RideList({
@@ -29,51 +27,32 @@ function RideList({
 				<h3>Attractions ouvertes : {openRides.length}</h3>
 			</div>
 
+			{/* Liste des ouvertes */}
 			<ul className="ride-list">
 				{openRides.map((ride, index) => (
-					<li key={ride.id} className="ride-item">
-						<div className="ride-info">
-							<span className="ride-number">{index + 1}</span>
-							<div className="ride-text">
-								<h3>{ride.name}</h3>
-								<span className="ride-category">{ride.category}</span>
-							</div>
-						</div>
-
-						<div className="ride-actions">
-							<div
-								className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}
-							>
-								{ride.wait_time} min
-							</div>
-
-							<FavoriteButton
-								item={ride}
-								favorites={favoriteRides}
-								onToggle={addFavorite}
-							/>
-							<HiddenButton rideName={ride.name} />
-						</div>
-					</li>
+					<RideItem
+						key={ride.id}
+						ride={ride}
+						index={index}
+						favorites={favoriteRides}
+						onToggle={addFavorite}
+					/>
 				))}
 			</ul>
 
+			{/* Liste des fermées */}
 			{closedRides.length > 0 && (
 				<section className="closed-rides-section">
 					<h2>FERMÉES ({closedRides.length})</h2>
 					<ul className="ride-list closed-list">
 						{closedRides.map((ride) => (
-							<li key={ride.id} className="ride-item closed">
-								<div className="ride-info">
-									<div className="ride-text">
-										<h3>{ride.name}</h3>
-										<span className="ride-category">{ride.category}</span>
-									</div>
-								</div>
-								<div className="ride-actions">
-									<div className="ride-status">Fermé</div>
-								</div>
-							</li>
+							<RideItem
+								key={ride.id}
+								ride={ride}
+								variant="closed"
+								favorites={favoriteRides}
+								onToggle={addFavorite}
+							/>
 						))}
 					</ul>
 				</section>

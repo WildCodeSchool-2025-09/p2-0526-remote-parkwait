@@ -1,7 +1,6 @@
 import type { ParkGroup } from "../types";
 import type { Park } from "../types";
 
-// Util 1 : Appel à l'API
 export const fetchParksData = async (): Promise<ParkGroup[]> => {
 	const response = await fetch("https://queue-times.com/parks.json");
 	if (!response.ok) {
@@ -10,16 +9,16 @@ export const fetchParksData = async (): Promise<ParkGroup[]> => {
 	return response.json();
 };
 
-export const getUniqueCountries = (allParksList: []): string[] => {
+export const getUniqueCountries = (allParksList: Park[]): string[] => {
 	return ["All", ...new Set(allParksList.map((p) => p.country))];
 };
 
 export const filterParks = (
-	parks: [],
-	searchTerm: string,
+	parks: Park[],
 	selectedCountry: string,
-) => {
-	return parks.filter((park) => {
+	searchTerm: string,
+): Park[] => {
+	return parks.filter((park: Park) => {
 		const matchesName = park.name
 			.toLowerCase()
 			.includes(searchTerm.toLowerCase());

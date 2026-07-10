@@ -6,7 +6,8 @@ export function useSearchBarRide({
 	onFilterChange,
 }: SearchBarRideProps) {
 	const [searchTerm, setSearchTerm] = useState("");
-	const [activeFilter, setActiveFilter] = useState<FilterType>("Toutes");
+	// Mise à jour de la valeur initiale ici
+	const [activeFilter, setActiveFilter] = useState<FilterType>("all");
 
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;

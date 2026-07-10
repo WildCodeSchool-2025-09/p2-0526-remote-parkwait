@@ -29,8 +29,10 @@ function LandSection({ land }: LandSectionProps) {
 						<RideItem
 							key={ride.id}
 							ride={ride}
-							index={index + 1}
-							hideCategory
+							index={index}
+							hideCategory={true}
+							favorites={[]}
+							onToggle={() => {}}
 						/>
 					))}
 				</ul>
