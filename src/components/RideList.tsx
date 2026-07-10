@@ -18,7 +18,8 @@ function RideList({
 
 	const openRides = rides
 		.filter((ride) => ride.is_open)
-		.sort((a, b) => a.wait_time - b.wait_time);	const closedRides = rides.filter((ride) => !ride.is_open);
+		.sort((a, b) => a.wait_time - b.wait_time);
+	const closedRides = rides.filter((ride) => !ride.is_open);
 
 	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
 	if (error) return <div className="error">{error}</div>;
@@ -26,8 +27,8 @@ function RideList({
 	return (
 		<div className="ride-list-container" aria-live="polite">
 			<div className="ride-stats">
-				<h1>{rides.length} ATTRACTIONS</h1>
-				<h2>Attractions ouvertes : {openRides.length}</h2>
+				<h2>{rides.length} ATTRACTIONS</h2>
+				<h3>Attractions ouvertes : {openRides.length}</h3>
 			</div>
 
 			<ul className="ride-list" aria-live="polite">
@@ -49,9 +50,9 @@ function RideList({
 							</div>
 
 							<FavoriteButton
-								ride={ride}
-								addFavorite={addFavorite}
-								favoriteRides={favoriteRides}
+								item={ride}
+								favorites={favoriteRides}
+								onToggle={addFavorite}
 							/>
 							<HiddenButton rideName={ride.name} />
 						</div>

@@ -1,6 +1,8 @@
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ParkHeader from "../components/ParkHeader";
 import RideList from "../components/RideList";
+import { useParkSummary } from "../hooks/useParkSummary";
 import type { Ride } from "../types";
 
 function Park({
@@ -14,6 +16,11 @@ function Park({
 }) {
 	const { id } = useParams<{ id: string }>();
 	const parkId = Number(id);
+	const summary = useParkSummary(id);
+
+	if (summary === null) {
+		return <p>Chargement...</p>;
+	}
 
 	// on informe App.tsx quel parc est actuellement affiché
 	useEffect(() => {
@@ -24,6 +31,7 @@ function Park({
 
 	return (
 		<div className="park-page">
+			<ParkHeader summary={summary} />
 			{parkId ? (
 				<RideList
 					parkId={parkId}

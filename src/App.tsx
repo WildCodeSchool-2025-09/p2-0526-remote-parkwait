@@ -1,13 +1,13 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./css/App.css";
 import "./css/Reset.css";
-import { useState } from "react";
-import FavoriteList from "./components/FavoriteList.tsx";
-import FavoriteParkList from "./components/FavoriteParkList.tsx";
+import NavBar from "./components/NavBar.tsx";
+import { useParkRides } from "./hooks/useParkRides.ts";
+import FavoriteList from "./pages/FavoriteList.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { Park as ParkType, Ride } from "./types.ts";
-import { useParkRides } from "./hooks/useParkRides.ts";
 
 function App() {
 	const [favoriteRideIds, setFavoriteRideIds] = useState<number[]>([]);
@@ -45,12 +45,7 @@ function App() {
 	return (
 		<>
 			<BrowserRouter>
-				<Link to="/favorites" className="favorites-link">
-					Mes favoris
-				</Link>
-				<Link to="/favorite-parks" className="favorites-link">
-					Mes parcs favoris
-				</Link>
+				<NavBar />
 				<Routes>
 					<Route
 						path="/"
@@ -73,11 +68,26 @@ function App() {
 					/>
 					<Route
 						path="/favorites"
-						element={<FavoriteList favoriteRides={favoriteRides} />}
+						element={
+							<FavoriteList
+								title="FAVORIS"
+								items={favoriteRides}
+								emptyMessage="Vous n'avez pas encore ajouté de favoris. Cliquez sur le cœur d'une attraction pour l'ajouter ici."
+								isOpen={(ride) => ride.is_open}
+								renderStatus={(ride) => `${ride.wait_time} min d'attente`}
+							/>
+						}
 					/>
 					<Route
 						path="/favorite-parks"
-						element={<FavoriteParkList favoriteParks={favoriteParks} />}
+						element={
+							<FavoriteList
+								title="PARCS FAVORIS"
+								items={favoriteParks}
+								emptyMessage="Vous n'avez pas encore ajouté de parc en favoris. Cliquez sur le cœur d'un parc pour l'ajouter ici."
+								renderStatus={(park) => park.country}
+							/>
+						}
 					/>
 					<Route path="*" element={<p>Page introuvable</p>} />
 				</Routes>
