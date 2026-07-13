@@ -7,6 +7,8 @@ export function useParkSummary(id: string | undefined) {
 	const [summary, setSummary] = useState<ParkSummary | null>(null);
 
 	useEffect(() => {
+		setSummary(null);
+
 		async function loadPark() {
 			if (parkId === undefined || Number.isNaN(parkId)) {
 				return;

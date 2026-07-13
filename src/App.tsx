@@ -3,14 +3,26 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./css/App.css";
 import "./css/Reset.css";
 import NavBar from "./components/NavBar.tsx";
+import { useParkRides } from "./hooks/useParkRides.ts";
 import FavoriteList from "./pages/FavoriteList.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { Park as ParkType, Ride } from "./types.ts";
+import { byWaitTime } from "./utils/rideUtils.ts";
 
 function App() {
 	const [favoriteRides, setFavoriteRides] = useState<Ride[]>([]);
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
+	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
+
+	// on récupère les rides à jour du parc actuellement sélectionné
+	const { rides: freshRides } = useParkRides(currentParkId ?? 0);
+
+	// on rafraîchit les favoris du parc actuellement affiché avec les données à jour
+	// (wait_time notamment) ; les favoris des autres parcs gardent leur dernier snapshot connu
+	const favoriteRidesWithFreshData: Ride[] = favoriteRides
+		.map((fav) => freshRides.find((ride) => ride.id === fav.id) ?? fav)
+		.sort(byWaitTime);
 
 	function addFavorite(ride: Ride) {
 		const alreadyFavorite = favoriteRides.some((fav) => fav.id === ride.id);
@@ -49,7 +61,11 @@ function App() {
 					<Route
 						path="/park/:id"
 						element={
-							<Park addFavorite={addFavorite} favoriteRides={favoriteRides} />
+							<Park
+								addFavorite={addFavorite}
+								favoriteRides={favoriteRidesWithFreshData}
+								setCurrentParkId={setCurrentParkId}
+							/>
 						}
 					/>
 					<Route
@@ -57,7 +73,7 @@ function App() {
 						element={
 							<FavoriteList
 								title="FAVORIS"
-								items={favoriteRides}
+								items={favoriteRidesWithFreshData}
 								emptyMessage="Vous n'avez pas encore ajouté de favoris. Cliquez sur le cœur d'une attraction pour l'ajouter ici."
 								isOpen={(ride) => ride.is_open}
 								renderStatus={(ride) => `${ride.wait_time} min d'attente`}
