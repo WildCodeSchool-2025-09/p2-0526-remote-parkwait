@@ -56,7 +56,8 @@ export async function getParkSummary(park: Park): Promise<ParkSummary> {
 		isOpen: open,
 		closingTime: `22h - ${park.country}`,
 		affluence: affluence,
+		averageWaitTime: average,
 		openRidesCount: getOpenRidesCount(allRides),
-		// total ?
+		totalRidesCount: allRides.length,
 	};
 }

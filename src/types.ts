@@ -47,8 +47,9 @@ export interface ParkSummary {
 	isOpen: boolean;
 	closingTime: string;
 	affluence: AffluenceLevel;
+	averageWaitTime: number;
 	openRidesCount: number;
-	// total aussi ?
+	totalRidesCount: number;
 }
 
 export interface FavoriteEntry {
