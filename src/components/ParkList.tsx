@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import ParkFavoriteButton from "./ParkFavoriteButton";
+import FavoriteButton from "./FavoriteButton";
+import ParkCard from "./ParkCard";
 import ParkFilter from "./ParkFilter";
 import "../css/Parklist.css";
-import type { ParkGroup, ParkListProps } from "../types.js";
+import type { ParkGroup, ParkListProps } from "../types";
 
 function ParkList({
 	searchTerm,
@@ -13,7 +14,7 @@ function ParkList({
 	const [selectedCountry, setSelectedCountry] = useState("All");
 
 	useEffect(() => {
-		fetch("https://queue-times.com/parks.json")
+		fetch("/api/parks.json")
 			.then((res) => res.json())
 			.then((data) => {
 				setAllParksData(data);
@@ -41,19 +42,19 @@ function ParkList({
 				onFilterChange={setSelectedCountry}
 			/>
 
-			<div className="park-list-grid">
+			<ul className="park-list-grid">
 				{filteredParks.map((park) => (
-					<div key={park.id} className="park-card">
-						<h3>{park.name}</h3>
-						<p>{park.country}</p>
-						<ParkFavoriteButton
-							park={park}
-							addFavoritePark={addFavoritePark}
-							favoriteParks={favoriteParks}
-						/>
-					</div>
+					<li key={park.id}>
+						<ParkCard park={park}>
+							<FavoriteButton
+								item={park}
+								favorites={favoriteParks}
+								onToggle={addFavoritePark}
+							/>
+						</ParkCard>
+					</li>
 				))}
-			</div>
+			</ul>
 		</div>
 	);
 }

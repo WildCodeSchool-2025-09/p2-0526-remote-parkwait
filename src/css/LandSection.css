@@ -1,0 +1,51 @@
+.land-section {
+	margin-bottom: var(--space-4);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.land-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: var(--space-3) var(--space-2);
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-family: var(--font-family);
+}
+
+.land-title {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+}
+
+.land-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.land-name {
+	font-weight: var(--font-weight-semibold, 600);
+	color: var(--color-primary-dark);
+	text-transform: uppercase;
+	font-size: var(--font-size-sm);
+}
+
+.land-count {
+	font-size: var(--font-size-xs);
+	color: var(--color-text-muted);
+	background: var(--color-primary-soft);
+	padding: 2px var(--space-2);
+	border-radius: var(--radius-pill);
+}
+
+.chevron {
+	transition: transform var(--transition-fast);
+	color: var(--color-text-muted);
+}
+
+.chevron.open {
+	transform: rotate(180deg);
+}
