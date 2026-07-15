@@ -46,7 +46,10 @@ export interface ParkSummary {
 	country: string;
 	isOpen: boolean;
 	closingTime: string;
-	affluence: "Faible" | "Moderée" | "Elevée";
+	affluence: AffluenceLevel;
+	averageWaitTime: number;
+	openRidesCount: number;
+	totalRidesCount: number;
 }
 
 export interface FavoriteEntry {
