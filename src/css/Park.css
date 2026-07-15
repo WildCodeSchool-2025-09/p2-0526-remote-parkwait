@@ -3,6 +3,8 @@
 	color: var(--color-text-white);
 	padding: var(--space-6);
 	border-radius: var(--radius-xl);
+	max-width: var(--container-width);
+	margin: 0 auto var(--space-6);
 }
 
 .label {
