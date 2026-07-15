@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
-import type { Ride, FilterType } from "../types";
+import type { Ride } from "../types";
+import { byWaitTime } from "../utils/rideUtils";
 import RideItem from "./RideItem";
 import SearchBarRide from "./SearchBarRide";
 import "../css/RideList.css";
@@ -17,7 +18,8 @@ function RideList({
     const [searchTerm, setSearchTerm] = useState("");
     const [activeFilter, setActiveFilter] = useState<FilterType>("all");
 
-    const { rides, isLoading, error } = useParkRides(parkId);
+	const openRides = rides.filter((ride) => ride.is_open).sort(byWaitTime);
+	const closedRides = rides.filter((ride) => !ride.is_open);
 
     // Filtrage basé sur la recherche et la catégorie
     const filteredRides = rides.filter((ride) => {
@@ -32,6 +34,17 @@ function RideList({
 
     if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
     if (error) return <div className="error">{error}</div>;
+			<ul className="ride-list" aria-live="polite">
+				{openRides.map((ride, index) => (
+					<RideItem
+						key={ride.id}
+						ride={ride}
+						index={index}
+						favorites={favoriteRides}
+						onToggle={addFavorite}
+					/>
+				))}
+			</ul>
 
     return (
         <div className="ride-list-container" aria-live="polite">

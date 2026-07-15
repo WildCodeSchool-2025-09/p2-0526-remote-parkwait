@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ParkHeader from "../components/ParkHeader";
 import RideList from "../components/RideList";
@@ -7,10 +8,22 @@ import type { Ride } from "../types";
 function Park({
 	addFavorite,
 	favoriteRides,
-}: { addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
+	setCurrentParkId,
+}: {
+	addFavorite: (ride: Ride) => void;
+	favoriteRides: Ride[];
+	setCurrentParkId: (id: number | null) => void;
+}) {
 	const { id } = useParams<{ id: string }>();
 	const parkId = Number(id);
 	const summary = useParkSummary(id);
+
+	// on informe App.tsx quel parc est actuellement affiché
+	useEffect(() => {
+		if (parkId) {
+			setCurrentParkId(parkId);
+		}
+	}, [parkId, setCurrentParkId]);
 
 	if (summary === null) {
 		return <p>Chargement...</p>;
