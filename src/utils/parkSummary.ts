@@ -15,6 +15,10 @@ function isParkOpen(allRides: Ride[]): boolean {
 	return allRides.some((ride) => ride.is_open);
 }
 
+function getOpenRidesCount(allRides: Ride[]): number {
+	return allRides.filter((ride) => ride.is_open).length;
+}
+
 function getAverageWaitTime(allRides: Ride[]): number {
 	const openRides = allRides.filter((ride) => ride.is_open);
 
@@ -52,5 +56,8 @@ export async function getParkSummary(park: Park): Promise<ParkSummary> {
 		isOpen: open,
 		closingTime: `22h - ${park.country}`,
 		affluence: affluence,
+		averageWaitTime: average,
+		openRidesCount: getOpenRidesCount(allRides),
+		totalRidesCount: allRides.length,
 	};
 }

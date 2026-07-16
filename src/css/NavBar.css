@@ -25,6 +25,24 @@
 	color: var(--color-text);
 }
 
+.NavBar-links {
+	display: flex;
+	align-items: center;
+	gap: var(--space-5);
+}
+
+.favorites-link {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text);
+	text-decoration: none;
+}
+
+.favorites-link:hover,
+.favorites-link:focus-visible {
+	color: var(--color-primary);
+}
+
 .LastUpdate_Refresh {
 	display: flex;
 	align-items: center;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../css/ParkFilter.css";
-import myIcon from "/icons/world.svg";
+import myIcon from "../asset/img/icons/world.svg";
 import type { ParkFilterProps } from "../types";
 
 function ParkFilter({
@@ -23,7 +23,7 @@ function ParkFilter({
 
 			{isOpen && (
 				<ul className="filter-list">
-					{countries.map((country) => (
+					{countries.map((country: string) => (
 						<li key={country}>
 							<button
 								type="button"
