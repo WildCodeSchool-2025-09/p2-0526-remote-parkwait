@@ -5,13 +5,18 @@ export interface RideWithCategory extends Ride {
 	category: string;
 }
 
-export const useParkRides = (parkId: number) => {
+export const useParkRides = (parkId: number | null) => {
 	const [rides, setRides] = useState<RideWithCategory[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
 	useEffect(() => {
+		if (!parkId) {
+			setIsLoading(false);
+			return;
+		}
+
 		const fetchParkData = async () => {
 			try {
 				const response = await fetch(

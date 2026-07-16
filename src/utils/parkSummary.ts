@@ -59,5 +59,7 @@ export async function getParkSummary(park: Park): Promise<ParkSummary> {
 		openRidesCount: getOpenRidesCount(allRides),
 		totalRidesCount: allRides.length,
 		averageWaitTime: average,
+		latitude: Number(park.latitude),
+		longitude: Number(park.longitude),
 	};
 }

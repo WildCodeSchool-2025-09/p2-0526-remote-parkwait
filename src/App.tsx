@@ -13,14 +13,11 @@ function App() {
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
 	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
 	const [doneRideIds, setDoneRideIds] = useState<number[]>([]);
-
-	// on récupère les rides à jour du parc actuellement sélectionné
-	const { rides: freshRides } = useParkRides(currentParkId ?? 0);
-
-	// on reconstruit la liste des rides favorites à partir des ids + données fraîches
+	const { rides: freshRides } = useParkRides(currentParkId);
 	const favoriteRides: Ride[] = freshRides.filter((ride) =>
 		favoriteRideIds.includes(ride.id),
 	);
+	const [searchTerm, setSearchTerm] = useState("");
 
 	function addFavorite(ride: Ride) {
 		const alreadyFavorite = favoriteRideIds.some((fav) => fav === ride.id);
@@ -61,6 +58,8 @@ function App() {
 							<Home
 								favoriteParks={favoriteParks}
 								addFavoritePark={addFavoritePark}
+								searchTerm={searchTerm}
+								setSearchTerm={setSearchTerm}
 							/>
 						}
 					/>
