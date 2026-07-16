@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import type { Land, Park, ParkQueueData, ParkSummary } from "../types";
 import type { ReactNode } from "react";
 import cancelIcon from "../asset/img/icons/cancel.svg";
 import checkCircleIcon from "../asset/img/icons/checkcircle.svg";
 import "../css/ShowParksCard.css";
-import type { Park, ParkSummary } from "../types";
 import { getParkSummary } from "../utils/parkSummary";
 
 interface ParkCardProps {
@@ -31,12 +32,14 @@ function ParkCard({ park, children }: ParkCardProps) {
 
 	return (
 		<article className="ParkCard">
+			<Link to={`/park/${park.id}`} className="ParkCard-Link">
 			<p className="ParkCard-name">{park.name}</p>
 			<p className={`ParkCard-status ${status.className}`}>
 				{status.icon && <img src={status.icon} alt="" width="16" />}
 				{status.text}
 			</p>
 			<p className="ParkCard-country">{park.country}</p>
+			</Link>
 			{children}
 		</article>
 	);
