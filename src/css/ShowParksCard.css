@@ -69,7 +69,7 @@
 }
 
 .ParkCard-image {
-    height: 140px;
+    height: 90px;
     object-fit: cover;
     border-radius: 8px 8px 0 0;
     flex-shrink: 0;
