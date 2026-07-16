@@ -10,17 +10,17 @@ function RideItem({
 	index,
 	variant = "open",
 	hideCategory = false,
-	favorites,
-	onToggle,
+	addFavorite,
+	favoriteRides,
 	doneRideIds,
 	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
 }: RideItemProps) {
 	return (
-		<li className={`ride-item ${variant === "closed" ? "closed" : ""}`}>
+		<li className={`ride-item ${variant !== "open" ? variant : ""}`}>
 			<div className="ride-info">
-				{index !== undefined && (
-					<span className="ride-number">{index + 1}</span>
-				)}
+				{index !== undefined && <span className="ride-number">{index}</span>}
 				<div className="ride-text">
 					<h3>{ride.name}</h3>
 					{!hideCategory && (
@@ -30,19 +30,56 @@ function RideItem({
 			</div>
 
 			<div className="ride-actions">
-				{variant === "closed" ? (
-					<div className="ride-status">Fermé</div>
-				) : (
-					<div className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}>
-						{ride.wait_time} min
-					</div>
+				{variant === "closed" && <div className="ride-status">Closed</div>}
+				{variant === "done" && (
+					<>
+						<div className="ride-status">Done</div>
+						<Done
+							ride={ride}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
+						/>
+						<HiddenButton
+							ride={ride}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
+						/>
+					</>
 				)}
-
-				{toggleDone && (
-					<Done ride={ride} doneRideIds={doneRideIds ?? []} toggleDone={toggleDone} />
+				{variant === "hidden" && (
+					<>
+						<div className="ride-status">Hidden</div>
+						<HiddenButton
+							ride={ride}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
+						/>
+					</>
 				)}
-				<FavoriteButton item={ride} favorites={favorites} onToggle={onToggle} />
-				<HiddenButton rideName={ride.name} />
+				{variant === "open" && (
+					<>
+						<div
+							className={`ride-wait-time ${getWaitTimeClass(ride.wait_time)}`}
+						>
+							{ride.wait_time} min
+						</div>
+						<Done
+							ride={ride}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
+						/>
+						<FavoriteButton
+							ride={ride}
+							addFavorite={addFavorite}
+							favoriteRides={favoriteRides}
+						/>
+						<HiddenButton
+							ride={ride}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
+						/>
+					</>
+				)}
 			</div>
 		</li>
 	);

@@ -17,13 +17,14 @@ function ParkFilter({
 				className="filter-trigger"
 				onClick={() => setIsOpen(!isOpen)}
 			>
-				<img src={myIcon} alt="world Icon" className="btn-icon" />
-				Pays : {selectedCountry} {isOpen ? "▲" : "▼"}
+				<img src={myIcon} alt="" className="btn-icon" />
+				{selectedCountry === "All" ? `Country: ${selectedCountry}` : selectedCountry}{" "}
+				{isOpen ? "▲" : "▼"}
 			</button>
 
 			{isOpen && (
 				<ul className="filter-list">
-					{countries.map((country: string) => (
+					{countries.map((country) => (
 						<li key={country}>
 							<button
 								type="button"

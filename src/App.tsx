@@ -4,34 +4,29 @@ import "./css/App.css";
 import "./css/Reset.css";
 import NavBar from "./components/NavBar.tsx";
 import { useParkRides } from "./hooks/useParkRides.ts";
-import FavoriteList from "./pages/FavoriteList.tsx";
 import Home from "./pages/Home.tsx";
 import Park from "./pages/Park.tsx";
 import type { Park as ParkType, Ride } from "./types.ts";
-import { byWaitTime } from "./utils/rideUtils.ts";
 
 function App() {
-	const [favoriteRides, setFavoriteRides] = useState<Ride[]>([]);
+	const [favoriteRideIds, setFavoriteRideIds] = useState<number[]>([]);
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
 	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
 	const [doneRideIds, setDoneRideIds] = useState<number[]>([]);
-
-	// on récupère les rides à jour du parc actuellement sélectionné
-	const { rides: freshRides } = useParkRides(currentParkId ?? 0);
-
-	// on rafraîchit les favoris du parc actuellement affiché avec les données à jour
-	// (wait_time notamment) ; les favoris des autres parcs gardent leur dernier snapshot connu
-	const favoriteRidesWithFreshData: Ride[] = favoriteRides
-		.map((fav) => freshRides.find((ride) => ride.id === fav.id) ?? fav)
-		.sort(byWaitTime);
+	const [hiddenRideIds, setHiddenRideIds] = useState<number[]>([]);
+	const { rides: freshRides } = useParkRides(currentParkId);
+	const favoriteRides: Ride[] = freshRides.filter((ride) =>
+		favoriteRideIds.includes(ride.id),
+	);
+	const [searchTerm, setSearchTerm] = useState("");
 
 	function addFavorite(ride: Ride) {
-		const alreadyFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+		const alreadyFavorite = favoriteRideIds.some((fav) => fav === ride.id);
 
 		if (alreadyFavorite) {
-			setFavoriteRides(favoriteRides.filter((fav) => fav.id !== ride.id));
+			setFavoriteRideIds(favoriteRideIds.filter((fav) => fav !== ride.id));
 		} else {
-			setFavoriteRides([...favoriteRides, ride]);
+			setFavoriteRideIds([...favoriteRideIds, ride.id]);
 		}
 	}
 
@@ -46,11 +41,19 @@ function App() {
 	}
 
 	function toggleDone(id: number) {
-	if (doneRideIds.some((rideId) => rideId === id)) {
-		setDoneRideIds(doneRideIds.filter((rideId) => rideId !== id));
-	} else {
-		setDoneRideIds([...doneRideIds, id]);
+		if (doneRideIds.some((rideId) => rideId === id)) {
+			setDoneRideIds(doneRideIds.filter((rideId) => rideId !== id));
+		} else {
+			setDoneRideIds([...doneRideIds, id]);
+		}
 	}
+
+	function toggleHidden(id: number) {
+		if (hiddenRideIds.some((rideId) => rideId === id)) {
+			setHiddenRideIds(hiddenRideIds.filter((rideId) => rideId !== id));
+		} else {
+			setHiddenRideIds([...hiddenRideIds, id]);
+		}
 	}
 
 	return (
@@ -64,45 +67,26 @@ function App() {
 							<Home
 								favoriteParks={favoriteParks}
 								addFavoritePark={addFavoritePark}
+								searchTerm={searchTerm}
+								setSearchTerm={setSearchTerm}
 							/>
 						}
 					/>
 					<Route
-						path="/park/:id"
+						path="/park/:parkId"
 						element={
 							<Park
 								addFavorite={addFavorite}
-								favoriteRides={favoriteRidesWithFreshData}
+								favoriteRides={favoriteRides}
 								setCurrentParkId={setCurrentParkId}
 								doneRideIds={doneRideIds}
 								toggleDone={toggleDone}
+								hiddenRideIds={hiddenRideIds}
+								toggleHidden={toggleHidden}
 							/>
 						}
 					/>
-					<Route
-						path="/favorites"
-						element={
-							<FavoriteList
-								title="FAVORIS"
-								items={favoriteRidesWithFreshData}
-								emptyMessage="Vous n'avez pas encore ajouté de favoris. Cliquez sur le cœur d'une attraction pour l'ajouter ici."
-								isOpen={(ride) => ride.is_open}
-								renderStatus={(ride) => `${ride.wait_time} min d'attente`}
-							/>
-						}
-					/>
-					<Route
-						path="/favorite-parks"
-						element={
-							<FavoriteList
-								title="PARCS FAVORIS"
-								items={favoriteParks}
-								emptyMessage="Vous n'avez pas encore ajouté de parc en favoris. Cliquez sur le cœur d'un parc pour l'ajouter ici."
-								renderStatus={(park) => park.country}
-							/>
-						}
-					/>
-					<Route path="*" element={<p>Page introuvable</p>} />
+					<Route path="*" element={<p>Page not found</p>} />
 				</Routes>
 			</BrowserRouter>
 		</>

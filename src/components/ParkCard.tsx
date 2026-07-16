@@ -1,46 +1,74 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { Land, Park, ParkQueueData, ParkSummary } from "../types";
-import type { ReactNode } from "react";
-import cancelIcon from "../asset/img/icons/cancel.svg";
-import checkCircleIcon from "../asset/img/icons/checkcircle.svg";
 import "../css/ShowParksCard.css";
-import { getParkSummary } from "../utils/parkSummary";
+import { useParkSummary } from "../hooks/useParkSummary";
+import type { Park } from "../types";
+import ParkFavoriteButton from "./ParkFavoriteButton";
+import ParkKPIs from "./ParkKPIs";
+import { useState } from "react";
 
-interface ParkCardProps {
+function ParkCard({
+	park,
+	favoriteParks,
+	addFavoritePark,
+}: {
 	park: Park;
-	children?: ReactNode;
-}
+	favoriteParks?: Park[];
+	addFavoritePark?: (park: Park) => void;
+}) {
+	const summary = useParkSummary(String(park.id));
 
-function ParkCard({ park, children }: ParkCardProps) {
-	const [summary, setSummary] = useState<ParkSummary | null>(null);
-
-	useEffect(() => {
-		getParkSummary(park).then(setSummary);
-	}, [park]);
+	const [imgSrc, setImgSrc] = useState(`/icons/parks/${park.id}.webp`);
+	const [triedFallback, setTriedFallback] = useState(false);
 
 	const status =
 		summary === null
-			? { text: "...", icon: null, className: "" }
+			? { text: "...", className: "" }
 			: summary.isOpen
-				? {
-						text: `Ouvert jusqu'à ${summary.closingTime}`,
-						icon: checkCircleIcon,
-						className: "is-open",
-					}
-				: { text: "Fermé", icon: cancelIcon, className: "is-closed" };
+				? { text: "Open", className: "is-open" }
+				: { text: "Closed", className: "is-closed" };
+
+	function handleImageError() {
+		if (!triedFallback) {
+			setImgSrc("/icons/parks/default.webp");
+			setTriedFallback(true);
+		}
+	}
 
 	return (
 		<article className="ParkCard">
-			<Link to={`/park/${park.id}`} className="ParkCard-Link">
-			<p className="ParkCard-name">{park.name}</p>
-			<p className={`ParkCard-status ${status.className}`}>
-				{status.icon && <img src={status.icon} alt="" width="16" />}
-				{status.text}
-			</p>
-			<p className="ParkCard-country">{park.country}</p>
+			<Link to={`/park/${park.id}`} className="ParkCard-link">
+				<div className="ParkCard-header">
+					<img
+						src={imgSrc}
+						alt=""
+						className="ParkCard-image"
+						onError={handleImageError}
+					/>
+					<div className="ParkCard-text">
+						<h2 className="ParkCard-name">{park.name}</h2>
+						<p className={`ParkCard-status ${status.className}`}>
+							{status.text}
+						</p>
+						<p className="ParkCard-country">{park.country}</p>
+					</div>
+				</div>
+
+				{summary && (
+					<div className="ParkCard-kpis">
+						<ParkKPIs summary={summary} />
+					</div>
+				)}
 			</Link>
-			{children}
+
+			{addFavoritePark && favoriteParks && (
+				<div className="ParkCard-favorite">
+					<ParkFavoriteButton
+						park={park}
+						addFavoritePark={addFavoritePark}
+						favoriteParks={favoriteParks}
+					/>
+				</div>
+			)}
 		</article>
 	);
 }

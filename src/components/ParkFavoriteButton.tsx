@@ -1,16 +1,20 @@
 import favIconEmpty from "../asset/img/icons/favempty.svg";
 import favIconFilled from "../asset/img/icons/favfull.svg";
-import type { Ride } from "../types";
+import type { Park } from "../types";
 
-function FavoriteButton({
-	ride,
-	addFavorite,
-	favoriteRides,
-}: { ride: Ride; addFavorite: (ride: Ride) => void; favoriteRides: Ride[] }) {
-	const isFavorite = favoriteRides.some((fav) => fav.id === ride.id);
+function ParkFavoriteButton({
+	park,
+	addFavoritePark,
+	favoriteParks,
+}: {
+	park: Park;
+	addFavoritePark: (park: Park) => void;
+	favoriteParks: Park[];
+}) {
+	const isFavorite = favoriteParks.some((fav) => fav.id === park.id);
 
 	function handleClick() {
-		addFavorite(ride);
+		addFavoritePark(park);
 	}
 
 	return (
@@ -20,8 +24,8 @@ function FavoriteButton({
 			onClick={handleClick}
 			aria-label={
 				isFavorite
-					? `Remove ${ride.name} from favorites`
-					: `Add ${ride.name} to favorites`
+					? `Remove ${park.name} from favorites`
+					: `Add ${park.name} to favorites`
 			}
 			aria-pressed={isFavorite}
 			title="Favorites"
@@ -35,4 +39,4 @@ function FavoriteButton({
 	);
 }
 
-export default FavoriteButton;
+export default ParkFavoriteButton;

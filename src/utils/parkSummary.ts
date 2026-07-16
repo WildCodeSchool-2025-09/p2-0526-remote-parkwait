@@ -32,12 +32,12 @@ function getAverageWaitTime(allRides: Ride[]): number {
 
 function getAffluenceLevel(averageWait: number): AffluenceLevel {
 	if (averageWait < 20) {
-		return "Faible";
+		return "Low";
 	}
 	if (averageWait <= 40) {
-		return "Moderée";
+		return "Moderate";
 	}
-	return "Elevée";
+	return "High";
 }
 
 export async function getParkSummary(park: Park): Promise<ParkSummary> {
@@ -56,8 +56,10 @@ export async function getParkSummary(park: Park): Promise<ParkSummary> {
 		isOpen: open,
 		closingTime: `22h - ${park.country}`,
 		affluence: affluence,
-		averageWaitTime: average,
 		openRidesCount: getOpenRidesCount(allRides),
 		totalRidesCount: allRides.length,
+		averageWaitTime: average,
+		latitude: Number(park.latitude),
+		longitude: Number(park.longitude),
 	};
 }

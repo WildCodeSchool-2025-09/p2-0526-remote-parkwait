@@ -4,7 +4,15 @@ import { getLandIcon } from "../utils/rideUtils";
 import RideItem from "./RideItem";
 import "../css/LandSection.css";
 
-function LandSection({ land }: LandSectionProps) {
+function LandSection({
+	land,
+	addFavorite,
+	favoriteRides,
+	doneRideIds,
+	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
+}: LandSectionProps) {
 	const { isOpen, toggle } = useLandSection();
 
 	return (
@@ -17,7 +25,7 @@ function LandSection({ land }: LandSectionProps) {
 			>
 				<div className="land-title">
 					<img src={getLandIcon(land.name)} alt="" className="land-icon" />
-					<span className="land-name">{land.name}</span>
+					<h2 className="land-name">{land.name}</h2>
 					<span className="land-count">{land.rides.length} attractions</span>
 				</div>
 				<span className={`chevron ${isOpen ? "open" : ""}`}>▾</span>
@@ -29,10 +37,14 @@ function LandSection({ land }: LandSectionProps) {
 						<RideItem
 							key={ride.id}
 							ride={ride}
-							index={index}
-							hideCategory={true}
-							favorites={[]}
-							onToggle={() => {}}
+							index={index + 1}
+							hideCategory
+							addFavorite={addFavorite}
+							favoriteRides={favoriteRides}
+							doneRideIds={doneRideIds}
+							toggleDone={toggleDone}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
 						/>
 					))}
 				</ul>

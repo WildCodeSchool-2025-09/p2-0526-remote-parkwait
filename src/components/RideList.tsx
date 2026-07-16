@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useParkRides } from "../hooks/useParkRides";
 import type { FilterType, Ride } from "../types";
-import { byWaitTime } from "../utils/rideUtils";
+import { groupRidesByLand } from "../utils/rideUtils";
+import LandSection from "./LandSection";
 import RideItem from "./RideItem";
 import SearchBarRide from "./SearchBarRide";
 import "../css/RideList.css";
@@ -12,95 +13,236 @@ function RideList({
 	favoriteRides,
 	doneRideIds,
 	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
 }: {
 	parkId: number;
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
 	doneRideIds: number[];
 	toggleDone: (id: number) => void;
+	hiddenRideIds: number[];
+	toggleHidden: (id: number) => void;
 }) {
 	const { rides, isLoading, error } = useParkRides(parkId);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+	const [activeFilter, setActiveFilter] = useState<FilterType>("All");
+	const [isOpenListOpen, setIsOpenListOpen] = useState(true);
+	const [isClosedOpen, setIsClosedOpen] = useState(false);
+	const [isDoneOpen, setIsDoneOpen] = useState(false);
+	const [isHiddenOpen, setIsHiddenOpen] = useState(false);
 
-	// Filtrage basé sur la recherche et la catégorie
-	const filteredRides = rides.filter((ride) => {
-		const matchesSearch = ride.name.toLowerCase().includes(searchTerm.toLowerCase());
-		const matchesFilter = activeFilter === "all" || ride.category === activeFilter;
-		return matchesSearch && matchesFilter;
-	});
+	const isFavorite = (ride: { id: number }) =>
+		favoriteRides.some((fav) => fav.id === ride.id);
 
-	// On divise la liste filtrée en trois catégories : ouvertes, fermées, terminées
-	const openRides = filteredRides
-		.filter((ride) => ride.is_open && !doneRideIds.includes(ride.id))
-		.sort(byWaitTime);
-	const closedRides = filteredRides.filter(
-		(ride) => !ride.is_open && !doneRideIds.includes(ride.id),
+	const openRides = rides
+		.filter(
+			(ride) =>
+				ride.is_open &&
+				!doneRideIds.some((rideId) => rideId === ride.id) &&
+				!hiddenRideIds.some((rideId) => rideId === ride.id),
+		)
+		.sort((a, b) => a.wait_time - b.wait_time);
+
+	const closedRides = rides.filter(
+		(ride) =>
+			!ride.is_open &&
+			!doneRideIds.some((rideId) => rideId === ride.id) &&
+			!hiddenRideIds.some((rideId) => rideId === ride.id),
 	);
-	const doneRides = filteredRides.filter((ride) => doneRideIds.includes(ride.id));
 
-	if (isLoading) return <p aria-live="polite">Chargement des attractions...</p>;
+	const doneRides = rides.filter(
+		(ride) =>
+			doneRideIds.some((rideId) => rideId === ride.id) &&
+			!hiddenRideIds.some((rideId) => rideId === ride.id),
+	);
+
+	const hiddenRides = rides.filter((ride) =>
+		hiddenRideIds.some((rideId) => rideId === ride.id),
+	);
+
+	const searchedOpenRides = openRides.filter((ride) =>
+		ride.name.toLowerCase().includes(searchTerm.toLowerCase()),
+	);
+
+	const filteredOpenRides =
+		activeFilter === "Favorites"
+			? searchedOpenRides.filter(isFavorite)
+			: searchedOpenRides;
+
+	const displayedClosedRides =
+		activeFilter === "Favorites" ? closedRides.filter(isFavorite) : closedRides;
+
+	const displayedDoneRides =
+		activeFilter === "Favorites" ? doneRides.filter(isFavorite) : doneRides;
+
+	const displayedHiddenRides =
+		activeFilter === "Favorites" ? hiddenRides.filter(isFavorite) : hiddenRides;
+
+	const hasNoFavorites =
+		activeFilter === "Favorites" &&
+		filteredOpenRides.length === 0 &&
+		displayedClosedRides.length === 0 &&
+		displayedDoneRides.length === 0 &&
+		displayedHiddenRides.length === 0;
+
+	const groupedLands = groupRidesByLand(filteredOpenRides);
+
+	if (isLoading) return <p aria-live="polite">Loading attractions...</p>;
 	if (error) return <div className="error">{error}</div>;
 
 	return (
 		<div className="ride-list-container" aria-live="polite">
 			<div className="ride-stats">
 				<SearchBarRide
-					onSearchChange={(value) => setSearchTerm(value)}
-					onFilterChange={(filter) => setActiveFilter(filter)}
+					onSearchChange={setSearchTerm}
+					onFilterChange={setActiveFilter}
 				/>
-				<h2>{filteredRides.length} ATTRACTIONS</h2>
-				<h3>Attractions ouvertes : {openRides.length}</h3>
+				<h2>{rides.length} ATTRACTIONS</h2>
+				<h3>Open attractions: {openRides.length}</h3>
 			</div>
 
-			<ul className="ride-list">
-				{openRides.map((ride, index) => (
-					<RideItem
-						key={ride.id}
-						ride={ride}
-						index={index}
-						favorites={favoriteRides}
-						onToggle={addFavorite}
+			{hasNoFavorites && (
+				<p className="loading-text">
+					You haven't added any attractions to your favorites yet. Click the
+					heart on an attraction to add it here.
+				</p>
+			)}
+
+			{activeFilter === "Theme" ? (
+				groupedLands.map((land) => (
+					<LandSection
+						key={land.name}
+						land={land}
+						addFavorite={addFavorite}
+						favoriteRides={favoriteRides}
 						doneRideIds={doneRideIds}
 						toggleDone={toggleDone}
+						hiddenRideIds={hiddenRideIds}
+						toggleHidden={toggleHidden}
 					/>
-				))}
-			</ul>
-
-			{closedRides.length > 0 && (
-				<section className="closed-rides-section">
-					<h2>FERMÉES ({closedRides.length})</h2>
-					<ul className="ride-list closed-list">
-						{closedRides.map((ride) => (
-							<RideItem
-								key={ride.id}
-								ride={ride}
-								variant="closed"
-								favorites={favoriteRides}
-								onToggle={addFavorite}
-								doneRideIds={doneRideIds}
-								toggleDone={toggleDone}
-							/>
-						))}
-					</ul>
+				))
+			) : (
+				<section className="open-rides-section">
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsOpenListOpen((prev) => !prev)}
+						aria-expanded={isOpenListOpen}
+					>
+						<h2>OPEN ({filteredOpenRides.length})</h2>
+						<span className={`chevron ${isOpenListOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isOpenListOpen && (
+						<ul className="ride-list">
+							{filteredOpenRides.map((ride, index) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									index={index + 1}
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+									hiddenRideIds={hiddenRideIds}
+									toggleHidden={toggleHidden}
+								/>
+							))}
+						</ul>
+					)}
 				</section>
 			)}
 
-			{doneRides.length > 0 && (
+			{displayedDoneRides.length > 0 && (
 				<section className="done-rides-section">
-					<h2>TERMINÉES ({doneRides.length})</h2>
-					<ul className="ride-list done-list">
-						{doneRides.map((ride) => (
-							<RideItem
-								key={ride.id}
-								ride={ride}
-								favorites={favoriteRides}
-								onToggle={addFavorite}
-								doneRideIds={doneRideIds}
-								toggleDone={toggleDone}
-							/>
-						))}
-					</ul>
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsDoneOpen((prev) => !prev)}
+						aria-expanded={isDoneOpen}
+					>
+						<h2>DONE ({displayedDoneRides.length})</h2>
+						<span className={`chevron ${isDoneOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isDoneOpen && (
+						<ul className="ride-list done-list">
+							{displayedDoneRides.map((ride) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									variant="done"
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+									hiddenRideIds={hiddenRideIds}
+									toggleHidden={toggleHidden}
+								/>
+							))}
+						</ul>
+					)}
+				</section>
+			)}
+
+			{displayedHiddenRides.length > 0 && (
+				<section className="hidden-rides-section">
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsHiddenOpen((prev) => !prev)}
+						aria-expanded={isHiddenOpen}
+					>
+						<h2>HIDDEN ({displayedHiddenRides.length})</h2>
+						<span className={`chevron ${isHiddenOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isHiddenOpen && (
+						<ul className="ride-list hidden-list">
+							{displayedHiddenRides.map((ride) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									variant="hidden"
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+									hiddenRideIds={hiddenRideIds}
+									toggleHidden={toggleHidden}
+								/>
+							))}
+						</ul>
+					)}
+				</section>
+			)}
+
+			{displayedClosedRides.length > 0 && (
+				<section className="closed-rides-section">
+					<button
+						type="button"
+						className="section-toggle"
+						onClick={() => setIsClosedOpen((prev) => !prev)}
+						aria-expanded={isClosedOpen}
+					>
+						<h2>CLOSED ({displayedClosedRides.length})</h2>
+						<span className={`chevron ${isClosedOpen ? "open" : ""}`}>▾</span>
+					</button>
+					{isClosedOpen && (
+						<ul className="ride-list closed-list">
+							{displayedClosedRides.map((ride) => (
+								<RideItem
+									key={ride.id}
+									ride={ride}
+									variant="closed"
+									addFavorite={addFavorite}
+									favoriteRides={favoriteRides}
+									doneRideIds={doneRideIds}
+									toggleDone={toggleDone}
+									hiddenRideIds={hiddenRideIds}
+									toggleHidden={toggleHidden}
+								/>
+							))}
+						</ul>
+					)}
 				</section>
 			)}
 		</div>

@@ -1,7 +1,13 @@
 import type { FilterButtonProps } from "../types";
 import "../css/FilterButton.css";
 
-function FilterButton({ label, isActive, onClick }: FilterButtonProps) {
+function FilterButton({
+	label,
+	isActive,
+	onClick,
+	icon,
+	plainIcon,
+}: FilterButtonProps) {
 	return (
 		<button
 			type="button"
@@ -9,6 +15,15 @@ function FilterButton({ label, isActive, onClick }: FilterButtonProps) {
 			onClick={onClick}
 			aria-pressed={isActive}
 		>
+			{icon && (
+				<span
+					className="filter-btn-icon"
+					style={{ maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` }}
+				/>
+			)}
+			{plainIcon && (
+				<img src={plainIcon} alt="" className="filter-btn-icon-img" />
+			)}
 			{label}
 		</button>
 	);

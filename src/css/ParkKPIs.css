@@ -1,9 +1,10 @@
-.kpi-container {
+.park-kpis {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	gap: var(--space-4);
+	margin: 0 auto var(--space-2);
+	padding: var(--space-6) var(--card-padding) var(--space-6);
 	max-width: var(--container-width);
-	margin: var(--space-6) auto;
 }
 
 .kpi-card {
@@ -11,7 +12,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: var(--space-2);
+	gap: var(--space-3);
 	background: var(--color-surface);
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius-lg);
@@ -29,6 +30,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex: 0 0 auto;
 	width: 28px;
 	height: 28px;
 	border-radius: var(--radius-sm);
@@ -48,7 +50,7 @@
 	-webkit-mask-size: contain;
 }
 
-.kpi-card p {
+.kpi-label {
 	font-size: var(--font-size-lg);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-text-secondary);
@@ -58,16 +60,17 @@
 .kpi-value {
 	font-size: var(--font-size-xl);
 	font-weight: var(--font-weight-bold);
+	margin: 0;
 }
 
-.kpi-value.wait-short {
+.kpi-value-good {
 	color: var(--color-success-text);
 }
 
-.kpi-value.wait-medium {
+.kpi-value-medium {
 	color: var(--color-warning-text);
 }
 
-.kpi-value.wait-long {
+.kpi-value-bad {
 	color: var(--color-danger-text);
 }

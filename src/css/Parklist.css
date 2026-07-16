@@ -1,11 +1,14 @@
+.park-list-container {
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: 0 var(--space-6);
+}
+
 .park-list-grid {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: var(--space-4);
 	margin-top: var(--space-6);
-	list-style: none;
-	padding: 0;
-	margin-left: 0;
 }
 
 .loading-text {

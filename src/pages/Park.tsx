@@ -12,16 +12,20 @@ function Park({
 	setCurrentParkId,
 	doneRideIds,
 	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
 }: {
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
 	setCurrentParkId: (id: number | null) => void;
 	doneRideIds: number[];
 	toggleDone: (id: number) => void;
+	hiddenRideIds: number[];
+	toggleHidden: (id: number) => void;
 }) {
-	const { id } = useParams<{ id: string }>();
-	const parkId = Number(id);
+	const { parkId: id } = useParams<{ parkId: string }>();
 	const summary = useParkSummary(id);
+	const parkId = Number(id);
 
 	useEffect(() => {
 		if (parkId) {
@@ -34,21 +38,25 @@ function Park({
 	}
 
 	return (
-		<div className="park-page">
+		<>
 			<ParkHeader summary={summary} />
 			<ParkKPIs summary={summary} />
-			{parkId ? (
-				<RideList
-					parkId={parkId}
-					addFavorite={addFavorite}
-					favoriteRides={favoriteRides}
-					doneRideIds={doneRideIds}
-					toggleDone={toggleDone}
-				/>
-			) : (
-				<p>Parc introuvable.</p>
-			)}
-		</div>
+			<div className="park-page">
+				{id ? (
+					<RideList
+						parkId={parkId}
+						addFavorite={addFavorite}
+						favoriteRides={favoriteRides}
+						doneRideIds={doneRideIds}
+						toggleDone={toggleDone}
+						hiddenRideIds={hiddenRideIds}
+						toggleHidden={toggleHidden}
+					/>
+				) : (
+					<p>Parc introuvable.</p>
+				)}
+			</div>
+		</>
 	);
 }
 

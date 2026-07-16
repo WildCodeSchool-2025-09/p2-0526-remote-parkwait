@@ -2,7 +2,6 @@ import clockIcon from "../asset/img/icons/clock.svg";
 import usergroupIcon from "../asset/img/icons/usergroup.svg";
 import "../css/ParkKPIs.css";
 import type { AffluenceLevel, ParkSummary } from "../types";
-import { getWaitTimeClass } from "../utils/rideUtils";
 
 const attractionIcon = "/icons/lands/attraction.svg";
 
@@ -10,10 +9,18 @@ interface ParkKPIsProps {
 	summary: ParkSummary;
 }
 
-const AFFLUENCE_CLASS: Record<AffluenceLevel, string> = {
-	Faible: "wait-short",
-	Moderée: "wait-medium",
-	Elevée: "wait-long",
+type KpiTone = "good" | "medium" | "bad";
+
+function getWaitTone(waitTime: number): KpiTone {
+	if (waitTime <= 20) return "good";
+	if (waitTime <= 50) return "medium";
+	return "bad";
+}
+
+const AFFLUENCE_TONE: Record<AffluenceLevel, KpiTone> = {
+	Low: "good",
+	Moderate: "medium",
+	High: "bad",
 };
 
 function KpiIcon({ icon }: { icon: string }) {
@@ -29,35 +36,39 @@ function KpiIcon({ icon }: { icon: string }) {
 
 function ParkKPIs({ summary }: ParkKPIsProps) {
 	const averageWaitTime = Math.round(summary.averageWaitTime);
+	const waitTone = getWaitTone(averageWaitTime);
+	const affluenceTone = AFFLUENCE_TONE[summary.affluence];
 
 	return (
-		<section className="kpi-container" aria-label="Indicateurs du parc">
+		<section className="park-kpis">
 			<article className="kpi-card">
 				<div className="kpi-header">
 					<KpiIcon icon={clockIcon} />
-					<p>Attente moyenne</p>
+					<p className="kpi-label">Average wait</p>
 				</div>
-				<strong className={`kpi-value ${getWaitTimeClass(averageWaitTime)}`}>
+				<p className={`kpi-value kpi-value-${waitTone}`}>
 					{averageWaitTime} min
-				</strong>
+				</p>
 			</article>
+
 			<article className="kpi-card">
 				<div className="kpi-header">
 					<KpiIcon icon={attractionIcon} />
-					<p>Attractions ouvertes</p>
+					<p className="kpi-label">Open attractions</p>
 				</div>
-				<strong className="kpi-value wait-short">
+				<p className="kpi-value kpi-value-good">
 					{summary.openRidesCount} / {summary.totalRidesCount}
-				</strong>
+				</p>
 			</article>
+
 			<article className="kpi-card">
 				<div className="kpi-header">
 					<KpiIcon icon={usergroupIcon} />
-					<p>Affluence</p>
+					<p className="kpi-label">Crowd level</p>
 				</div>
-				<strong className={`kpi-value ${AFFLUENCE_CLASS[summary.affluence]}`}>
+				<p className={`kpi-value kpi-value-${affluenceTone}`}>
 					{summary.affluence}
-				</strong>
+				</p>
 			</article>
 		</section>
 	);

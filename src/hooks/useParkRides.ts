@@ -5,16 +5,17 @@ export interface RideWithCategory extends Ride {
 	category: string;
 }
 
-export const useParkRides = (parkId: number) => {
+export const useParkRides = (parkId: number | null) => {
 	const [rides, setRides] = useState<RideWithCategory[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
 	useEffect(() => {
-		setRides([]);
-		setIsLoading(true);
-		setError(null);
+		if (!parkId) {
+			setIsLoading(false);
+			return;
+		}
 
 		const fetchParkData = async () => {
 			try {
@@ -28,7 +29,7 @@ export const useParkRides = (parkId: number) => {
 				const ridesWithoutLand: RideWithCategory[] = (data.rides || []).map(
 					(ride) => ({
 						...ride,
-						category: "Général",
+						category: "General",
 					}),
 				);
 				const ridesFromLands: RideWithCategory[] = (data.lands || []).flatMap(
@@ -42,7 +43,7 @@ export const useParkRides = (parkId: number) => {
 				setError(null);
 			} catch (err) {
 				console.error(err);
-				setError("Impossible de charger les attractions.");
+				setError("Unable to load attractions.");
 			} finally {
 				setIsLoading(false);
 			}
