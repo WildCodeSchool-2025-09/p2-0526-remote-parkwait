@@ -25,7 +25,7 @@ function LandSection({
 			>
 				<div className="land-title">
 					<img src={getLandIcon(land.name)} alt="" className="land-icon" />
-					<span className="land-name">{land.name}</span>
+					<h2 className="land-name">{land.name}</h2>
 					<span className="land-count">{land.rides.length} attractions</span>
 				</div>
 				<span className={`chevron ${isOpen ? "open" : ""}`}>▾</span>

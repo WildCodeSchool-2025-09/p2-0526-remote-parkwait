@@ -6,7 +6,7 @@ function NavBar() {
 	return (
 		<section className="NavBar">
 			<Link to="/" className="imgNavBar">
-				<img src={parkWaitLogo} alt="ParkWait Logo" width="50" height="50" />
+				<img src={parkWaitLogo} alt="" width="50" height="50" />
 				<h1 className="NavBar-title">
 					Park<span className="NavBar-title-accent">Wait</span>
 				</h1>

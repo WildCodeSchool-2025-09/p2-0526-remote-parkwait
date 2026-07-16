@@ -40,12 +40,12 @@ function ParkCard({
 				<div className="ParkCard-header">
 					<img
 						src={imgSrc}
-						alt={park.name}
+						alt=""
 						className="ParkCard-image"
 						onError={handleImageError}
 					/>
 					<div className="ParkCard-text">
-						<p className="ParkCard-name">{park.name}</p>
+						<h2 className="ParkCard-name">{park.name}</h2>
 						<p className={`ParkCard-status ${status.className}`}>
 							{status.text}
 						</p>

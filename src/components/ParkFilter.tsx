@@ -17,7 +17,7 @@ function ParkFilter({
 				className="filter-trigger"
 				onClick={() => setIsOpen(!isOpen)}
 			>
-				<img src={myIcon} alt="world Icon" className="btn-icon" />
+				<img src={myIcon} alt="" className="btn-icon" />
 				{selectedCountry === "All" ? `Country: ${selectedCountry}` : selectedCountry}{" "}
 				{isOpen ? "▲" : "▼"}
 			</button>

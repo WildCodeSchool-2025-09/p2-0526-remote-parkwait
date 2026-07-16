@@ -145,7 +145,7 @@
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
-	border: 1.5px solid var(--color-border);
+	border: 1.5px solid var(--color-border-strong);
 	background: var(--color-surface);
 	display: flex;
 	align-items: center;
@@ -177,12 +177,12 @@
 }
 
 .favorite-button:not(.is-active) {
-	border-color: var(--color-danger-bg);
+	border-color: var(--color-danger);
 	background: var(--color-danger-bg);
 }
 
 .hidden-button:not(.is-active) {
-	border-color: var(--color-primary-soft);
+	border-color: var(--color-primary);
 	background: var(--color-primary-soft);
 }
 

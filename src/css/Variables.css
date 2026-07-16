@@ -10,23 +10,24 @@
 
 	--color-text: #1e1b4b;
 	--color-text-secondary: #6b7280;
-	--color-text-muted: #9ca3af;
+	--color-text-muted: #5a6270;
 	--color-text-white: #ffffff;
 
 	--color-border: #ececf3;
 	--color-border-hover: #d9d9e5;
+	--color-border-strong: #8f8fac;
 
 	--color-success: #22c55e;
 	--color-success-bg: #ecfdf3;
-	--color-success-text: #16a34a;
+	--color-success-text: #15803d;
 
 	--color-warning: #f59e0b;
 	--color-warning-bg: #fff7ed;
-	--color-warning-text: #d97706;
+	--color-warning-text: #b45309;
 
 	--color-danger: #ef4444;
 	--color-danger-bg: #fef2f2;
-	--color-danger-text: #dc2626;
+	--color-danger-text: #b91c1c;
 
 	--color-disabled: #9ca3af;
 	--color-disabled-bg: #f4f4f5;

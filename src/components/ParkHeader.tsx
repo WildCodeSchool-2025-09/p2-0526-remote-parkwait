@@ -30,7 +30,7 @@ function ParkHeader({ summary }: ParkHeaderProps) {
 				/>
 			</div>
 			<p className="label">Selected park</p>
-			<h1 className="title">{summary.name}</h1>
+			<h2 className="title">{summary.name}</h2>
 			<div className="badges">
 				<span
 					className={`badge ${summary.isOpen ? "badge-open" : "badge-closed"}`}
