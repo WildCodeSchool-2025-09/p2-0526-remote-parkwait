@@ -1,3 +1,4 @@
+import { useState } from "react";
 import cancelIcon from "../asset/img/icons/cancel.svg";
 import checkCircleIcon from "../asset/img/icons/checkcircle.svg";
 import WeatherBadge from "./WeatherBadge";
@@ -8,8 +9,26 @@ interface ParkHeaderProps {
 }
 
 function ParkHeader({ summary }: ParkHeaderProps) {
+	const [imgSrc, setImgSrc] = useState(`/icons/parks/${summary.id}.webp`);
+	const [triedFallback, setTriedFallback] = useState(false);
+
+	function handleImageError() {
+		if (!triedFallback) {
+			setImgSrc("/icons/parks/default.webp");
+			setTriedFallback(true);
+		}
+	}
+
 	return (
 		<header className="park-header">
+			<div className="park-header-image-wrapper">
+				<img
+					src={imgSrc}
+					alt=""
+					className="park-header-image"
+					onError={handleImageError}
+				/>
+			</div>
 			<p className="label">Parc sélectionné</p>
 			<h1 className="title">{summary.name}</h1>
 			<div className="badges">

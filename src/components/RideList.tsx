@@ -79,8 +79,8 @@ function RideList({
 					onSearchChange={setSearchTerm}
 					onFilterChange={setActiveFilter}
 				/>
-				<h1>{rides.length} ATTRACTIONS</h1>
-				<h2>Attractions ouvertes : {openRides.length}</h2>
+				<h2>{rides.length} ATTRACTIONS</h2>
+				<h3>Attractions ouvertes : {openRides.length}</h3>
 			</div>
 
 			{hasNoFavorites && (

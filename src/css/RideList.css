@@ -22,7 +22,7 @@
 	align-content: flex-start;
 }
 
-.ride-stats h1 {
+.ride-stats h2 {
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-bold);
 	letter-spacing: 0.3px;
@@ -32,7 +32,7 @@
 	padding-top: var(--space-4);
 }
 
-.ride-stats h2 {
+.ride-stats h3 {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -258,4 +258,16 @@
 	border-radius: var(--radius-md);
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 450px) {
+	.ride-stats  {
+	display: flex;
+    align-items: center;
+	}
+
+	.ride-stats h2 {
+		align-self: flex-start;
+		padding-left: var(--space-6);
+	}
 }
