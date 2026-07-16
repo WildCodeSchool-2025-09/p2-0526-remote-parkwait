@@ -1,6 +1,6 @@
 import cancelIcon from "../asset/img/icons/cancel.svg";
 import checkCircleIcon from "../asset/img/icons/checkcircle.svg";
-import graphBarIcon from "../asset/img/icons/graphbar.svg";
+import WeatherBadge from "./WeatherBadge";
 import type { ParkSummary } from "../types";
 
 interface ParkHeaderProps {
@@ -23,10 +23,7 @@ function ParkHeader({ summary }: ParkHeaderProps) {
 					/>
 					{summary.isOpen ? `Ouvert jusqu'à ${summary.closingTime}` : "Fermé"}
 				</span>
-				<span className="badge">
-					<img src={graphBarIcon} alt="" width="16" />
-					{summary.affluence} (Affluence)
-				</span>
+				<WeatherBadge lat={summary.latitude} lng={summary.longitude} />
 			</div>
 		</header>
 	);

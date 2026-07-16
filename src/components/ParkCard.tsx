@@ -14,6 +14,8 @@ function ParkCard({
 	addFavoritePark?: (park: Park) => void;
 }) {
 	const [isOpen, setIsOpen] = useState<boolean | null>(null);
+	const [imgSrc, setImgSrc] = useState(`/icons/parks/${park.id}.webp`);
+	const [triedFallback, setTriedFallback] = useState(false);
 
 	useEffect(() => {
 		fetch(`/api/parks/${park.id}/queue_times.json`)
@@ -34,12 +36,27 @@ function ParkCard({
 				? { text: "Ouvert", className: "is-open" }
 				: { text: "Fermé", className: "is-closed" };
 
+	function handleImageError() {
+		if (!triedFallback) {
+			setImgSrc("/icons/parks/default.webp");
+			setTriedFallback(true);
+		}
+	}
+
 	return (
 		<article className="ParkCard">
 			<Link to={`/park/${park.id}`} className="ParkCard-link">
-				<p className="ParkCard-name">{park.name}</p>
-				<p className={`ParkCard-status ${status.className}`}>{status.text}</p>
-				<p className="ParkCard-country">{park.country}</p>
+				<img
+					src={imgSrc}
+					alt={park.name}
+					className="ParkCard-image"
+					onError={handleImageError}
+				/>
+				<div className="ParkCard-text">
+					<p className="ParkCard-name">{park.name}</p>
+					<p className={`ParkCard-status ${status.className}`}>{status.text}</p>
+					<p className="ParkCard-country">{park.country}</p>
+				</div>
 			</Link>
 			{addFavoritePark && favoriteParks && (
 				<ParkFavoriteButton

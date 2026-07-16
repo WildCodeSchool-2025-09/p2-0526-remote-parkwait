@@ -91,8 +91,10 @@ export interface ParkFilterProps {
 }
 
 export interface SearchBarProps {
+	value: string;
 	onSearch: (value: string) => void;
 }
+
 export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
 
 export interface ParkSummary {
@@ -105,6 +107,8 @@ export interface ParkSummary {
 	openRidesCount: number;
 	totalRidesCount: number;
 	averageWaitTime: number;
+	latitude: number;
+	longitude: number;
 }
 
 export interface FavoriteButtonProps {
@@ -112,4 +116,10 @@ export interface FavoriteButtonProps {
 }
 export interface HiddenButtonProps {
 	rideName: string;
+}
+
+export interface WeatherData {
+    temperature: number;
+    weatherCode: number;
+    isDay: boolean;
 }

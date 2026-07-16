@@ -2,7 +2,7 @@ import "../css/index.css";
 import searchIcon from "../asset/img/icons/search.svg";
 import type { SearchBarProps } from "../types";
 
-function SearchBarPark({ onSearch }: SearchBarProps) {
+function SearchBarPark({ value, onSearch }: SearchBarProps) {
 	return (
 		<div className="search-container">
 			<div className="search-input-wrapper">
@@ -12,6 +12,7 @@ function SearchBarPark({ onSearch }: SearchBarProps) {
 					type="text"
 					aria-label="recherche de parc"
 					placeholder="Rechercher un parc..."
+					value={value}
 					onChange={(e) => onSearch(e.target.value)}
 				/>
 			</div>
