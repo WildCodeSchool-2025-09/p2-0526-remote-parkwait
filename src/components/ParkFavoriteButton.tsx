@@ -24,11 +24,11 @@ function ParkFavoriteButton({
 			onClick={handleClick}
 			aria-label={
 				isFavorite
-					? `Retirer ${park.name} des favoris`
-					: `Ajouter ${park.name} aux favoris`
+					? `Remove ${park.name} from favorites`
+					: `Add ${park.name} to favorites`
 			}
 			aria-pressed={isFavorite}
-			title="Favoris"
+			title="Favorites"
 		>
 			<img
 				src={isFavorite ? favIconFilled : favIconEmpty}

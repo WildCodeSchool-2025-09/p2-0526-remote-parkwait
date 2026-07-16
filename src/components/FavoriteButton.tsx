@@ -20,11 +20,11 @@ function FavoriteButton({
 			onClick={handleClick}
 			aria-label={
 				isFavorite
-					? `Retirer ${ride.name} des favoris`
-					: `Ajouter ${ride.name} aux favoris`
+					? `Remove ${ride.name} from favorites`
+					: `Add ${ride.name} to favorites`
 			}
 			aria-pressed={isFavorite}
-			title="Favoris"
+			title="Favorites"
 		>
 			<img
 				src={isFavorite ? favIconFilled : favIconEmpty}

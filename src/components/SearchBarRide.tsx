@@ -14,11 +14,11 @@ function SearchBarRide({ onSearchChange, onFilterChange }: SearchBarRideProps) {
 	return (
 		<div className="search-ride-container">
 			<div className="search-input-wrapper">
-				<img src={searchIcon} alt="Recherche" className="search-icon" />
+				<img src={searchIcon} alt="Search" className="search-icon" />
 				<input
 					type="text"
-					aria-label="rechecher une attraction"
-					placeholder="Rechercher une attraction..."
+					aria-label="search for an attraction"
+					placeholder="Search for an attraction..."
 					value={searchTerm}
 					onChange={handleSearch}
 					className="search-ride-input"
@@ -27,22 +27,22 @@ function SearchBarRide({ onSearchChange, onFilterChange }: SearchBarRideProps) {
 
 			<div className="filter-buttons">
 				<FilterButton
-					label="Toutes"
+					label="All"
 					icon={worldIcon}
-					isActive={activeFilter === "Toutes"}
-					onClick={() => handleFilterClick("Toutes")}
+					isActive={activeFilter === "All"}
+					onClick={() => handleFilterClick("All")}
 				/>
 				<FilterButton
-					label="Thème"
+					label="Theme"
 					icon={tagThemeIcon}
-					isActive={activeFilter === "Thème"}
-					onClick={() => handleFilterClick("Thème")}
+					isActive={activeFilter === "Theme"}
+					onClick={() => handleFilterClick("Theme")}
 				/>
 				<FilterButton
-					label="Favoris"
+					label="Favorites"
 					plainIcon={favFullIcon}
-					isActive={activeFilter === "Favoris"}
-					onClick={() => handleFilterClick("Favoris")}
+					isActive={activeFilter === "Favorites"}
+					onClick={() => handleFilterClick("Favorites")}
 				/>
 			</div>
 		</div>

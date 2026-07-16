@@ -20,8 +20,8 @@ function Done({
 			onClick={handleClick}
 			aria-label={
 				isDone
-					? `Marquer ${ride.name} comme non terminé`
-					: `Marquer ${ride.name} comme terminé`
+					? `Mark ${ride.name} as not done`
+					: `Mark ${ride.name} as done`
 			}
 			aria-pressed={isDone}
 			title="Done"

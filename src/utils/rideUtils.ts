@@ -10,7 +10,7 @@ export function getWaitTimeClass(waitTime: number): string {
 export function groupRidesByLand(rides: RideWithCategory[]): GroupedLand[] {
 	const map = new Map<string, RideWithCategory[]>();
 	for (const ride of rides) {
-		const landName = ride.category || "Autres attractions";
+		const landName = ride.category || "Other attractions";
 		if (!map.has(landName)) map.set(landName, []);
 		map.get(landName)?.push(ride);
 	}

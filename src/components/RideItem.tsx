@@ -14,6 +14,8 @@ function RideItem({
 	favoriteRides,
 	doneRideIds,
 	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
 }: RideItemProps) {
 	return (
 		<li className={`ride-item ${variant !== "open" ? variant : ""}`}>
@@ -28,14 +30,29 @@ function RideItem({
 			</div>
 
 			<div className="ride-actions">
-				{variant === "closed" && <div className="ride-status">Fermé</div>}
+				{variant === "closed" && <div className="ride-status">Closed</div>}
 				{variant === "done" && (
 					<>
-						<div className="ride-status">Terminé</div>
+						<div className="ride-status">Done</div>
 						<Done
 							ride={ride}
 							doneRideIds={doneRideIds}
 							toggleDone={toggleDone}
+						/>
+						<HiddenButton
+							ride={ride}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
+						/>
+					</>
+				)}
+				{variant === "hidden" && (
+					<>
+						<div className="ride-status">Hidden</div>
+						<HiddenButton
+							ride={ride}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
 						/>
 					</>
 				)}
@@ -56,7 +73,11 @@ function RideItem({
 							addFavorite={addFavorite}
 							favoriteRides={favoriteRides}
 						/>
-						<HiddenButton rideName={ride.name} />
+						<HiddenButton
+							ride={ride}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
+						/>
 					</>
 				)}
 			</div>

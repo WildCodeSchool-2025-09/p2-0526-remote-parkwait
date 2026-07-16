@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/ShowParksCard.css";
-import type { Land, Park, ParkQueueData } from "../types";
+import { useParkSummary } from "../hooks/useParkSummary";
+import type { Park } from "../types";
 import ParkFavoriteButton from "./ParkFavoriteButton";
+import ParkKPIs from "./ParkKPIs";
+import { useState } from "react";
 
 function ParkCard({
 	park,
@@ -13,28 +15,17 @@ function ParkCard({
 	favoriteParks?: Park[];
 	addFavoritePark?: (park: Park) => void;
 }) {
-	const [isOpen, setIsOpen] = useState<boolean | null>(null);
+	const summary = useParkSummary(String(park.id));
+
 	const [imgSrc, setImgSrc] = useState(`/icons/parks/${park.id}.webp`);
 	const [triedFallback, setTriedFallback] = useState(false);
 
-	useEffect(() => {
-		fetch(`/api/parks/${park.id}/queue_times.json`)
-			.then((response) => response.json())
-			.then((data: ParkQueueData) => {
-				const allRides = [
-					...data.rides,
-					...data.lands.flatMap((land: Land) => land.rides),
-				];
-				setIsOpen(allRides.some((ride) => ride.is_open));
-			});
-	}, [park.id]);
-
 	const status =
-		isOpen === null
+		summary === null
 			? { text: "...", className: "" }
-			: isOpen
-				? { text: "Ouvert", className: "is-open" }
-				: { text: "Fermé", className: "is-closed" };
+			: summary.isOpen
+				? { text: "Open", className: "is-open" }
+				: { text: "Closed", className: "is-closed" };
 
 	function handleImageError() {
 		if (!triedFallback) {
@@ -46,24 +37,37 @@ function ParkCard({
 	return (
 		<article className="ParkCard">
 			<Link to={`/park/${park.id}`} className="ParkCard-link">
-				<img
-					src={imgSrc}
-					alt={park.name}
-					className="ParkCard-image"
-					onError={handleImageError}
-				/>
-				<div className="ParkCard-text">
-					<p className="ParkCard-name">{park.name}</p>
-					<p className={`ParkCard-status ${status.className}`}>{status.text}</p>
-					<p className="ParkCard-country">{park.country}</p>
+				<div className="ParkCard-header">
+					<img
+						src={imgSrc}
+						alt={park.name}
+						className="ParkCard-image"
+						onError={handleImageError}
+					/>
+					<div className="ParkCard-text">
+						<p className="ParkCard-name">{park.name}</p>
+						<p className={`ParkCard-status ${status.className}`}>
+							{status.text}
+						</p>
+						<p className="ParkCard-country">{park.country}</p>
+					</div>
 				</div>
+
+				{summary && (
+					<div className="ParkCard-kpis">
+						<ParkKPIs summary={summary} />
+					</div>
+				)}
 			</Link>
+
 			{addFavoritePark && favoriteParks && (
-				<ParkFavoriteButton
-					park={park}
-					addFavoritePark={addFavoritePark}
-					favoriteParks={favoriteParks}
-				/>
+				<div className="ParkCard-favorite">
+					<ParkFavoriteButton
+						park={park}
+						addFavoritePark={addFavoritePark}
+						favoriteParks={favoriteParks}
+					/>
+				</div>
 			)}
 		</article>
 	);

@@ -42,7 +42,7 @@ export interface FavoriteEntry {
 	addedAt: string;
 }
 
-export type FilterType = "Toutes" | "Thème" | "Favoris";
+export type FilterType = "All" | "Theme" | "Favorites";
 
 export interface SearchBarRideProps {
 	onSearchChange: (term: string) => void;
@@ -64,12 +64,14 @@ export interface GroupedLand {
 export interface RideItemProps {
 	ride: RideWithCategory;
 	index?: number;
-	variant?: "open" | "closed" | "done";
+	variant?: "open" | "closed" | "done" | "hidden";
 	hideCategory?: boolean;
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
 	doneRideIds: number[];
 	toggleDone: (id: number) => void;
+	hiddenRideIds: number[];
+	toggleHidden: (id: number) => void;
 }
 
 export interface LandSectionProps {
@@ -78,6 +80,8 @@ export interface LandSectionProps {
 	favoriteRides: Ride[];
 	doneRideIds: number[];
 	toggleDone: (id: number) => void;
+	hiddenRideIds: number[];
+	toggleHidden: (id: number) => void;
 }
 export interface ParkListProps {
 	searchTerm: string;
@@ -95,7 +99,7 @@ export interface SearchBarProps {
 	onSearch: (value: string) => void;
 }
 
-export type AffluenceLevel = "Faible" | "Moderée" | "Elevée";
+export type AffluenceLevel = "Low" | "Moderate" | "High";
 
 export interface ParkSummary {
 	id: number;
@@ -115,7 +119,9 @@ export interface FavoriteButtonProps {
 	rideName: string;
 }
 export interface HiddenButtonProps {
-	rideName: string;
+	ride: Ride;
+	hiddenRideIds: number[];
+	toggleHidden: (id: number) => void;
 }
 
 export interface WeatherData {

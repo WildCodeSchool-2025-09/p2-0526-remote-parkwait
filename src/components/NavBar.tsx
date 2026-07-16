@@ -11,10 +11,6 @@ function NavBar() {
 					Park<span className="NavBar-title-accent">Wait</span>
 				</h1>
 			</Link>
-			<article className="LastUpdate_Refresh">
-				<p>Last update</p>
-				<button type="button">Refresh</button>
-			</article>
 		</section>
 	);
 }

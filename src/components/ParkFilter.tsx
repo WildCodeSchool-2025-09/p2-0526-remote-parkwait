@@ -18,7 +18,8 @@ function ParkFilter({
 				onClick={() => setIsOpen(!isOpen)}
 			>
 				<img src={myIcon} alt="world Icon" className="btn-icon" />
-				Pays : {selectedCountry} {isOpen ? "▲" : "▼"}
+				{selectedCountry === "All" ? `Country: ${selectedCountry}` : selectedCountry}{" "}
+				{isOpen ? "▲" : "▼"}
 			</button>
 
 			{isOpen && (

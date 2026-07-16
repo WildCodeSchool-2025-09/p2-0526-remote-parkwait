@@ -29,7 +29,7 @@ export const useParkRides = (parkId: number | null) => {
 				const ridesWithoutLand: RideWithCategory[] = (data.rides || []).map(
 					(ride) => ({
 						...ride,
-						category: "Général",
+						category: "General",
 					}),
 				);
 				const ridesFromLands: RideWithCategory[] = (data.lands || []).flatMap(
@@ -43,7 +43,7 @@ export const useParkRides = (parkId: number | null) => {
 				setError(null);
 			} catch (err) {
 				console.error(err);
-				setError("Impossible de charger les attractions.");
+				setError("Unable to load attractions.");
 			} finally {
 				setIsLoading(false);
 			}

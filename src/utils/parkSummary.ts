@@ -32,12 +32,12 @@ function getAverageWaitTime(allRides: Ride[]): number {
 
 function getAffluenceLevel(averageWait: number): AffluenceLevel {
 	if (averageWait < 20) {
-		return "Faible";
+		return "Low";
 	}
 	if (averageWait <= 40) {
-		return "Moderée";
+		return "Moderate";
 	}
-	return "Elevée";
+	return "High";
 }
 
 export async function getParkSummary(park: Park): Promise<ParkSummary> {

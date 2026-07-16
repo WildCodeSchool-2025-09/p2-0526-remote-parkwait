@@ -2,8 +2,9 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	gap: var(--space-4);
+	margin: 0 auto var(--space-2);
+	padding: var(--space-6) var(--card-padding) var(--space-6);
 	max-width: var(--container-width);
-	margin: var(--space-6) auto;
 }
 
 .kpi-card {

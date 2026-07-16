@@ -3,7 +3,6 @@
 	align-items: center;
 	flex-wrap: wrap;
 	gap: var(--space-3);
-	padding: var(--space-6) var(--space-6) 0;
 }
 
 .filter-wrapper {
@@ -148,5 +147,22 @@
 	to {
 		opacity: 1;
 		transform: translateY(0);
+	}
+}
+
+@media (max-width: 450px) {
+	.park-list-filters {
+		gap: calc(var(--space-3) * 0.8);
+	}
+
+	.park-list-filters .filter-trigger {
+		height: calc(var(--button-height) * 0.8);
+		padding: 0 calc(var(--space-5) * 0.8);
+		gap: calc(var(--space-2) * 0.8);
+		font-size: calc(var(--font-size-md) * 0.8);
+	}
+
+	.park-list-filters .btn-icon {
+		max-height: calc(20px * 0.8);
 	}
 }

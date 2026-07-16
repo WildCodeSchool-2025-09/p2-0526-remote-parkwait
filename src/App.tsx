@@ -13,6 +13,7 @@ function App() {
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
 	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
 	const [doneRideIds, setDoneRideIds] = useState<number[]>([]);
+	const [hiddenRideIds, setHiddenRideIds] = useState<number[]>([]);
 	const { rides: freshRides } = useParkRides(currentParkId);
 	const favoriteRides: Ride[] = freshRides.filter((ride) =>
 		favoriteRideIds.includes(ride.id),
@@ -47,6 +48,14 @@ function App() {
 		}
 	}
 
+	function toggleHidden(id: number) {
+		if (hiddenRideIds.some((rideId) => rideId === id)) {
+			setHiddenRideIds(hiddenRideIds.filter((rideId) => rideId !== id));
+		} else {
+			setHiddenRideIds([...hiddenRideIds, id]);
+		}
+	}
+
 	return (
 		<>
 			<BrowserRouter>
@@ -72,10 +81,12 @@ function App() {
 								setCurrentParkId={setCurrentParkId}
 								doneRideIds={doneRideIds}
 								toggleDone={toggleDone}
+								hiddenRideIds={hiddenRideIds}
+								toggleHidden={toggleHidden}
 							/>
 						}
 					/>
-					<Route path="*" element={<p>Page introuvable</p>} />
+					<Route path="*" element={<p>Page not found</p>} />
 				</Routes>
 			</BrowserRouter>
 		</>

@@ -5,11 +5,11 @@
 }
 
 .ParkCard {
+	position: relative;
 	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
+	flex-direction: column;
 	gap: var(--space-4);
-	padding: var(--card-padding);
+	padding: var(--space-4);
 	background-color: var(--color-surface);
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius-lg);
@@ -18,12 +18,18 @@
 		var(--transition-fast);
 }
 
+.ParkCard-header {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--space-4);
+}
+
 .ParkCard-link {
 	flex: 1;
 	min-width: 0;
 	display: flex;
-	align-items: flex-start;
-	gap: var(--space-4);
+	flex-direction: column;
+	gap: var(--space-2);
 	color: inherit;
 	text-decoration: none;
 }
@@ -37,6 +43,7 @@
 	display: flex;
 	flex-direction: column;
 	min-width: 0;
+	padding-right: var(--space-8);
 }
 
 .ParkCard-name {
@@ -69,8 +76,52 @@
 }
 
 .ParkCard-image {
-    height: 90px;
-    object-fit: cover;
-    border-radius: 8px 8px 0 0;
-    flex-shrink: 0;
+	height: 90px;
+	object-fit: cover;
+	border-radius: 8px 8px 0 0;
+	flex-shrink: 0;
+}
+
+.ParkCard-kpis .park-kpis {
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--space-1);
+}
+
+.ParkCard-kpis .kpi-card {
+	padding: var(--space-2);
+	gap: var(--space-1);
+}
+
+.ParkCard-kpis .kpi-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.ParkCard-kpis .kpi-icon-glyph {
+	width: 14px;
+	height: 14px;
+}
+
+.ParkCard-kpis .kpi-label {
+	font-size: var(--font-size-xs);
+}
+
+.ParkCard-kpis .kpi-value {
+	font-size: var(--font-size-md);
+}
+
+.ParkCard-favorite {
+	position: absolute;
+	top: var(--space-3);
+	right: var(--space-3);
+	z-index: 1; /* pour rester au-dessus du contenu si jamais ça chevauche */
+}
+
+@media (min-width: 600px) {
+	.ParkCard-kpis .kpi-label {
+		font-size: var(--font-size-sm);
+	}
 }

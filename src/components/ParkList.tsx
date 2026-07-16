@@ -52,14 +52,14 @@ function ParkList({
 					aria-pressed={showFavoritesOnly}
 				>
 					<img src={favIconFilled} alt="" className="btn-icon" />
-					Mes parcs favoris
+					Favorite parks
 				</button>
 			</div>
 
 			{showFavoritesOnly && filteredParks.length === 0 ? (
 				<p className="loading-text">
-					Vous n'avez pas encore ajouté de parc en favoris. Cliquez sur le cœur
-					d'un parc pour l'ajouter ici.
+					You haven't added any parks to your favorites yet. Click the heart on
+					a park to add it here.
 				</p>
 			) : (
 				<div className="park-list-grid">

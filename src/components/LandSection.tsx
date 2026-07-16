@@ -10,6 +10,8 @@ function LandSection({
 	favoriteRides,
 	doneRideIds,
 	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
 }: LandSectionProps) {
 	const { isOpen, toggle } = useLandSection();
 
@@ -41,6 +43,8 @@ function LandSection({
 							favoriteRides={favoriteRides}
 							doneRideIds={doneRideIds}
 							toggleDone={toggleDone}
+							hiddenRideIds={hiddenRideIds}
+							toggleHidden={toggleHidden}
 						/>
 					))}
 				</ul>

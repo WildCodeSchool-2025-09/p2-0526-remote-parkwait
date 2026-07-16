@@ -6,12 +6,12 @@ function SearchBarPark({ value, onSearch }: SearchBarProps) {
 	return (
 		<div className="search-container">
 			<div className="search-input-wrapper">
-				<img src={searchIcon} alt="Recherche" className="search-icon" />
+				<img src={searchIcon} alt="Search" className="search-icon" />
 				<input
 					className="search-input"
 					type="text"
-					aria-label="recherche de parc"
-					placeholder="Rechercher un parc..."
+					aria-label="park search"
+					placeholder="Search for a park..."
 					value={value}
 					onChange={(e) => onSearch(e.target.value)}
 				/>

@@ -12,12 +12,16 @@ function Park({
 	setCurrentParkId,
 	doneRideIds,
 	toggleDone,
+	hiddenRideIds,
+	toggleHidden,
 }: {
 	addFavorite: (ride: Ride) => void;
 	favoriteRides: Ride[];
 	setCurrentParkId: (id: number | null) => void;
 	doneRideIds: number[];
 	toggleDone: (id: number) => void;
+	hiddenRideIds: number[];
+	toggleHidden: (id: number) => void;
 }) {
 	const { parkId: id } = useParams<{ parkId: string }>();
 	const summary = useParkSummary(id);
@@ -45,6 +49,8 @@ function Park({
 						favoriteRides={favoriteRides}
 						doneRideIds={doneRideIds}
 						toggleDone={toggleDone}
+						hiddenRideIds={hiddenRideIds}
+						toggleHidden={toggleHidden}
 					/>
 				) : (
 					<p>Parc introuvable.</p>

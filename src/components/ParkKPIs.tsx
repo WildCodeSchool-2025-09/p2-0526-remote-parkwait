@@ -18,9 +18,9 @@ function getWaitTone(waitTime: number): KpiTone {
 }
 
 const AFFLUENCE_TONE: Record<AffluenceLevel, KpiTone> = {
-	Faible: "good",
-	Moderée: "medium",
-	Elevée: "bad",
+	Low: "good",
+	Moderate: "medium",
+	High: "bad",
 };
 
 function KpiIcon({ icon }: { icon: string }) {
@@ -44,7 +44,7 @@ function ParkKPIs({ summary }: ParkKPIsProps) {
 			<article className="kpi-card">
 				<div className="kpi-header">
 					<KpiIcon icon={clockIcon} />
-					<p className="kpi-label">Attente moyenne</p>
+					<p className="kpi-label">Average wait</p>
 				</div>
 				<p className={`kpi-value kpi-value-${waitTone}`}>
 					{averageWaitTime} min
@@ -54,7 +54,7 @@ function ParkKPIs({ summary }: ParkKPIsProps) {
 			<article className="kpi-card">
 				<div className="kpi-header">
 					<KpiIcon icon={attractionIcon} />
-					<p className="kpi-label">Attractions ouvertes</p>
+					<p className="kpi-label">Open attractions</p>
 				</div>
 				<p className="kpi-value kpi-value-good">
 					{summary.openRidesCount} / {summary.totalRidesCount}
@@ -64,7 +64,7 @@ function ParkKPIs({ summary }: ParkKPIsProps) {
 			<article className="kpi-card">
 				<div className="kpi-header">
 					<KpiIcon icon={usergroupIcon} />
-					<p className="kpi-label">Affluence</p>
+					<p className="kpi-label">Crowd level</p>
 				</div>
 				<p className={`kpi-value kpi-value-${affluenceTone}`}>
 					{summary.affluence}
