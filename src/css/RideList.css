@@ -13,7 +13,7 @@
 
 .ride-stats {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
 	padding-bottom: var(--space-4);
 	margin-bottom: var(--space-2);
@@ -22,7 +22,7 @@
 	align-content: flex-start;
 }
 
-.ride-stats h1 {
+.ride-stats h2 {
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-bold);
 	letter-spacing: 0.3px;
@@ -32,7 +32,7 @@
 	padding-top: var(--space-4);
 }
 
-.ride-stats h2 {
+.ride-stats h3 {
 	position: absolute;
 	width: 1px;
 	height: 1px;
