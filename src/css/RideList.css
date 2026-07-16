@@ -81,6 +81,17 @@
 	justify-content: center;
 }
 
+.ride-item.done {
+	opacity: 0.5;
+	background-color: #f0f0f0;
+}
+
+.done-rides-section {
+	margin-top: 2rem;
+	border-top: 1px solid #ddd;
+	padding-top: 1rem;
+}
+
 .ride-text {
 	display: flex;
 	flex-direction: column;
@@ -163,6 +174,7 @@
 }
 
 .favIcon,
+.doneIcon,
 .hideIcon {
 	width: 17px;
 	height: 17px;

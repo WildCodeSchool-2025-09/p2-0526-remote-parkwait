@@ -14,6 +14,7 @@ function App() {
 	const [favoriteRides, setFavoriteRides] = useState<Ride[]>([]);
 	const [favoriteParks, setFavoriteParks] = useState<ParkType[]>([]);
 	const [currentParkId, setCurrentParkId] = useState<number | null>(null);
+	const [doneRideIds, setDoneRideIds] = useState<number[]>([]);
 
 	// on récupère les rides à jour du parc actuellement sélectionné
 	const { rides: freshRides } = useParkRides(currentParkId ?? 0);
@@ -44,6 +45,14 @@ function App() {
 		}
 	}
 
+	function toggleDone(id: number) {
+	if (doneRideIds.some((rideId) => rideId === id)) {
+		setDoneRideIds(doneRideIds.filter((rideId) => rideId !== id));
+	} else {
+		setDoneRideIds([...doneRideIds, id]);
+	}
+	}
+
 	return (
 		<>
 			<BrowserRouter>
@@ -65,6 +74,8 @@ function App() {
 								addFavorite={addFavorite}
 								favoriteRides={favoriteRidesWithFreshData}
 								setCurrentParkId={setCurrentParkId}
+								doneRideIds={doneRideIds}
+								toggleDone={toggleDone}
 							/>
 						}
 					/>

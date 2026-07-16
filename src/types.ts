@@ -66,6 +66,8 @@ export interface RideItemProps {
 	hideCategory?: boolean;
 	favorites: Ride[];
 	onToggle: (ride: Ride) => void;
+	doneRideIds?: number[];
+	toggleDone?: (id: number) => void;
 }
 
 export interface FavoriteButtonProps {
